@@ -1,0 +1,2428 @@
+%\documentstyle[12pt,accents]{article}
+
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amscd}
+%\usepackage[latin1]{inputenc}
+%\usepackage{minitoc}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[usenames]{color}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{accents}
+\usepackage{url}
+
+\usepackage{framed}
+\newenvironment{solution}%
+{\rule{1ex}{1ex}
+\hspace{\stretch{1}}
+\textbf{Solution}
+\hspace{\stretch{1}}\rule{1ex}{1ex}\par%
+\hspace{2ex}% indente tout de 2ex
+\begin{minipage}{0.95\linewidth}% s'arrête un peu avant les carrés de droite
+\begin{framed}}% met un contour noir
+{\end{framed}\end{minipage}
+\par\rule{1ex}{1ex}\hspace{\stretch{1}}
+\hspace{\stretch{1}}\rule{1ex}{1ex}\par}
+\newcommand{\maxi}{\mbox{maximiser}}
+\newcommand{\mini}{\mbox{minimiser}}
+
+\parindent0mm
+
+\setlength{\textwidth}{15cm}
+\setlength{\oddsidemargin}{0.50cm}
+\setlength{\textheight}{8.7in}
+\setlength{\topmargin}{-0.5in}
+
+%%% ACCENTS
+
+\def\ifundefined#1{\expandafter\ifx\csname #1\endcsname\relax}%
+\ifundefined{language} \else \catcode`\ç=13 \catcode`\à=13
+\catcode`\â=13 \catcode`\ä=13 \catcode`\é=13 \catcode`\è=13
+\catcode`\ê=13 \catcode`\ë=13 \catcode`\ï=13 \catcode`\î=13
+\catcode`\ô=13 \catcode`\ö=13 \catcode`\ù=13 \catcode`\û=13
+\catcode`\ü=13
+\defç{\c c}
+\defà{\`a}
+\defâ{\^a}
+\defä{\"a}
+\defé{\'e}
+\defè{\`e}
+\defê{\^e}
+\defë{\"e}
+\defï{\"{\i}}
+\defî{\^{\i}}
+\defô{\^o}
+\defö{\"o}
+\defù{\`u}
+\defû{\^u}
+\defü{\"u}
+\fi
+
+\newcommand{\R}{{\mbox{\bf R}}}
+
+\newcommand{\head}{{\parindent 0pt  V. Blondel \hfill INMA1702 \\}}
+
+\author{Vincent Blondel\\
+Université catholique de Louvain}
+
+\title{INMA1702. Mod\`eles et m\'ethodes d'optimisation
+  \\
+Exercices (partie optimisation linéaire)}
+
+\begin{document}
+
+\date{Année 2007-2008}
+
+\maketitle
+
+\begin{center}
+\textbf{Code source et bug tracker}\\
+\url{https://github.com/blegat/INMA1702-exercices}
+\end{center}
+
+\newpage
+
+
+%******************************************************************************
+
+\tableofcontents
+
+\newpage
+
+
+%******************************************************************************
+
+
+
+
+\section{Problèmes d'optimisation linéaire}
+
+Soit le problème
+
+$$
+\begin{array}{ll}
+  \mini   &  f(x_1, \ldots, x_n) \\
+  \mbox{sous la contrainte} &  (x_1, \ldots, x_n)  \in \Omega
+\end{array}
+$$
+
+
+Les scalaires $x_1, \ldots, x_n \in \R$ sont les \emph{variables de décision}, $f$  est la \emph{fonction objectif}
+(on parle volontier de \emph{fonction coût} pour un problème de minimisation et de \emph{fonction profit} pour un problème de maximisation), et
+$\Omega$ est le \emph{domaine admissible}. Un élément de $\R^n$ est une \emph{solution}, c'est une \emph{solution admissible}   si
+$x
+\in \Omega$. Si la solution admissible
+$x^\star$ est telle que
+$f(x^\star) \leq f(x)$ pour toute autre solution admissible
+$x$,  la solution $x^\star$ est \emph{optimale}. L'\emph{objectif optimal}   est alors donné par
+$f(x^\star)$. Lorsqu'il existe, le coût optimal est unique. Par contre, il peut y avoir de nombreuses solutions optimales et l'ensemble des solutions
+optimales peut être non borné. Si pour tout
+$K$ il existe une solution admissible $x \in \Omega$ telle que $f(x) \leq K$, le coût est dit \emph{non borné}. On
+dit aussi que le  coût est \emph{égal à
+$-\infty$}.\\
+
+\newpage
+
+
+
+\begin{enumerate}
+
+
+  \item Un étudiant dispose de 100 heures de travail pour étudier les examens A, B et C. Il pense gagner par heure de travail et par
+    cours: 1/5 de points pour le cours A, 2/5 de points pour le cours B et 3/5 pour le cours C. Chaque examen est coté sur 20. Les
+    exercices de ces cours comptent pour la moitié de la cote finale. Ses résultats pour les exercices lui ont été communiqués. Il a
+    obtenu 12/20 pour A, 12.5/20 pour B et 13.4/20 pour C.  L'étudiant doit obtenir au minimum une cote globale de 10/20 pour chaque cours. Tous
+    les cours ont la même pondération et l'étudiant désire obtenir la  moyenne la plus élevée possible.  Formulez ce problème comme un problème d'optimisation
+    linéaire (solution lors d'une séance ultérieure).
+
+
+  \item Une société produit des biens A, B et C. La production des biens nécessite l'utilisation de 4 machines. Les temps de production
+    et les profits générés sont repris dans le tableau suivant\\
+
+    $
+    \begin{array}{l|llll|l}
+      & 1 & 2 & 3 & 4 & \mbox{profit}\\
+      \hline
+      A & 1 & 3 & 1 & 2 & 6\\
+      B & 6 & 1 & 3 & 3 & 6\\
+      C & 3 & 3 & 2 & 4 & 6
+    \end{array}
+    $
+    \\
+
+
+    Les temps de production disponibles sur les machines 1, 2, 3 et 4  sont de 84, 42, 21 et 42 et la société cherche à  maximiser son
+    profit. Formulez ce problème comme un problème d'optimisation linéaire.
+
+
+
+  \item Il y a en Belgique $I$ communes, $J$ écoles et $G$ niveaux
+    d'enseignement. L'école $j$ possède  une capacité d'accueil de $c_{jg}$
+    écoliers pour le niveau $g$. Dans la commune $i$, le nombre d'écoliers devant
+    suivre le niveau d'enseignement $g$ est égal à $s_{ig}$. Enfin, la distance de
+    l'école $j$ à la commune $i$ est égale à $d_{ij}$. On demande d'affecter les écoliers dans les écoles de façon à minimiser la
+    distance totale parcourue par l'ensemble des écoliers. Formulez ce problème comme un problème d'optimisation linéaire.
+
+
+
+
+  \item Résolvez géométriquement le problème suivant
+
+    $
+    \begin{array}{lrcl}
+      \maxi & 12 x_1+16 x_2\\
+      & x_1 + x_2 & \leq & 150\\
+      & 1/2 x_1 + 3x_2 & \leq & 200\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    La fonction objectif change et devient $17 x_1+16 x_2$. Que se passe-t-il? L'ensemble des solutions optimales est-il toujours fini?
+
+
+  \item Soit le problème d'optimisation linéaire
+
+    $
+    \begin{array}{lrcr}
+      \mini & c_1 x_1 + c_2 x_2 + c_3 x_3\\
+      & x_1 + x_2 & \geq & 1\\
+      & x_1 + 2x_2 & \leq & 3\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Représentez l'ensemble des solutions admissibles. Trouvez le coût optimal et les solutions  optimales pour les
+    valeurs suivantes de $c$: $c=(-1, 0, 1)$,
+    $c=(0, 1, 0)$ et
+    $c=(0, 0, -1)$.
+
+
+
+
+  \item  Trouvez, si possible, des problèmes d'optimisation linéaire pour lesquels le problème
+
+    \begin{enumerate}
+      \item Poss\`ede un co\^ut optimal fini et exactement une solution optimale.
+      \item Poss\`ede exactement deux solutions optimales.
+      \item Possède un coût optimal infini.
+      \item Possède un coût optimal fini et un ensemble de solutions optimales infini et borné.
+      \item Possède un coût optimal fini et un ensemble de solutions  optimales non-borné.
+
+    \end{enumerate}
+
+
+
+  \item Soit le problème d'optimisation linéaire
+
+    $
+    \begin{array}{ll}
+      \mini &  c^T x \\
+      \mbox{ }
+      & A x \geq b
+    \end{array}
+    $
+
+    Comment évolue l'objectif optimum si on ajoute une contrainte?
+
+
+
+  \item Un sous-ensemble $V$ de $\R^n$ est convexe si $x, y \in V \Rightarrow \lambda x + (1-\lambda) y \in V$ pour tout $0 < \lambda <1$. Démontrez que
+    l'ensemble des solutions optimales d'un problème d'optimisation linéaire est un ensemble convexe.
+
+
+
+  \item On considère  un graphe dirigé donné par un ensemble de noeuds $V$ et d'arcs $E$. L'arc
+    $(i, j) \in E$ a une  capacité maximale de
+    $h_{ij}$ et est de coût unitaire
+    $c_{ij}$. En certains noeuds
+    $i \in V$ il y a une quantité
+    $b_i$ qui entre  ($b_i >0$) ou qui sort ($b_i <0$). Nous supposons que les quantité entrantes et sortantes s'équilibrent, $\sum_i b_i=0$. Nous
+    cherchons un flot admissible de coût minimum.  Formulez ce problème comme un problème d'optimisation linéaire. La solution d'un tel problème est-elle
+    toujours unique? Parmi l'ensemble des solutions, on cherche celle(s) qui maximisent le flot en un noeud donn\'e.
+    Formulez ce probl\`eme comme un probl\`eme d'optimisation lin\'eaire. Montrez comment  rechercher le   plus court chemin entre deux noeuds dans un
+    graphe au moyen de la solution d'un  problème de flot de coût minimum.
+
+
+
+
+\end{enumerate}
+
+
+
+
+\newpage
+
+
+
+%******************************************************************************
+
+
+\section{Formes canoniques}
+
+
+
+{\bf Forme géométrique}
+
+$$
+\begin{array}{ll}
+  \mini &  c^T x \\
+  \mbox{ }
+  & A x \geq b
+\end{array}
+$$
+
+
+{\bf Forme standard}
+
+$$
+\begin{array}{lrcr}
+  \mini &  c^T x \\
+  \mbox{ }
+  & A x & = &  b\\
+  & x & \geq & 0
+\end{array}
+$$
+\\
+
+
+
+\newpage
+
+
+
+\begin{enumerate}
+
+
+  \item Ecrivez  le programme linéaire suivant sous forme géométrique
+
+    $
+    \begin{array}{lrcr}
+      \maxi & -x_1 + 8 x_2 \\
+      & x_1 + x_2 & = & 1\\
+      & x_1 + 2x_2 & \leq & 3\\
+      & x_1 & \geq & 0
+    \end{array}
+    $
+
+
+  \item Ecrivez  le programme linéaire suivant sous forme standard
+
+    $
+    \begin{array}{lrcr}
+      \mini & -x_1 + 8 x_2 \\
+      & x_1 + x_2 & \geq & 1\\
+      & x_1 + 2x_2 & \leq & 3\\
+      & x_1 & \geq & 0
+    \end{array}
+    $
+
+
+
+  \item Ecrivez  le programme linéaire suivant sous forme standard
+
+    $
+    \begin{array}{lrcr}
+      \mini & x_1-5x_2-7x_3\\
+      & 5x_1-2x_2+6x_3  & \geq & 5\\
+      &3x_1+4x_2-9x_3 & = & 3\\
+      &7x_1+3x_2+ 5x_3 & \leq & 9\\
+      & x_1  & \geq & -2\\
+    \end{array}
+    $
+
+  \item Soit le problème d'optimisation
+
+    $
+    \begin{array}{lrcr}
+      \mini   &  2x_1+3 \; | x_2-10|\\
+      & |x_1+2| + |x_2| & \leq & 5
+    \end{array}
+    $
+
+    Formulez ce problème comme un problème d'optimisation linéaire.
+
+
+  \item Un problème d'optimisation linéaire peut-il toujours s'écrire sous la forme $\min c^Tx$ sous la contrainte $A = b$? Si oui, démontrez, si non, justifiez.
+
+  \item Une fusée se déplace en suivant une trajectoire rectiligne. Soit $x_t$, $v_t$
+    et $a_t$ la position, la vitesse et l'accélération de la fusée au temps $t$. En discrétisant le temps et en considérant un incrément
+    unité, trouvez des expressions pour $x_{t+1}$ et $v_{t+1}$ en fonction de $x_t, v_t$ et $a_t$. Nous supposons que l'accélération $a_t$ est sous notre
+    contrôle. Par ailleurs, la fusée est au repos à l'origine au temps
+    $t=0$ ($x_0=0$ et
+    $v_0=0$). Nous désirons faire décoller la fusée pour la faire atterrir  en douceur au temps $T$ à une
+    distance d'une unité de son point de départ ($x_T=1$ et $v_T=0$). De plus, nous désirons atteindre cet
+    objectif en minimisant la consommation totale de carburant
+    $\sum_{t=0}^{T-1} |a_t|$.  Formulez ce problème comme un problème d'optimisation linéaire.
+
+
+
+  \item Nous considérons l'ensemble $P=\{ x \in \R^n \; | \; a_i^T x \leq b_i \; , \;  i=1, \ldots, m \}$. Nous désirons trouver la
+    plus grande boule entièrement contenue dans cet ensemble. Le centre de cette boule est  le {\it centre de Chebychev} de $P$.  Formulez
+    ce problème comme un problème d'optimisation linéaire. (Indication:  La distance entre l'hyperplan $\{x \in \R^n | \;  a^Tx=b \}$ et le point $x_0 \in \R^n$
+    est donnée par
+    $|a^Tx_0 - b|/\|a\|$ avec $\|a\|=\sqrt{a_1^2+ \ldots + a_n^2}$.)
+
+
+
+
+
+  \item Nous considérons un ensemble de $m$ lampes disposées aux points $l_1, \ldots, l_m \in \R^2$ du plan et éclairant $n$
+    tronçons. Les tronçons sont des segments de droites. Le tronçon $i$ est donné par $[v_i, v_{i+1}]$ où $v_1, \ldots, v_{n+1}
+    \in \R^2$.  Les variables du problème sont les puissances des lampes $p_1, \ldots, p_m$, qui peuvent varier entre 0 et 1.
+    L'illumination $I_i$ du point milieu du tronçon $i$ dépend de la position des lampes et de leurs
+    puissances. Nous utilisons un modèle simple d'illumination
+
+    $$I_i = \sum_{j=1}^m a_{ij} p_j, \qquad a_{ij}=r_{ij}^{-2} \max \{\cos \theta_{ij}, 0 \}$$
+
+    où $r_{ij}$ représente la distance entre la lampe $j$ et le point milieu du tronçon $i$, et $\theta_{ij}$ représente l'angle
+    entre la normale du tronçon $i$ et le segment de droite qui lie le point milieu du tronçon $i$ et la lampe $j$ (voir Figure). Ce
+    modèle rend compte du fait qu'un tronçon n'est illuminé que par les lampes situées dans le demi-plan qui lui fait face,
+    mais ne prend pas en compte l'illumination des tronçons entre eux par réflexion.  Le problème consiste à déterminer la puissance des lampes de façon à ce
+    que les niveaux d'illumination des  tronçons soient tous proches du niveau désiré $I_{des}$. Nous choisissons la déviation maximum
+
+    $$\max_{i=1, \ldots, n} | I_i -I_{des}|$$
+
+    pour quantifier la déviation globale par rapport au niveau d'illumination désiré. Formulez ce problème comme un problème d'optimisation linéaire.
+
+
+
+  \item Les résultats finaux $x_i$ pour l'examen INMA2702 sont les suivants (par ordre croissant, résultats sur 100): 28, 62, 80,
+    83, 86, 87,  92, 95, 98. On cherche à exprimer au moyen d'un seul nombre la manière dont l'examen a été réussi. La moyenne des résultats
+    est de
+    $\overline x = \sum_i x_i /9 = 79$. Un étudiant ayant
+    obtenu 80 fait donc mieux que la moyenne des résultats. Il fait toutefois moins bien que plus de la moitié des étudiants. La
+    \emph{médiane}  des résultats est un résultat qui partage l'ensemble des résultats en deux ensembles de  tailles égales. Dans notre
+    exemple, la médiane est donnée par $86$. Montrez que la moyenne et la médiane s'obtiennent comme solutions optimales des problèmes
+    d'optimisation
+    $$\min_x \sum_i (x-x_i)^2$$
+    et
+    $$\min_x \sum_i |x-x_i|.$$
+    Quelle est la solution du problème
+    $$\min_x \max_i | x-x_i| ?$$
+
+
+
+  \item  Soit $\{b_1, b_2, \ldots, b_m\}$ un ensemble de points du plan. Le \emph{centro\"ide}
+    $$\overline x = \frac{1}{m} \sum_i b_i$$
+    minimise la somme des carrés des distances aux points de l'ensemble. Comment trouver le point qui minimise la somme des distances (et
+    non pas la somme des carrés)? Trouvez une description explicite de ce point pour les cas $m=2$ et $m=3$.
+
+
+
+
+  \item  Les composants d'une puce électronique sont placés sur
+    une puce carrée $\{ (x, y) \; |  -1 \leq x, y \leq 1\}$.
+    Chaque composant possède plusieurs bornes qui sont connectées à
+    des bornes d'autres composants, ou aux bornes d'entrée/\-sortie situées sur le périmètre de la puce.  Les connexions et les
+    positions des bornes d'entrée/sortie sont fixées; les seules variables sont les coordonnées   $(x_i, y_i)$ des $n$
+    composants.  Les connexions entre les composants
+    sont précisés de la manière suivante. On définit les vecteurs
+
+
+    $$x=
+    \left(
+    \begin{array}{c}
+      x_1\\
+      \vdots\\
+      x_n
+    \end{array}
+    \right)
+    \mbox{ et }
+    y=
+    \left(
+    \begin{array}{c}
+      y_1\\
+      \vdots\\
+      y_n
+    \end{array}
+    \right)
+    $$
+
+
+
+    et on construit une matrice $A \in \R^{m \times n}$ et deux vecteurs $b_x \in \R^m, b_y \in \R^m$.
+    Chaque ligne de
+    $A$ et chaque entrée de $b_x$ et de $b_y$ décrivent une connexion. Pour chaque $i=1, \ldots, m$, nous pouvons distinguer deux cas
+    suivant que la ligne $i$ de $A$ décrit une connexion entre deux composants, ou entre un composant et une borne d'entrée/sortie.
+    \begin{itemize}
+      \item Si $i$ décrit une connexion entre deux composants $j$ et $k$ (avec $j < k$), alors
+
+        $$a_{il}=
+        \left\{
+          \begin{array}{rl}
+            1 & \mbox{si } l=j\\
+            -1 & \mbox{si } l=k\\
+            0 & \mbox{sinon}
+          \end{array}
+          \right.
+          \mbox{ et }
+          b_{x, i}=0, b_{y,i}=0
+          $$
+
+          et nous avons  $a_i^Tx-b_{x,i}=x_j-x_k$ et $a_i^Ty-b_{y,i}=y_j-y_k.$
+
+        \item Si $i$ décrit une connexion entre un composant $j$ et une borne d'entrée/sortie de coordonnée $(\bar x, \bar y)$, alors
+
+          $$a_{il}=
+          \left\{
+            \begin{array}{rll}
+              1 & \mbox{si } l=j\\
+              0 & \mbox{sinon}
+            \end{array}
+            \right.
+            \mbox{ et }
+            b_{x, i}=\bar x, b_{y,i}=\bar y
+            $$
+
+            et nous avons $a_i^Tx-b_{x,i}=x_j-\bar x$ et $a_i^Ty-b_{y,i}=y_j-\bar y.$
+
+        \end{itemize}
+
+        Le problème consiste à déterminer les coordonnées des composants qui minimisent
+        la plus grande distance de Manhattan
+        entre deux composants connectés, ou entre un composant et une borne. (Remarque: La distance de Manhattan entre les
+        points de coordonnées
+        $(x_0, y_0)$ et
+        $(x_1, y_1)$ est donnée par
+        $|x_1-x_0|+|y_1-y_0|$.) Formulez ce problème sous la forme d'un problème
+        d'optimisation. En utilisant la propriété
+        $|a|+|b|=\max(a+b, a-b, -a+b, -a-b)$, formulez le problème sous la
+        forme d'un problème d'optimisation linéaire.
+
+
+
+
+
+    \end{enumerate}
+
+
+
+
+
+    \newpage
+
+
+
+
+
+%******************************************************************************
+
+
+    \section{Géométrie des polyèdres}
+
+
+
+    Un \emph{polyèdre} est un sous-ensemble de $\R^n$ qui peut être écrit comme ${\mathcal P}=\{x \in \R^n |\;  Ax \geq b \}$. Un polyédre est une
+    intersection d'un nombre fini d'ensembles convexes et c'est donc un ensemble convexe. Soit
+    $\mathcal P$ un poly\`edre de
+    $\R^n$. La solution
+    $x^\star
+    \in \R^n$ est une
+    \emph{solution admissible de base}  de
+    $\mathcal P$ (pour les poly\`edres, \emph{sommet}, \emph{point extrême} et \emph{solution admissible de base} sont synonymes)
+    si  $x^\star$ est une solution admissible ($x^\star
+    \in {\mathcal{P}}$) et s'il y a
+    $n$ contraintes linéairement indépendantes actives en
+    $x^\star$. Une solution admissible de base $x^\star$ est \emph{dégénérée}     s'il y a plus de $n$ contraintes actives en
+    $x^\star$. Deux solutions admissibles de base sont \emph{adjacentes}   si elles partagent $n-1$ contraintes linéairement indépendantes
+    actives.\\
+
+
+
+
+    \newpage
+
+
+
+    \begin{enumerate}
+
+
+
+
+      \item Soit le poly\`edre défini par les inégalités linéaires
+
+        $
+        \begin{array}{rcr}
+          x_1+4 x_2-2x_3 & = & 7\\
+          2x_2 -3x_3 & \leq & 1\\
+          x_2 & \geq & 2\\
+          x_3& \geq & 0
+        \end{array}
+        $
+
+        Le point $(1, 2, 1)$ est-il un sommet du poly\`edre? et le point $(5, 1/2, 0)$?
+
+
+
+
+
+      \item Trouvez les sommets du poly\`edre
+
+        $
+        \begin{array}{rcr}
+          -2x_1+x_2 & \leq & 2\\
+          -x_1+x_2  & \leq & 3\\
+          x_1 & \leq & 3\\
+          x_1, x_2 & \geq & 0
+        \end{array}
+        $
+
+
+      \item Soit le poly\`edre défini par les inégalités linéaires
+
+        $
+        \begin{array}{rcr}
+          x_1+x_2+2x_3 & \leq & 8\\
+          x_2 + 6x_3 & \leq & 12\\
+          x_1 & \leq & 4\\
+          x_2 & \leq & 6\\
+          x_1, x_2, x_3 & \geq & 0
+        \end{array}
+        $
+
+        Parmi les points suivants trouvez ceux qui sont des sommets et déterminez ceux qui sont
+        dégénérés: $(2, 6, 0)$, $(4, 6, 0)$, $(4, 0, 2)$. Ces sommets sont-ils adjacents?
+
+
+
+
+
+      \item Trouvez  tous les sommets du poly\`edre sous forme standard ${\mathcal{P}}=\{x \in \R^4 \; | \; Ax=b \; , \; x \geq 0\}$ avec
+
+        $
+        A=
+        \left[ \begin{array}{rrrr}
+            1 & 0 & 2 & 0\\
+            0 & 1 & -1 & -1
+          \end{array}
+        \right]
+        \qquad
+        b=
+        \left[ \begin{array}{r}
+            1 \\
+            0
+          \end{array}
+        \right]$
+
+
+        Déterminez les sommets adjacents et les sommets dégénérés.
+
+
+
+
+
+      \item Quand un demi-espace contient-il un autre demi-espace? Donnez des
+        conditions pour lesquelles
+        $$\{x | a^Tx \leq b \} \subseteq \{x | \tilde a ^Tx \leq \tilde b \}$$
+
+
+
+
+      \item Parmi les ensembles suivants quels sont ceux qui sont des poly\`edres?
+
+        \begin{enumerate}
+
+          \item $\{y_1 a_1 + y_2 a_2 \; | \; -1 \leq y_1 \leq 1, \; -1 \leq y_2 \leq 1 \}$ pour des $a_1, a_2$
+            donnés.
+
+          \item $\{x \in \R^n \; | \; x \geq 0, x^T y \leq 1 \mbox{ pour tous les } y \mbox{ avec } \| y \| =1
+          \}$.
+
+        \item $\{x \in \R^n \; | \; x \geq 0, x^T y \leq 1 \mbox{ pour tous les } y \mbox{ avec } \sum_i |y_i | =1
+        \}$.
+
+    \end{enumerate}
+
+    Lorsque c'est possible, exprimez l'ensemble sous forme $\{x \; | \; Ax \leq b\}$.
+
+
+
+  \item Supposons que $\{ x \in \R^n \; | \; a_i^Tx \geq b_i, i=1, \ldots, m \}$ et $\{ x \in \R^n \; | \; g_i^Tx \geq h_i,
+    i=1, \ldots, k \}$ sont deux représentation du même poly\`edre. Démontrez que si les vecteurs $a_1, \ldots, a_m$ génèrent
+    $\R^n$ alors les vecteurs $g_1, \ldots, g_k$ également.
+
+
+
+
+
+
+
+  \item Trouvez, si possible, un problème d'optimisation linéaire qui possède un coût optimal fini mais qui ne possède pas de sommet optimal.
+    Trouvez, si possible, un problème  sous forme standard avec deux variables qui possède cette propriété.  Justifiez votre réponse en cas
+    d'impossibilité.
+
+
+
+
+
+
+
+  \item     Considérez le problème d'optimisation
+
+    $
+    \begin{array}{lrcr}
+      \mini & c^T x \\
+      & Ax & \geq & b
+    \end{array}
+    $
+
+    Supposez que le poly\`edre $\{x |  Ax \geq b \}$  possède au moins un sommet et que le coût optimal est fini. Vous disposez d'une routine pour résoudre les
+    systèmes linéaires de $n$ équations à $n$ inconnues. La routine prévient si le déterminant est nul et retourne une solution s'il ne l'est pas. La routine
+    utilise
+    $O(n^3)$ opérations arithmétiques.  Proposez un algorithme
+    simple de résolution du problème d'optimisation qui ne fait appel qu'à la routine. Estimez le nombre d'opérations à effectuer pour résoudre un
+    problème de
+    $n$ variables et $m$ contraintes. (Remarque. On écrit $f(n)=O(g(n))$ s'il existe des nombres positifs $n_0$ et $c$ pour lesquels $f(n) \leq cg(n)$ pour tout
+    $n \geq n_0$.)
+
+
+
+
+
+
+
+
+  \item Nous considérons l'ensemble $P=\{ x \in \R^n \; | \; a_i^T x \leq b_i \; , \;  i=1, \ldots, m \}$. Nous désirons trouver la
+    plus grande boule entièrement contenue dans cet ensemble. Le centre de cette boule est  le {\it centre de Chebychev} de $P$.  Formulez
+    ce problème comme un problème d'optimisation linéaire. Le centre de Chebychev
+    existe-t-il toujours? Est-il toujours unique? (Indication:  La distance entre l'hyperplan $\{x \in \R^n | \;  a^Tx=b \}$ et le point $x_0 \in \R^n$
+    est donnée par
+    $|a^Tx_0 - b|/\|a\|$ avec $\|a\|=\sqrt{a_1^2+ \ldots + a_n^2}$.)
+
+
+
+  \item  Le poly\`edre de $\R^3$ défini par les inégalités linéaires
+
+    $
+    \begin{array}{rcr}
+      4x_1- x_2 +x_3 & \leq & 7\\
+      -x_1 +3x_2 -x_3 & \leq & 9\\
+      -x_1 + 6 x_2 +5 x_3 & \leq & 5\\
+      x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    est borné, possède un sommet et contient une sphère de rayon strictement positif. Nous désirons trouver le rayon de la plus grande
+    sphère entièrement contenue dans ce poly\`edre. Formulez ce problème comme un problème d'optimisation et transformez le en un
+    problème d'optimisation linéaire.  Répondez à la question suivante sans faire aucun calcul. Parmi les sphères de rayon
+    maximum, en existe-t-il une qui touche quatre des plans qui définissent le poly\`edre? Justifiez votre réponse.
+
+
+
+
+
+
+  \item Nous considérons un ensemble de $m$ lampes situées dans le  plan et éclairant $n$
+    tronçons (voir figure).  Les variables du problèmes sont les puissances des lampes $p_1, \ldots, p_m$ qui peuvent varier entre 0 et 1 ($0 \leq p_j \leq 1$ pour
+    $j=1, \ldots, m$).  L'illumination $I_i$ du point milieu du tronçon $i$ dépend de la position des lampes et de leurs
+    puissances. Nous utilisons un modèle simple d'illumination
+
+    $$I_i = \sum_{j=1}^m a_{ij} p_j$$
+
+    où les $a_{ij}$ sont donnés. Le problème consiste à déterminer la puissance des lampes de façon à ce que les niveaux d'illumination des
+    tronçons soient tous proches du niveau désiré $I_{des}$. Nous choisissons la déviation maximum
+
+    $$\max_{i=1, \ldots, n} | I_i -I_{des}|$$
+
+    pour quantifier la déviation globale par rapport au niveau d'illumination désiré.  Formulez ce problème comme un problème d'optimisation linéaire. Supposons
+    que pour une configuration donnée de 5 lampes et 8 tronçons la déviation maximum optimale  $I^*$ est obtenue pour des puissances de lampes {\it
+    strictement}  comprises entre 0 et 1 ($0 < p_j < 1$ pour $j=1, \ldots, m$). Pour combien de tronçons la déviation maximum optimale $I^*$ est-elle atteinte?
+
+
+
+
+
+  \item On dispose des points $(x_i, y_i)$ expérimentaux suivants: $(0, 0), (1, 3), (2, 4)$ et $(4, 2)$. On cherche l'équation de la
+    droite $y=ax+b$ qui minimise la mesure d'erreur
+
+    $$\max_i | (ax_i+b)-y_i |.$$
+
+    Formulez ce problème comme un problème d'optimisation linéaire. Soit
+    $$z_* = \min_{a, b} \max_i|(ax_i+b)-y_i|,$$ pour combien de points
+    $(x_i, y_i)$ l'égalité
+    $z_*= | (ax_i+b)-y_i |$ est-elle obtenue? Considérons la généralisation de ce problème à $m$ points $(x_i, y_i)$ et à un polynôme $p(x)$ de degré $n$. On
+    cherche à minimiser la mesure d'erreur
+
+    $$\max_i | p(x_i)-y_i |.$$
+
+    Soit $z_*$ l'objectif optimal de ce problème. Discutez le nombre de points $(x_i, y_i)$ pour lesquels $z_*= | p(x_i)-y_i|$. Supposons que ce problème
+    possède plusieurs solutions. Parmi l'ensemble des solutions du problème nous cherchons celle pour laquelle la quantité
+
+    $$\sum_i | (ax_i+b)-y_i |$$
+
+    est minimum. Comment formuler ce problème comme un problème d'optimisation linéaire?
+
+
+
+
+  \item  Soit $\| \cdot \|_{\infty}$ la norme du maximum ($\| x \|_{\infty}=\max_i |x_i|$).
+    Soit $A \in \R^{100 \times m}$  et
+    $b
+    \in
+    \R^{100}$. Le nombre de colonnes de $A$ n'est pas connu mais on sait que le problème
+    d'optimisation
+    $$\min_{x} \|Ax-b\|_{\infty}$$
+    possède une solution unique  $x^* \in \R^n$ dont  le
+    vecteur des résidus correspondant $Ax^*-b$ est représenté plus bas. Au vu de ce graphique, que peut-on en
+    déduire pour
+    $m$? Justifiez votre réponse en détaillant votre raisonnement.
+
+    \begin{center}
+      \includegraphics[scale=0.3]{residus.jpg}
+    \end{center}
+
+  \item Vrai ou faux? Justifiez vos choix par quelques lignes, un contre-exemple ou un dessin. Soyez assez précis pour convaincre
+    que vous ne devinez pas la réponse mais ne fournissez toutefois pas une justification formelle et détaillée.
+
+    \begin{enumerate}
+
+% polyhedron
+
+      \item L'union de deux polyèdres est un polyèdre.
+
+%\item The empty set is a polyhedron.
+
+%extreme points
+
+      \item Tout polyèdre $P$ peut être écrit sous forme géométrique $P=\{ {\bf x} \in {\bf R}^n: \bf A
+      \bf x\geq \bf b\}$.
+
+    \item Tout polyèdre $P$ peut être écrit sous forme standard $P=\{
+        {\bf x} \in {\bf R}^n: \bf A \bf x= \bf b, \bf x \geq 0\}$.
+
+
+% \item L'ensemble $\{(x,y,z):x^2+y^2+z^2\leq 1\}$ est un polyèdre.
+
+%\item A polyhedron in standard form always has an extreme point.
+
+%\item A non-empty bounded polyhedra has at least one
+%non-degenerate vertex.
+
+%\item A point in a polyhedron in standard form can be expressed as
+%a convex combination of the polyhedron vertices.
+
+%\item Let $x_0$ and $x_1$ be two vertices of a polyhedron in ${\bf
+%R}^n$ and let the polyhedron be defined by $m$ linear
+%inequalities. Then here is a path from $x_0$ to $x_1$ along edges
+%of the polyhedron that passes through at most $m^m$ edges.
+
+%\item If there exists a vector $\bf q \neq \bf 0$ for which $\bf A
+%\bf q=\bf 0$, then the polyhedron $\{\bf x: \bf A \bf x\geq \bf
+%b\}$ doesn't have any vertex.
+
+%\item Suppose that the polyhedron $\{{\bf x}: \bf A \bf x\geq \bf
+%b\}$  is non-empty and bounded, then $\bf x = \bf 0$ is the only
+%vector for which $\bf A \bf x = \bf 0$.
+
+% solutions
+
+      \item L'ensemble des solutions optimales d'un problème d'optimisation linéaire est un polyèdre.
+
+%Consider the set $Q$ of optimal solutions to $\min \{ {\bf c}'
+%{\bf x}: {\bf A} {\bf x} \geq {\bf b}, {\bf x} \in {\bf R}^n\}$.
+%The set $Q$ is a polyhedron and its extreme points are extreme
+%points of the polyhedron $\{{\bf x} \in {\bf R}^n: \bf A \bf x
+%\geq \bf b\}$.
+
+%\item A linear optimization problem may have exactly two optimal
+%solutions.
+
+
+%\item At an optimal solution of a linear optimization problem in
+%${\bf R}^n$ there are $n$ active constraints.
+
+      \item En toute solution optimale d'un problème d'optimisation linéaire de
+        $n$ variables il y a au moins $n$  contraintes actives.
+
+
+%\item Let $\bf x$ be a basic feasible solution associated with
+%some basic matrix. If $\bf x$ is the unique optimal solution, then
+%the reduced cost of every nonbasic variable is positive.
+
+% simplex
+
+
+
+
+%\item If a linear optimization problem has an unbounded optimal
+%cost, then its dual is infeasible.
+
+
+%\item If a linear optimization problem is infeasible, then its
+%dual has unbounded optimal cost.
+
+
+%\item L'optimisation linéaire permet de faire une régression linéaire minimisant la norme $||\cdot||_\infty$ des résidus.
+
+
+
+
+    \end{enumerate}
+
+
+
+
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+
+
+%******************************************************************************
+
+
+
+\section{Méthode du simplexe}
+
+
+
+\begin{enumerate}
+
+
+
+
+
+  \item Soit le problème d'optimisation
+
+    $
+    \begin{array}{lrcr}
+      \mini & -2x_1 - x_2 \\
+      & x_1 - x_2 & \leq & 2\\
+      & x_1 +  x_2 & \leq & 6\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    Convertissez ce problème sous forme standard et trouvez un sommet pour lequel $x_1 =x_2=0$. Résolvez le problème au moyen de la méthode
+    du simplexe. Tracez une représentation graphique en terme des variables $x_1, x_2$ et indiquez le chemin suivi par la méthode.
+
+
+
+  \item Considérez le problème
+
+
+
+    $
+    \begin{array}{llcr}
+      \mini & 20 x_1+\alpha x_2+12 x_3\\
+      & x_1  & \leq & 400\\
+      &2x_1+\beta x_2+x_3 & \leq & 1000\\
+      &2x_1+\gamma x_2+ 3x_3 & \leq & 1600\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Proposez, si possible, des valeurs pour $\alpha, \beta$ et $\gamma$ pour lesquelles:
+
+    \begin{enumerate}
+
+      \item Le coût optimal est fini et la solution optimale est unique.
+
+      \item Le coût optimal est fini et il y a une infinité de solutions optimales.
+
+      \item Le coût optimal est non borné (trouvez une paramétrisation de valeurs de $x$ parmi lesquelles se trouvent des solutions de coûts
+        arbitrairement faibles).
+
+      \item Le poly\`edre possède un sommet dégénéré.
+
+
+
+
+    \end{enumerate}
+
+
+
+
+
+
+
+  \item
+    Résoudre par l'algorithme du simplexe les problèmes
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 2x_1+3x_2\\
+      & x_1+2x_2 & \leq & 4\\
+      & x_1+x_2 & = & 3\\
+      & x_1, x_2& \geq & 0
+    \end{array}
+    $
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 20 x_1+16x_2+12 x_3\\
+      & x_1  & \leq & 400\\
+      &2x_1+x_2+x_3 & \leq & 1000\\
+      &2x_1+2x_2+ 3x_3 & \leq & 1600\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 4x_1+3x_2+6x_3\\
+      & 3x_1+x_2+3x_3 & \leq & 30\\
+      & 2x_1+2x_2+3x_3 & \leq & 40\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & -x_1+4x_2\\
+      & -3x_1+4x_2 & \leq & 6\\
+      & x_1+2x_2 & \leq & 4\\
+      & x_2& \geq & -3
+    \end{array}
+    $
+
+
+
+
+
+
+
+
+  \item Nous reprenons un des problèmes précédents. Un étudiant dispose de 100 heures de travail pour
+    étudier les examens A, B et C. Il pense gagner par heure de travail sur chaque cours 1/5 de points pour
+    le cours A, 2/5 de points pour le cours B et 3/5 pour le cours C. Chaque examen est coté sur 20. Les
+    exercices de ces cours comptent pour la moitié de la cote finale. Ses résultats pour les exercices lui
+    ont été communiqués. Il a obtenu 12/20 pour A, 12.5/20 pour B et 13.4/20 pour C.  L'étudiant doit obtenir au minimum une cote globale de 10/20 pour chaque
+    cours. Tous les cours ont la même pondération et l'étudiant désire obtenir la   moyenne la plus élevée possible.
+
+    Formulez ce problème comme un problème d'optimisation linéaire  et résolvez-le. Vous pouvez utiliser le fait que l'étudiant a avantage à utiliser la
+    totalité des 100 heures de travail. L'étudiant obtiendra-t-il une distinction?
+
+
+
+
+
+  \item Une société produit des biens A, B et C. La production des biens nécessite l'utilisation de 4 machines. Les temps de
+    production et les profits générés sont repris dans le tableau\\
+
+    $
+    \begin{array}{l|llll|l}
+      & 1 & 2 & 3 & 4 & \mbox{profit}\\
+      \hline
+      A & 1 & 3 & 1 & 2 & 6\\
+      B & 6 & 1 & 3 & 3 & 6\\
+      C & 3 & 3 & 2 & 4 & 6
+    \end{array}
+    $
+    \\
+
+    Si les temps de production disponibles sur les machines 1, 2, 3 et 4  sont de 84, 42, 21 et 42,
+    déterminez la quantité de biens à produire pour maximiser le profit.
+
+
+
+
+
+
+  \item Résoudre par la méthode du simplexe en utilisant la règle de Bland
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 10 x_1-57 x_2-9x_3-24x_4\\
+      & 0.5x_1-5.5x_2-2.5x_3+9x_4 & \leq & 0\\
+      & 0.5x_1-1.5x_2-0.5x_3+x_4 & \leq & 0\\
+      & x_1 & \leq &1\\
+      & x_1, x_2, x_3, x_4 & \geq & 0
+    \end{array}
+    $
+
+
+  \item Proposez une méthode de recherche d'un sommet du polyhèdre
+
+    $
+    \begin{array}{lrcr}
+      & 2x_1-3x_2 +2x_3 & \geq & 3\\
+      & -x_1+x_2 +x_3 & \geq & 5\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+  \item  Considérez le problème d'optimisation
+
+    $
+    \begin{array}{llcr}
+      \mini & 20 x_1+\alpha x_2+12 x_3\\
+      & x_1  & \leq & 4\\
+      &2x_1 - x_2+x_3 & \leq & 10\\
+      &2x_1+\beta x_2+ 3x_3 & \leq & 16\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+
+    Trouvez une solution optimale au moyen de l'algorithme du simplexe lorsque $\alpha=-2$ et $\beta =1$. Proposez des
+    valeurs pour
+    $\alpha$ et $\beta$  pour lesquelles le coût optimal est non borné et proposez dans ce cas une solution pour laquelle le coût
+    optimal est inférieur à -1000.
+
+
+
+
+
+  \item  Considérez le problème d'optimisation
+
+    $
+    \begin{array}{llcr}
+      \maxi & \alpha x_1+16x_2+12 x_3\\
+      & x_1  & \leq & 400\\
+      &2x_1+x_2+x_3 & \leq & 1000\\
+      &2x_1+2x_2+ 3x_3 & \leq & 1600\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Trouvez une solution optimale au moyen de l'algorithme du simplexe lorsque $\alpha=20$.  Existe-t-il une valeur de $\alpha$ pour laquelle le coût optimal
+    est non borné? Si oui,  proposez une solution pour laquelle le coût  est supérieur à 10000. Si non, justifiez votre réponse.
+
+
+
+
+
+\end{enumerate}
+
+
+
+
+
+
+\newpage
+
+
+
+
+
+%******************************************************************************
+
+
+
+\section{Dualité I: formulation, relations d'exclusion, solution}
+
+
+{\bf Forme géométrique}
+
+Problème primal
+
+$
+\begin{array}{lrcr}
+  \mini & c^T x\\
+  & A x & \geq &  b\\
+  & x   & \geq & 0
+\end{array}
+$
+
+Problème dual
+
+$
+\begin{array}{lrcr}
+  \maxi & b^Ty\\
+  & A^T y & \leq &  c\\
+  & y   & \geq & 0
+\end{array}
+$\\
+
+
+{\bf Forme standard}
+
+
+
+Problème primal
+
+$
+\begin{array}{lrcr}
+  \mini & c^T x\\
+  & A x & = &  b\\
+  & x   & \geq & 0
+\end{array}
+$
+
+
+
+Problème dual
+
+
+$
+\begin{array}{lrcr}
+  \maxi & b^T y\\
+  & A^T y & \leq &  c
+\end{array}
+$
+
+
+\newpage
+
+
+
+\begin{enumerate}
+
+  \item \label{e5.1} Trouvez le dual du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 3x_1-9x_2\\
+      & 2x_1-x_2+x_3 & \geq & 3\\
+      & x_1-x_2 -3x_3 & \geq & 2\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $
+      \begin{array}{llcr}
+        \maxi & 3y_1 + 2y_2\\
+        & 2y_1 + y_2 & \leq & 3\\
+        & -y_1 - y_2 & \leq & -9\\
+        & y_1 - 3y_2 & \leq & 0\\
+        & y & \geq & 0
+      \end{array}
+      $
+    \end{solution}
+
+
+  \item Trouvez le dual du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 3x_1-9x_2\\
+      & 4x_1-x_2+x_3 & = & 3\\
+      & x_1-x_2 -6x_3 & \geq & 2\\
+      & x_1-4x_2 -6x_3 & \leq & 8\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $
+      \begin{array}{lrcr}
+        \maxi & 3y_1 + 2y_2 + 8y_3\\
+        & 4y_1 + y_2 + y_3 & \leq & 3\\
+        & -y_1 + -y_2 -4y_3 & \leq & 2\\
+        & y_1 -6y_2 -6y_3 & = & 0\\
+        & y_2 & \geq & 0\\
+        & y_3 & \leq & 0
+
+      \end{array}
+      $
+    \end{solution}
+
+
+  \item Trouvez le dual du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & c^T x\\
+      & a_1^T x& = & b_1\\
+      & a_2^T  x & \geq & b_2\\
+      & a_3^T x & \leq & b_3\\
+      & x& \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $
+      \begin{array}{llcr}
+        \maxi & b^T x\\
+        & Ay & \leq & c\\
+        & y_2 & \geq & 0\\
+        & y_3 & \leq & 0
+      \end{array}
+      $
+
+      où $A = \begin{pmatrix}a_1 & a_2 & a_3\end{pmatrix}$
+    \end{solution}
+
+  \item Trouvez le dual du problème de trois variables
+
+    $
+    \begin{array}{llcr}
+      \mini & c^T x\\
+      & a^T x& = & b\\
+      & x_1 &  & \mbox{libre}\\
+      & x_2 & \geq & 0\\
+      & x_3 & \leq & 0
+    \end{array}
+    $
+
+
+  \item Trouvez une formulation duale du  problème
+
+    $
+    \begin{array}{lrcr}
+      \mini & c^T x\\
+      & A x & = &  b\\
+      & x   & \geq & a
+    \end{array}
+    $
+
+    où $a \geq 0$.
+
+    \begin{solution}
+      L'astuce ici est de prendre des nouvelles variables pour chacune des
+      (in)équations.
+      On réécrit donc le problème d'optimisation linéaire comme suit
+
+      $
+      \begin{array}{lrcr}
+        \mini & c^T x\\
+        & A x & = &  b\\
+        & I x   & \geq & a\\
+        & x & & \mbox{ libre}
+      \end{array}
+      $
+
+      où le dual appairait plus clairement
+
+      $
+      \begin{array}{lrcr}
+        \maxi & b^Ty_1+a^Ty_2\\
+        & Ay_1 + Iy_2 & = & c\\
+        & y_2 & \geq & 0.
+      \end{array}
+      $
+
+      Si $x$ était un vecteur, $y_1$ et $y_2$ seront des vecteurs également.
+
+      On peut s'en sortir avec moins de variables $y_i$ en faisant
+      le changement de variable $x' + a = x$, d'où
+
+      $
+      \begin{array}{lrcr}
+        \mini & c^T x' + c^Ta\\
+        & A x' & = &  b - Aa\\
+        & x'   & \geq & 0.
+      \end{array}
+      $
+
+      On peut retirer $c^Ta$ car c'est une constante.
+      Le dual est alors
+
+      $
+      \begin{array}{lrcr}
+        \maxi & (b-Aa)^Ty\\
+        & A^Ty & \leq & c
+      \end{array}
+      $
+
+      \textbf{TODO} comment utilise-t-on le fait que $a \geq 0$ ?
+
+      \textbf{TODO} ça a du sens de prendre le dual si on a fait un changement
+      de variable ?
+    \end{solution}
+
+  \item Trouvez une formulation duale du  problème
+
+    $
+    \begin{array}{lrcrcrcr}
+      \mini & c^T x\\
+      & b_1 & \leq & A x & \leq &  b_2\\
+      & x   & \geq & 0
+    \end{array}
+    $
+
+
+  \item Comment résoudre le problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 50x_1+25x_2\\
+      & x_1+3x_2 & \geq & 8\\
+      & 3x_1+4x_2 & \geq & 19\\
+      & 3x_1+x_2 & \geq & 7\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    sans effectuer de phase d'initialisation?
+
+
+
+
+  \item Soit le problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 2x_1-x_2\\
+      & 2x_1-x_2 -x_3 & \geq & 3\\
+      & x_1-x_2 +x_3 & \geq & 2\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Quel est le dual de ce problème?
+    Proposez des bornes supérieures et inférieures aussi précises que possible pour l'objectif optimal du primal.
+    Faites de même pour le dual.
+
+    \begin{solution}
+      $
+      \begin{array}{llcr}
+        \maxi & 3y_1 + 2y_2\\
+        & 2y_1 + y_2 & \leq & 2\\
+        & -y_1 - y_2 & \leq & -1\\
+        & -y_1 + y_2 & \leq & 0\\
+        & y_1, y_2 & \geq & 0
+      \end{array}
+      $
+
+      Pour l'objectif du primal, on sait que que $z^* \geq 3$ car,
+      par la première inéquation, on a $z = 2x_1 - x_2 \geq 3 + x_3$ et on
+      a aussi par la dernière inéquation $x_3 \geq 0$.
+      De plus, on remarque que $(2, 0, 0)$ est une solution admissible donnant
+      $z = 2\cdot 2 - 0 = 4$ donc $3 \leq z^* \leq 4$.
+
+      Pour l'objectif du dual, on a, par la première inéquation du dual,
+      $$ z = 3y_1 + 2y_2 \leq 4y_1 + 2y_2 \leq 4 $$
+      Comme $(1, 0)$ est une solution admissible du dual donnant $w = 3$,
+      on a $3 \leq w^* \leq 4$.
+
+      Pour les petits curieux, la solution optimal vaut $10/3$ et correspond
+      à $(y_1, y_2) = (2/3, 2/3)$ et $(x_1, x_2, x_3) = (5/3, 0, 1/3)$.
+    \end{solution}
+
+  \item L'objectif optimal du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 7x_1+10x_2\\
+      & 2x_1+3x_2 & \geq & 10\\
+      & 3x_1+4x_2 & \geq & 19\\
+      & x_1+2x_2 & \geq & 9\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    est égal à $z_*=47$. La solution $(0, 2, 1)$ est elle une solution admissible optimale du dual?
+
+
+
+
+  \item Soit le problème suivant
+
+    $
+    \begin{array}{llcr}
+      \mini & 2x_1+9x_2+3x_3\\
+      & -2x_1+2x_2 +x_3 & \geq & 1\\
+      & x_1+4x_2 -x_3 & \geq & 1\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Trouvez le dual de ce problème et résolvez-le graphiquement. Utilisez les relations d'exclusion pour obtenir une solution du primal.
+
+
+  \item Soit le problème suivant
+
+    $
+    \begin{array}{llcr}
+      \mini & 5x_1-3x_2\\
+      & 2x_1-x_2 +4x_3 & \leq & 4\\
+      & x_1+x_2 +2x_3 & \leq & 5\\
+      & 2x_1-x_2 +x_3 & \geq & 1\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Le sommet associé à la base $(x_1, x_2, x_3)$ est un sommet optimal de ce problème. Quel est le dual de ce problème? Trouvez une solution du problème dual.
+
+
+  \item  Jacques choisit un nombre de 1 à $m$, son adversaire, Yvan, choisit indépendamment
+    de Jacques, un nombre de 1 à $n$. Si Jacques choisit $i$ et Yvan $j$, Jacques reçoit
+    $a_{ij}$ d'Yvan. Jacques et Yvan appliquent des stratégies probabilistes; Jacques
+    choisit
+    $i$ avec une probabilité
+    $x_i$  ($x_i \geq 0$ et $\sum_1^m x_i =1$) et Yvan choisit $j$ avec une probabilité
+    $y_j$ ($y_j \geq 0$ et $\sum_1^n y_i =1$).
+
+    \begin{enumerate}
+      \item Soit $x$ et $y$ les stratégies de Jacques et d'Yvan. Quelle est le gain moyen de
+        Jacques par partie?
+      \item Jacques divulgue la stratégie probabiliste qu'il applique. Quelle stratégie Yvan
+        doit-il appliquer pour maximiser son gain? Formulez ce problème comme un problème
+        d'optimisation.
+      \item \label{l1} Nous considérons maintenant un jeu précis. Jacques et Yvan choisissent tout les deux un nombre
+        de  1 à 3. Le joueur ayant choisi le nombre le plus élevé reçoit 1 EUR de son adversaire, sauf si ce
+        nombre est exactement d'une unité supérieur au nombre choisi par l'adversaire, auquel cas,
+        il donne 3 EUR à son adversaire. Lorsque les nombres choisis sont égaux, les joueurs font
+        match nul et personne ne gagne rien. Jacques annonce sa stratégie probabiliste: il joue 1,
+        2 et 3 avec les probabilités $0$,
+        $1/2$ et $1/2$. Quelle stratégie Yvan doit-il choisir pour maximiser son gain et quel est
+        son gain moyen par partie? La stratégie optimale pour Yvan est-elle unique?
+      \item \label{t1} On considère le jeu décrit en \ref{l1}. Jacques sait que s'il joue suivant la stratégie
+        probabilitiste
+        $x$; Yvan choisira la stratégie probabiliste $y$ qui maximise son gain moyen. Sachant cela, quelle stratégie
+        Jacques doit-il adopter pour maximiser son gain moyen? Ecrivez ce
+        problème sous forme d'un problème d'optimisation linéaire.
+
+      \item Résolvez le problème formulé en \ref{t1}. Quel est le gain moyen de Jacques?
+
+    \end{enumerate}
+
+
+
+  \item Soit le problème d'optimisation linéaire suivant:
+
+    $
+    \begin{array}{rrllll}
+      \mini & \sum_{i=1}^n c_i x_i& & \\
+      &\sum_{i=1}^n a_i x_i&=&b  \\
+      &x_i  & \geq & 0 & i=1, \ldots, n
+    \end{array}
+    $
+
+
+
+% polyhedron
+
+    Remarquez que ce problème ne possède qu'une seule contrainte.
+
+    \begin{enumerate}
+      \item  En utilisant un argument élémentaire, trouvez une condition simple d'existence d'une solution admissible.
+
+
+      \item  En  supposant que le coût optimal est fini, proposez une méthode d'obtention d'une solution optimale et justifiez votre réponse. (Indice: pour répondre à cette question vous pouvez si vous le désirez faire appel au théorème fondamental de l'optimisation linéaire.)
+
+      \item Sous quelles conditions le problème possède-t-il plusieurs solutions?
+
+    \end{enumerate}
+
+
+
+  \item Soit le problème d'optimisation
+    \begin{eqnarray*}
+      \max_{x_i} & x_1+ x_2+ x_3 &  \\
+      &2 x_1 + x_3  &\leq 2 \\
+      &2 x_2 + x_3  &\leq 2 \\
+      &x_i &\geq 0
+    \end{eqnarray*}
+
+  \begin{enumerate} \item Enumérez les sommets de ce polyèdre. L'un des
+      ces sommets est-il optimal? \item Quelles sont (toutes) les
+      solutions optimales? \item Que deviennent ces solutions optimales si
+      on exige que les solutions soient entières? \item Ecrivez le dual de
+        ce problème, résolvez-le, et faites le lien avec la solution du
+        primal.
+    \end{enumerate}
+
+
+  \item Soit le problème d'optimisation
+    \begin{eqnarray*}
+      \min_{x_i} & 3 x_1- x_2+ x_3 &  \\
+      &-x_1 -x_2+ x_3  &\ge 1 \\
+      &x_1- x_2 +\alpha x_3  &= 2 \\
+      &x_1, x_2 &\ge 0
+    \end{eqnarray*}
+    où  $0.25\le\alpha\le4$ est un paramètre.
+    \begin{enumerate}
+      \item Quel est le dual de ce problème?
+      \item Résolvez le dual en fonction
+        du paramètre $\alpha$ par une méthode graphique.
+      \item Déduisez les solutions du primal.
+    \end{enumerate}
+
+
+
+
+
+
+
+
+
+  \item Une entreprise vend 20 tonnes de sa production à répartir
+    entre 5 acheteurs (voir les prix payés dans le tableau plus bas).
+    Pour des raisons de logistique:
+    \begin{itemize}
+      \item l'acheteur A a un accord privilégié et achète au moins 2
+      tonnes, dans toutes les circonstances. \item l'acheteur B achète
+      au plus 2 tonnes. \item l'acheteur C achète au moins 2 tonnes ou
+      alors n'achète rien. \item l'acheteur D achète au plus 5 tonnes.
+      \item l'acheteur E achète une quantité qui ne diffère pas de plus
+        de 3 tonnes avec la quantité achetée par D.
+    \end{itemize}
+
+    Les prix payés par les différents acheteurs sont, en milliers
+    d'Euros par tonne:
+    \begin{center}
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline %\vspace{2pt}
+        Acheteur & A & B & C & D & E\\
+        \hline
+        Prix payé & 20 & 50 & 20 & 25 & 15 \\
+        \hline
+      \end{tabular}
+    \end{center}
+
+    \begin{enumerate}
+      \item  Formulez ce problème comme un problème d'optimisation. Ce
+        problème est-il linéaire ? Sinon, reformulez-le comme un problème
+        d'optimisation linéaire.
+%%\\(b) Sans calculer la solution optimale, que pouvez-vous dire du nombre
+%%de contraintes serrées à l'optimal ? Cela vous permet-il d'obtenir
+%%des informations au sujet de la solution optimale ? Si oui,
+%%lesquelles ? Sinon, pourquoi ? Justifiez votre réponse.
+
+      \item %%Supposez que la résolution du problème formulé en (a) vous fournisse un
+%%objectif optimal de valeur $z^*$.
+        Formulez le problème qui consisterait à maximiser la quantité
+        vendue à l'acheteur C, parmi l'ensemble des solutions optimales du
+        problème formulé en (a).
+      \item  Résolvez le problème formulé en (a), en considérant que
+        l'acheteur C n'achète rien.
+
+    \end{enumerate}
+
+
+  \item Vrai ou faux? Justifiez vos choix par quelques lignes, un contre-exemple ou un dessin. Soyez assez précis pour convaincre
+    que vous ne devinez pas la réponse mais ne fournissez toutefois pas une justification formelle et détaillée.
+
+    \begin{enumerate}
+
+
+
+% duality
+
+      \item Le dual d'un problème d'optimisation linéaire existe toujours.
+
+%\item Un problème d'optimisation linéaire  possède exactement autant de variables que son dual.
+
+      \item Si un problème d'optimisation linéaire possède une solution admissible, alors son dual  également et les coûts optimaux sont égaux.
+
+      \item Si un problème d'optimisation linéaire admet un coût optimal fini, alors son dual également.
+
+%\item If a linear optimization problem has an unbounded optimal
+%cost, then its dual is infeasible.
+
+
+%\item If a linear optimization problem is infeasible, then its
+%dual has unbounded optimal cost.
+
+
+%\item L'optimisation linéaire permet de faire une régression linéaire minimisant la norme $||\cdot||_\infty$ des résidus.
+
+
+
+
+    \end{enumerate}
+
+
+
+    \newpage
+
+
+
+
+
+\end{enumerate}
+
+
+
+%*******************************
+
+
+\section{Dualit\'e II: interprétation, analyse postoptimale}
+
+\begin{enumerate}
+
+  \item On considère le problème diététique suivant:
+    Il s'agit d'acheter à un coût minimum des fruits, des légumes et
+    de la viande afin d'obtenir suffisamment de vitamines A et B.
+    Pour une alimentation saine, on considère qu'il faut consommer
+    11 unités de vitamines A et 4 unités de vitamines B. Les valeurs
+    nutritives des aliments (par unité de poids) sont données dans
+    le tableau ci-dessous: \\
+
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      & Légumes & Fruits & Viande \\
+      \hline
+      Vitamine A & 1 & 5 & 1 \\
+      \hline
+      Vitamine B & 2 & 1 & 1 \\
+      \hline
+    \end{tabular}\\
+
+    Les coûts par unité de poids des aliments sont de 3 (légumes),
+    2 (fruits) et 10 (viande). Modélisez ce problème et résolvez-le.
+
+    On considère ensuite le problème de l'entreprise pharmaceutique qui synthétise
+    artificiellement de la vitamine A et B et qui vend la vitamine pure au diététicien.  L'entreprise cherche à déterminer les prix
+    de vente des vitamines qui lui assurent d'emporter tout le marché tout en maximisant son profit. Modélisez ce problème
+    et résolvez-le. Laquelle des deux vitamines est la plus chère?
+
+    Contre toute attente, l'entreprise décide de mettre de la vitamine A et B sur le marché à des prix de 1 et 0.5. Comment le
+    diététicien compose-t-il le mélange?
+
+
+  \item On considère le problème suivant:
+
+    $
+    \begin{array}{llcr}
+      \maxi & x_1+2x_2+ x_3+x_4\\
+      & 2x_1+x_2+5x_3+x_4 & \leq & 8 + \delta\\
+      & 2x_1+ 2x_2+ 4x_4 & \leq & 12\\
+      & 3x_1+ x_2+ 2x_3 & \leq & 18\\
+      & x_1, x_2, x_3, x_4 & \geq & 0
+    \end{array}
+    $
+
+    La solution associée à la base $(x_2, x_3, x_7)$ est optimale pour $\delta = 0$ ($x_7$ est la variable d'écart de la 3ème contrainte); la solution
+    correspondante est donnée par $(x_1, x_2, x_3, x_4)=(0, 6, 0.4, 0)$. Pour quelles valeurs de
+    $\delta$ la base reste-t-elle optimale?
+
+
+
+  \item On considère le problème suivant:
+
+    $
+    \begin{array}{llcr}
+      \maxi & 3x_1+13x_2+13x_3\\
+      & x_1+x_2 & \leq & 7\\
+      & x_1+ 3x_2+ 2x_3 & \leq & 15\\
+      &  2x_2+ 3x_3 & \leq & 9\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Une base optimale est donnée par $(x_1, x_2, x_3)$. Pour cette base on obtient
+
+    $$
+    B^{-1}=
+    \left[
+      \begin{array}{ccc}
+        5/2 & -3/2 & 1\\
+        -3/2 & 3/2 & -1\\
+        1 & -1 & 1
+      \end{array}
+    \right]
+    $$
+
+    \begin{enumerate}
+      \item Donnez une solution du primal et une solution du dual.
+      \item Comment évolue l'objectif optimal lorsque le terme de droite de la deuxième contrainte décroît?
+      \item De combien d'unités le terme de droite de la première contrainte peut-il varier sans modifier la base optimale?
+      \item De combien d'unités le coefficient objectif associé à $x_1$ peut-il varier sans modifier la base
+        optimale?
+      \item La base resterait-elle optimale si on ajoutait une nouvelle variable $x_4$ de coefficient objectif $5$ et de vecteur de contrainte $(2, -1, 5)$?
+      \item Trouvez une solution du problème obtenu en ajoutant la contrainte $x_1-x_2+2x_3 \leq 10$.
+
+    \end{enumerate}
+
+
+  \item Les joueurs $A$ et $B$ choisissent indépendamment l'un de l'autre un nombre entre 1 et 100. L'issue du jeu est nulle si les
+    deux joueurs choisissent le même nombre. Sinon, le joueur qui a choisi le plus petit nombre gagne; sauf si ce nombre est d'une unité
+    inférieur à celui choisi par l'autre joueur, auquel cas l'autre joueur gagne. Montrez comment la recherche de la stratégie aléatoire
+    optimale peut-être exprimée comme un problème d'optimisation linéaire.
+
+
+  \item Une firme textile produit trois biens en quantités $x_1, x_2, x_3$. Le planning de production pour le prochain mois satisfait
+    les contraintes suivantes
+
+    $
+    \begin{array}{llcr}
+      & x_1+2x_2 +2x_3 & \leq & 12\\
+      & 2x_1+4x_2 +x_3 & \leq & 10\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    La première contrainte résulte de limitations techniques. La deuxième contrainte exprime une limitation due à la quantité de coton
+    disponible sur le marché. Les profits associés aux produits $x_1, x_2, x_3$
+    sont de 2, 3 et 3. Comment évolue le profit  lorsque la quantité de coton disponible passe de 10 à $10+ \epsilon$ pour
+    $\epsilon >0$? et lorsque elle passe de 10 à 12? Remplacez la deuxième
+    contrainte par $2x_1+4x_2 +x_3 \leq c$ et utilisez un argument géométrique pour trouver l'évolution du profit en fonction de $c$.
+
+
+
+
+
+
+
+  \item  Une université belge dispose d'au plus 5000 places pour des étudiants. Elle recrute des étudiants belges et
+    des étudiants étrangers. L'université compte 440 professeurs. L'encadrement est d'au moins un professeur pour 12 belges et d'un professeur pour 10
+    étrangers. L'université possède 2800 places dans des kots universitaires, elle garantit  qu'au moins 40 \% des étudiants belges et 80 \% des étudiants
+    étrangers trouveront place  dans un kot universitaire. L'université reçoit des subsides de 2000 EUR par étudiant belge et un minerval de 3000 EUR par
+    étudiant étranger. On suppose que l'université cherche à maximiser sont profit.  On vous demande de répondre aux questions suivantes.
+
+    \begin{enumerate}
+      \item  Formulez le problème de la maximisation du profit comme un problème d'optimisation linéaire. Résolvez le problème.
+
+      \item Trouvez la formulation  duale de ce problème. Soit $y_*$ une solution optimale du dual. Proposez une interprétation pour les
+        différentes composantes de
+        $y_*$.
+
+      \item   L'université a-t-elle avantage a recruter des professeurs supplémentaires pour 10000 EUR par professeur et par an?
+
+      \item L'université engage des professeurs supplémentaires à 8000 EUR par an. Combien de professeurs a-t-elle avantage \`a engager?
+
+    \end{enumerate}
+
+
+  \item  Une firme d\'esire produire un nouvel alliage comportant au minimum
+    30 $\%$ de cuivre et 20 $\%$ de zinc. La firme dispose des alliages suivants:
+
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      alliage &  $\%$ de cuivre & $\%$ de zinc & $\%$ autres m\'etaux & prix (Euro/kilo) \\
+      \hline
+      1 & 66 & 22 & 12 & 33 \\
+      \hline
+      2 & 20 & 10 & 70 & 20 \\
+      \hline
+      3 & 45 & 45 & 10 & 30 \\
+      \hline
+      4 & 20 & 50  & 30 & 40\\
+      \hline
+      5 & 0 & 0 & 100 & 0 \\
+      \hline
+    \end{tabular}
+
+
+    Remarquez que la firme dispose gratuitement d'un alliage ne comportant ni cuivre ni zinc.
+    Le but est de trouver les proportions de ces alliages qui doivent
+    \^etre m\'elang\'ees  pour produire le nouvel alliage \`a un co\^ut minimum. On vous demande de r\'epondre aux questions suivantes.
+
+    \begin{enumerate}
+      \item  Formulez le probl\`eme de la minimisation du co\^ut comme un probl\`eme
+        d'optimisation lin\'eaire.
+
+      \item Trouvez la formulation duale de ce probl\`eme. Soit $y_*$ une solution
+        optimale du dual. Proposez une interpr\'etation pour les
+        diff\'erentes composantes de
+        $y_*$. R\'esolvez ce probl\`eme dual et trouvez sa solution $y_*$.
+      \item   On suppose que le pourcentage minimum requis de cuivre augmente l\'eg\`erement
+        (il passe de 30 $\%$ \`a (30+$\delta$) $\%$ avec $\delta$ petit).
+        Comment \'evolue le co\^ut optimal de production du nouvel alliage?
+        Soyez aussi pr\'ecis que possible.
+
+      \item Que vaut le co\^ut optimal de production du probl\`eme initial?
+    \end{enumerate}
+
+
+
+
+  \item  Un épargnant investit 1000 EUR. Il a le choix entre trois investissements A, B et C. Les résultats attendus et
+    garantis pour ces investissements sont les suivants (pour 1 EUR):\\
+
+
+    \begin{tabular}{ccc}
+      & attendu & garanti\\
+      A & 1.4 & 0.9\\
+      B & 1.2 & 1.2\\
+      C & 1.6 & 0.5\\
+    \end{tabular}
+
+    \hspace{10mm}
+
+    L'épargnant a promis d'investir au moins 600 EUR en  B et C. Il souhaite en outre un intérêt global
+    d'au moins
+    $5 \%$ et cherche la répartition de son investissement  qui maximise l'espérance de son gain.
+
+    \begin{enumerate}
+      \item Formulez ce problème comme un problème d'optimisation linéaire et résolvez-le. Pour trouver la
+        solution vous pouvez, si vous le souhaitez, choisir comme solution de départ celle qui consiste à investir 1000
+        EUR dans B.
+      \item L'épargnant choisit d'investir \emph{au plus}   1000 EUR. Formulez ce problème comme un problème
+        d'optimisation linéaire. La solution optimale que vous obtenez pour cette version modifiée est-elle
+        différente de celle obtenue en 1?
+      \item Ecrivez le dual du problème obtenu en 1 et proposez une interprétation pour les variables duales
+        optimales.
+    \end{enumerate}
+
+
+  \item Jacques choisit un nombre de 1 \'a $m$, son adversaire, Yvan,
+    choisit ind\'ependamment de Jacques, un nombre de 1 \`a $n$. Si
+    Jacques choisit $i$ et Yvan $j$, Jacques re\c coit $a_{ij}$ d'Yvan.
+    Jacques et Yvan appliquent des strat\'egies probabilistes; Jacques
+    choisit $i$ avec une probabilit\'e $x_i$  ($x_i \geq 0$ et $\sum_1^m
+    x_i =1$) et Yvan choisit $j$ avec une probabilit\'e $y_j$ ($y_j \geq
+    0$ et $\sum_1^n y_i =1$).
+
+    \begin{enumerate}
+      \item Soit $x$ et $y$ les strat\'egies de Jacques et d'Yvan. Quel
+      est le gain moyen de Jacques par partie? \item Jacques divulgue la
+        strat\'egie probabiliste qu'il applique. Quelle strat\'egie Yvan
+        doit-il appliquer pour maximiser son gain? Formulez ce probl\`eme
+      comme un probl\`eme d'optimisation. \item \label{l1} Nous
+        consid\'erons maintenant un jeu pr\'ecis. Jacques et Yvan
+        choisissent tout les deux un nombre de  1 \`a 3. Le joueur ayant
+        choisi le nombre le plus \'elev\'e re\c coit 1 EUR de son
+        adversaire, sauf si ce nombre est exactement d'une unit\'e
+        sup\'erieur au nombre choisi par l'adversaire, auquel cas, il donne
+        3 EUR \`a son adversaire. Lorsque les nombres choisis sont \'egaux,
+        les joueurs font match nul et personne ne gagne rien. Jacques
+        annonce sa strat\'egie probabiliste: il joue 1, 2 et 3 avec les
+        probabilit\'es $0$, $1/2$ et $1/2$. Quelle strat\'egie Yvan doit-il
+        choisir pour maximiser son gain et quel est son gain moyen par
+      partie? La strat\'egie optimale pour Yvan est-elle unique? \item
+        \label{t1} On consid\`ere le jeu d\'ecrit en \ref{l1}. Jacques sait
+        que s'il joue suivant la strat\'egie probabilitiste $x$; Yvan
+        choisira la strat\'egie probabiliste $y$ qui maximise son gain
+        moyen. Sachant cela, quelle strat\'egie Jacques doit-il adopter pour
+        maximiser son gain moyen? Ecrivez ce probl\`eme sous forme d'un
+        probl\`eme d'optimisation lin\'eaire.
+
+      \item R\'esolvez le probl\`eme formul\'e en
+        \ref{t1}. Quel est le gain moyen de Jacques?
+
+    \end{enumerate}
+
+\end{enumerate}
+
+
+
+\newpage
+
+
+
+
+
+%******************************************************************************
+
+
+
+\section{Optimisation discrète}
+
+
+
+\begin{enumerate}
+
+
+
+
+  \item Considérez le problème d'optimisation en nombres entiers
+
+    $
+    \begin{array}{lrcrcl}
+      \maxi & 5x_1 & +&  x_2\\
+      & -x_1 &+& 2 x_2  & \leq & 4 \\
+      & x_1    & - &    x_2   &  \leq & 1\\
+      &   4x_1& +&  x_2  & \leq & 12 \\
+      &   \multicolumn{3}{r}{x_1, x_2}  & \geq & 0\\
+      &   \multicolumn{3}{r}{x_1, x_2}  & \multicolumn{2}{l}{\mbox{ entiers}}
+    \end{array}
+    $
+
+    Trouvez graphiquement une solution de ce problème. Trouvez graphiquement une solution optimale du problème relaxé. Trouvez la
+    solution entière la plus proche de la solution optimale du problème relaxé. Enumérez toutes le solutions entières obtenues en
+    arrondissant la solution optimale du problème relaxé. Une de ces solutions est-elle optimale?
+
+
+  \item Yves et Muriel désirent partager les principales tâches ménagères  (courses, cuisine, vaisselle et nettoyage)
+    entre eux. Leurs efficacités à la réalisation de ces tâches
+    diffèrent. Yves est rapide pour faire les courses et la vaisselle mais il se fait distancer par Murielle pour la cuisine et le
+    nettoyage.
+
+    $
+    \begin{array}{l|llll}
+      & courses & cuisine & vaisselle & nettoyage\\
+      \hline
+      Yves & 4.5 & 7.8 & 3.6 & 3.1\\
+      Muriel & 4.9 & 7.2 & 4.3 & 2.9
+    \end{array}
+    $
+
+    Le jeune couple  désire partager les tâches de manière équitable (deux tâches par personne) et optimale (temps total minimum). Formulez
+    ce problème comme un problème d'optimisation en nombres entiers. Donnez une relaxation de ce problème. La solution du problème
+    relaxé est-elle entière? Que pouvez-vous en déduire?
+
+
+  \item Vouz désirez choisir un ensemble de cours parmi huit cours $\{1, \ldots,
+    8 \}$ pour vous constituer un programme. Modélisez les contraintes
+    suivantes:
+
+    \begin{enumerate}
+      \item Vous ne pouvez pas choisir plus de 5 cours mais devez en choisir au
+        moins 3.
+      \item Le cours 3 est un prérequis du cours 6 et le cours 2 un prérequis
+        du cours 7.
+      \item Les cours 8 et 6 forment une paire. Vous devez les prendre tous les
+        deux, ou aucun des deux.
+      \item Pour des questions de conflit horaire, vous ne pouvez pas choisir
+        les cours 5 et 2, ni les cours 3 et 6.
+      \item Pour vous conformer aux contraintes de votre programme d'étude vous devez choisir au moins un des cours
+        1, 2, 3 ou au moins deux cours parmi les cours 5, 6, 7, 8.
+    \end{enumerate}
+
+
+  \item Vous désirez trouver les variables $0 \leq x_1, x_2 \leq 1$ qui maximisent la fonction $c^T x$ tout en satisfaisant au
+    moins une  des deux contraintes $x_1 + 2 x_2 \leq 1$  et  $3 x_1 +  x_2 \leq 1$. Formulez ce problème comme un
+    problème d'optimisation mixte.
+
+
+
+  \item Une société a développé deux nouveaux jouets pour la Noël. La production du jouet 1 nécessite des investissements initiaux de
+    50000 EUR et celle du jouet 2 des investissements initiaux de 80000 EUR. Les jouets
+    génèrent un profit de 10 EUR pour le jouet 1 et de 15 EUR pour le jouet 2.  Le jouet 1 est
+    produit à un taux de 50 l'heure et le jouet 2 à un taux de 25 l'heure. On dispose  de 500 heures
+    d'ici Noël. Déterminez le nombre de jouets à produire de manière à maximiser le profit.
+
+
+    Supposons maintenant que la société possède deux usines. Une seule usine sera choisie pour la production. Le
+    jouet 1 est produit à un taux de 50 l'heure dans l'usine 1 et de 40 l'heure dans l'usine 2. Le jouet 2 est produit à un taux de
+    25 l'heure dans les deux usines. Les usines disposent de 500 et 700 heures d'ici Noël.  Le problème consiste à déterminer le
+    nombre de jouets à produire de manière à maximiser le profit.
+
+
+
+
+
+
+
+
+
+
+
+
+  \item Vous disposez de 4 objets de poids respectifs 5, 3, 8 et 7. Les utilités des
+    objets sont de 17, 10, 25 et 7. Vous désirez sélectionner un ensemble d'objets de poids total inférieur  à 12 et dont la somme
+    des utilités est maximale.  Formulez le problème comme un problème d'optimisation en nombres entiers. Trouvez la solution.
+
+
+  \item Vous disposez de 5 objets de poids respectifs 2, 4, 3, 3 et 2. Les
+    utilités des objets sont respectivement de 9, 20, 14, 10 et 6. Vous désirez
+    sélectionner un ensemble d'objets de poids total inférieur  à 10
+    et dont la somme des utilités est maximale.  Formulez le problème
+    comme un problème d'optimisation en nombres entiers. Appliquez l'algorithme ``branch and bound" pour trouver la
+    solution. Justifiez les étapes de l'algorithme.
+
+
+  \item  Considérez l'arbre d'énumération suivant pour un problème d'optimisation en nombres entiers. L'arbre
+    résulte-t-il d'un problème de maximisation ou de minimisation?  Quels sont les noeuds qui doivent encore être analysés? Donnez
+    un intervalle dans lequel se trouve l'optimum. Que pouvez vous dire de la solution optimale?
+
+
+
+
+
+
+
+
+  \item Considérez le problème d'optimisation en nombres entiers
+
+    $
+    \begin{array}{lrcrcl}
+      \maxi & 9x_1 & +&  5 x_2\\
+      & 4 x_1 &+& 9 x_2  & \leq & 35 \\
+      & x_1    &  &       &  \leq & 6\\
+      &   x_1& -&  3x_2  & \geq & 1 \\
+      & 3 x_1    & + & 2x_2   &  \leq & 19\\
+      &   \multicolumn{3}{r}{x_1, x_2}  & \multicolumn{2}{l}{\mbox{ entiers}}
+    \end{array}
+    $
+
+
+    Résolvez le problème graphiquement et algébriquement en utilisant la méthode ``branch and bound".
+
+
+
+  \item Considérez l'arbre d'énumération suivant pour un problème d'optimisation de deux variables entières.
+
+    \begin{enumerate}
+      \item L'arbre résulte-t-il d'un problème de maximisation ou de minimisation?
+      \item \label{r1} Quels sont les
+        noeuds qui doivent encore être analysés?
+      \item \label{r2} Donnez un intervalle dans lequel se trouve
+        l'optimum.
+      \item La fonction objectif est donnée
+        par $3x_1+6x_2$. Cette information vous permet-elle de préciser vos réponses aux sous-questions \ref{r1} et
+        \ref{r2}?
+    \end{enumerate}
+
+
+  \item  Il y a 50 groupes d'étudiants en première candidature FSA. On souhaite affecter un projet par groupe. Il y a 10
+    projets disponibles et chaque projet peut être affecté à au plus 10 groupes. On a demandé à chaque groupe de classer les trois projets qui ont leur
+    préférence. On souhaite affecter à chaque groupe un des projets qu'il a classés et maximiser le nombre de groupes qui recoivent leur premier choix.
+    S'il y a plusieurs affectations qui satisfont cette contrainte, on souhaite, parmi l'ensemble de ces affectations, choisir celle qui maximise le nombre de groupes
+    qui recoivent leur deuxième choix. Vous êtes coordinateur d'année en FSA; proposez une manière de résoudre ce problème.
+
+
+  \item Le Sudoku est un jeu logique présenté sous forme de grille. D'abord publié en 1979, le Sudoku s'est développé au Japon en 1986 avant d'atteindre la popularité internationale en 2005, et ce jusqu'aux colonnes de l'hebdomadaire ``la Salopette" édité par le CI. La grille de jeu est un carré de neuf cases de côté, subdivisé en neuf carrés, appelés régions (voir figure). Quelques chiffres sont disposés dans la grille et le but du jeu est de compléter la grille avec des chiffres  de un à neuf en respectant la règle suivante: chaque ligne, colonne et région ne doit contenir qu'une et une seule fois  les chiffres de un à neuf.
+
+    \begin{enumerate}
+
+      \item Formulez le problème du Sudoku pour une grille quelconque comme un problème  d'optimisation linéaire en nombres entiers.
+
+      \item Une grille de Sudoku peut ne pas avoir de solution. Si une grille ne possède pas de solution, un objectif naturel consiste à compléter  toutes les cases de manière à ce que le nombre total de lignes, colonnes et régions complètes soit aussi élevé que possible (une ligne, colonne ou région est complète si tous les nombres de un à neuf y apparaissent exactement une fois). Formulez ce problème comme un problème d'optimisation linéaire en nombres entiers.
+
+        \begin{center}
+          \includegraphics[scale=0.7]{sudo.jpg}
+        \end{center}
+
+    \end{enumerate}
+
+  \item \textsc{OptiTv} lance un nouveau jeu sur nos écrans.  La
+    dernière épreuve du jeu permet au gagnant de
+    multiplier ses gains.
+
+    Deux rails $A$ et $B$ traversent un plateau de jeu jonché
+    d'obstacles.  Le but du joueur est de maximiser la masse
+    totale
+    de deux billes posées sur les rails qui pourront traverser le plateau.
+    Pour ce faire, il peut décider de retirer
+    certains obstacles du parcours, mais pour chaque obstacle
+    enlevé, une pénalisation de $20$ grammes lui sera retranchée du résultat.
+    Les règles du jeu sont les suivantes:
+    \begin{enumerate}
+      \item Le joueur a à sa disposition des billes de $10$,
+        $20$, $30$, ..., $100$ grammes en quantité suffisante.  Il
+        peut déposer $0$, $1$ ou $2$ billes sur le plateau
+        (maximum une bille par rail), et chaque bille déposée doit
+        traverser de part en part le plateau sous peine de
+        disqualification.
+      \item Pour assurer l'équilibre du plateau, la différence
+        de masse entre les deux billes choisies ne peut pas excéder
+        $20$ grammes. En particulier, si une seule bille traverse le
+        plateau, sa masse ne peut pas être supérieure à $20$
+        grammes.
+      \item Si l'obstacle $1$ n'est pas ôté, une bille posée sur le rail $A$ ne
+        peut pas traverser le plateau de jeu.
+      \item Les obstacles $2$ et $3$ ne peuvent pas être retirés
+        tous les deux ensemble.
+      \item S'il souhaite retirer l'obstacle $2$ ou l'obstacle
+        $4$, le joueur est obligé d'enlever d'abord les obstacles
+        $1$ et $3$.
+%        {\it \item Le joueur est obligé d'enlever au moins un des
+%        obstacles parmi $2$ et $4$ ou d'enlever les deux obstacles
+%        $1$ et $3$.}
+      \item Les obstacles $3$ et $4$ déterminent conjointement
+        la masse maximale de la bille qui pourra passer sur le rail $B$: le
+        retrait de l'obstacle $3$ permet de faire passer $80$
+        grammes et le retrait de l'obstacle $4$ autorise quant à lui $20$
+        grammes.  En particulier, si ces deux obstacles sont
+        retirés, une bille de $100$ grammes peut passer sur ce
+        rail.
+        %Quatre obstacles peuvent gêner la progression des billes.
+    \end{enumerate}
+
+    Formulez ce problème comme un problème d'optimisation linéaire
+    en nombres entiers.  Vous ne devez pas résoudre ce
+    problème.
+
+
+
+
+  \item Vous disposez d'une somme de 96 Euros. Vous désirez acheter
+    des boissons, disponibles en divers conditionnements.
+    \begin{center}
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline %\vspace{2pt}
+        Boisson & A & B & C & D & E\\
+        \hline
+        Volume unitaire (litres) & 15 & 16 & 17 & 18 & 20\\
+        \hline
+        Prix unitaire (Euros) & 16 & 17 & 18 & 19 & 20\\
+%\hline Nombre disponible & $\infty$ & $\infty$ & 6  & 4\\
+        \hline
+      \end{tabular}
+    \end{center}
+    Vous désirez acheter un volume le plus grand possible, sans
+    dépasser votre budget.
+    \begin{enumerate}
+      \item Formulez ce problème comme un problème d'optimisation
+        linéaire en nombres entiers.
+      \item Combien de conditionnements de chaque type allez-vous acheter
+        ? Détaillez votre raisonnement.
+    \end{enumerate}
+
+  \item Un transporteur est confronté au problème suivant : il ne
+    peut transporter qu'une tonne de marchandises dans son véhicule,
+    alors qu'une quantité supérieure à une tonne est disponible. Il
+    reçoit les données suivantes de la part du comptable de
+    l'entreprise, regroupant les quantités disponibles de chaque
+    marchandise, ainsi que le bénéfice retiré par leurs ventes
+    respectives.
+
+    \begin{center}
+      \begin{tabular}{|c|c|c|c|}
+        \hline %\vspace{2pt}
+        Marchandise & A & B & C\\
+        \hline
+        Quantité disponible (kg) & 900 & 240 & 560 \\
+        \hline
+        Bénéfice (euros/kg) & 15 & 17,5 & 14 \\
+        \hline
+      \end{tabular}
+    \end{center}
+
+    \begin{enumerate}
+      \item D'après ces informations, formulez le problème d'optimisation
+        linéaire correspondant et déterminez les quantités de A,B et C qui
+        optimiseront le bénéfice réalisé par la vente du chargement et
+        donnez la valeur de ce bénéfice.
+
+        \vspace{6pt} Arrivé dans le hangar pour charger, le chauffeur
+        réalise que les marchandises sont conditionnées en sacs, et qu'il
+        est impensable de charger autres choses que des sacs complets.
+        Voici les poids des sacs qui constituent le stock :
+        \begin{center}
+          \begin{tabular}{|c|c|c|c|}
+            \hline %\vspace{2pt}
+            Marchandise & A & B & C\\
+            \hline
+            Poids d'un sac (kg) & 60 & 80 & 20 \\
+            \hline
+          \end{tabular}
+        \end{center}
+
+      \item Reformulez le problème d'optimisation en tenant compte de ces
+        dernières informations. Résolvez ce nouveau problème et comparez
+        votre solution à la solution du cas~(a). Justifiez votre
+        raisonnement.
+
+      \item Le chauffeur (décidément malchanceux) se rend compte que le
+        comptable a oublié de mentionner la marchandise D dont il reste
+        trois sacs de 50 kg pouvant rapporter chacun 1000 Euros. A ce
+        moment, il a déjà chargé neuf sacs de A et deux sacs de B, et ne
+        compte pas les enlever de sa camionnette. Formulez le nouveau
+        problème d'optimisation et expliquez une méthode de résolution
+        "systématique" (par opposition à intuitive) de ce problème, sans la
+        mener à terme.
+    \end{enumerate}
+
+
+
+\end{enumerate}
+
+
+
+
+\end{document}
+
+
+
+
+\newpage
+
+
+
+
+
+%******************************************************************************
+
+
+
+\section{Optimisation non-linéaire: Gradient et gradients conjugués}
+
+
+
+\begin{enumerate}
+
+  \item Soit la fonction $f(x_1, x_2)= 2 x_1^3+3 x_1^2+12x_1 x_2 + 3 x_2^2
+    -6 x_2 + 54$. Trouvez les points stationnaires de cette fonction et déterminez leur nature.
+    La fonction possède-t-elle un minimum global? un maximum global?
+
+  \item Trouvez les points maximants et les points minimants de la fonction $f(x_1, x_2)=2x_1^2+x_2^2-2x_1x_2+2x_1^3+x_1^4$.
+
+  \item Trouvez si possible une fonction $f$ de deux variables et un point stationnaire $x_*$ de $f$ qui maximise $f$ et pour lequel
+    $\nabla^2 f(x_*)
+    \geq 0$. Même question pour  $\nabla^2 f(x_*)> 0$
+
+  \item Considérez la fonction quadratique $f(x)=(1/2) x^T Q x-c^T x$ avec $Q$ symétrique. Sous quelle condition cette fonction possède-t-elle un
+    point stationnaire? un minimum local? un point stationnaire mais pas de minimum ni de maximum local?
+
+  \item Soit $f(x_1, x_2)=2x_1^2+x_1 \sin x_2$ la direction $(-2, 3)$ est-elle une direction de descente pour $f$ en $(2, -1)$? Si oui, donnez
+    une expression pour le point résultant de la minimisation de la fonction dans cette direction.
+
+
+  \item On d\'esire minimiser la fonction:
+
+    $$
+    f(x_1, x_2)=2x_1^2 + x_2^2 - 2xy + 2x_1^3 + x_1^4
+    $$
+
+    par une methode it\'erative. Celle-ci nous am\`ene \`a minimiser
+    la fonction objectif le long de la direction $d = (-1, 4)^T$ au
+    d\'epart du point $x=(2,-1)^T$. La direction $d$ est-elle une
+    direction de descente? Utilisez la condition d'Armijo pour trouver
+    un nouveau point de d\'epart.
+
+
+%SOLUTION:
+%
+%gradient = $(66, -6)$ donc descente. Il faut minimiser
+%$f(2-\alpha, -1+ 4* \alpha)$. Avec $\epsilon=0.1$ (donc Armijo est
+%$f(x+ \alpha*d) \leq 45 - 9*\alpha$) et $\eta=2$, $\alpha=1$
+%convient.
+
+
+  \item Soit la fonction $f(x,y)=x^2+y^2(x^4-5x^2+7)$. Lors d'une
+    tentative de minimisation de cette fonction, on utilise un
+    algorithme qui essaie successivement comme directions de descente
+    les axes $x$ et $y$.
+    \begin{enumerate}
+      \item Considérant une descente suivant l'axe $x$ à partir du point
+        $(2,2)$, déterminez le sens de descente (augmentation ou
+        diminution de $x$). Justifiez.
+      \item Ayant obtenu la direction de
+        descente $d_k$ au point précédent, on définit la fonction
+        $F(\alpha)=f(x_k-\alpha d_k)$. Utilisez le critère d'Armijo pour
+        effectuer une minimisation approximative de la fonction
+        $F(\alpha)$. Donnez le $\alpha$ obtenu, ainsi que les coordonnées
+        du point atteint.
+      \item Appliquez maintenant la méthode en utilisant
+        la direction $y$ à partir du nouveau point obtenu.
+    \end{enumerate}
+
+%%Réponse:
+%%\begin{enumerate}
+%%\item Direction : $(-1,0)$, car $\nabla f (2,2) = (52,12)$.
+%%\item $F(\alpha)=f(2-\alpha,2)=4(2-\alpha)^4-19(2-\alpha)^2+28$.
+%%\newline $F(0)=16$, $F'(0)=-52$
+%%\newline Critère d'Armijo, avec $\varepsilon=1$ : $F(\alpha)\leq 16-5.2 \alpha$
+%%\newline Essai avec $\alpha=1$ ok, $\alpha=2$ non. Donc
+%%$\alpha=1$.
+%%\newline Point atteint : (1,2)
+%%\item $F(\alpha)\leq 13-1.2 \alpha$, $\alpha=2$, (1,0)
+%%\newline puis en $x$, $F(\alpha)\leq 1-0.2 \alpha$, $\alpha=1$, (0,0).
+
+
+
+
+
+  \item Soit $f(x_1, x_2)=2x_1^2 + x_2^2 -2 x_1 x_2 + 2 x_1^3 + x_1^4$. La direction $(0, 1)$ est-elle une direction de descente pour $f$ en
+    $(0, -2)$? Trouvez l'ensemble des directions de descente en ce point. Quelle est la direction de plus grande pente?
+
+  \item Soit $f$ une fonction dont on cherche un minimum au moyen d'un algorithme qui effectue des minimisations unidimensionnelles exactes.
+    Démontrez qu'une direction de recherche $d_k$ est toujours orthogonale au gradient de la fonction au nouveau point $x_{k+1}$.
+
+  \item Soit la fonction quadratique $f(x)=(1/2) x^T Q x-c^T x$ avec $Q=diag(1, \gamma, \gamma^2)$ et $c=(1, 1, 1)^T$. On cherche un minimum
+    de $f$ au moyen de la méthode de la plus grande pente au départ de l'origine. Pouvez-vous borner le nombre d'itérations en fonction de la
+    précision souhaitée?
+
+  \item La méthode de la plus grande pente est appliquée au problème de la minimisation de $f(x_1, x_2)=x_1^2 + 2 x_2^2$ au départ de $(2, 1)$.
+    Montrez que les approximations successives sont données par $x_k =  (2, (-1)^k)/3^k$. Montrez que $f(x_{k+1})=f(x_k)/9$.
+
+
+  \item  La fonction de Rosenbrock est la fonction
+
+    $$f(x_1,x_2) = (x_1-1)^2 + \lambda({x_1}^2-x_2)^2$$
+
+    pour $\lambda \in \R$.\\
+
+
+
+    a) Trouvez les points stationnaires de $f$ et discutez leur nature en fonction de $\lambda$.\\
+
+    b) La méthode de la plus grande pente est utilisée pour trouver un point minimant de $f$ au départ de $(0, 0)$.
+    Combien d'itérations faut-il dans le cas $\lambda = 0$? Caractérisez la vitesse de convergence de la
+    méthode dans le cas $\lambda >0$. Si possible, quantifiez votre réponse pour le cas  $\lambda =10$.
+
+  \item  Consid\'erons la fonction
+
+    $$f(x_1,x_2) = 5 x_1^2 + 3 x_1 x_2 + 5 x_2^2 - 6 x_1 -8 x_2$$
+
+
+
+
+    a) Trouvez les points stationnaires de $f$ et discutez leur nature.
+
+    b) La m\'ethode de la plus grande pente est utilis\'ee pour trouver un point
+    minimant de $f$ au d\'epart de $(0, 0)$.
+    Caract\'erisez la vitesse de convergence de la
+    m\'ethode. Si possible, quantifiez votre r\'eponse.
+
+
+
+\end{enumerate}
+
+%******************************************************************************
+
+
+
+
+\newpage
+
+
+\section{Optimisation non-linéaire: Newton et quasi-Newton}
+
+\begin{enumerate}
+
+
+
+  \item Utilisez la méthode de Newton pour trouver un point minimant de $f(x_1, x_2)=5x_1^4+6x_2^4-6x_1^2+2 x_1 x_2 +5x_2^2+15x_1-7x_2+13$.
+    Partez de $x_0=(1, 1)$.
+
+  \item Utilisez la méthode de Newton modifiée (avec une recherche unidimensionnelle) pour la résolution de
+    $$\min 2x_1^2 + x_2^2-2x_1 x_2 + 2 x_1^3 + x_1^4$$
+    Effectuez seulement les deux premières
+    itérations et partez de $x_0=(2, -1)$.
+
+
+
+  \item Appliquez la méthode de quasi-Newton de rang un à la résolution de
+
+    $$\min \frac{1}{2} x^TAx-b^Tx$$ pour
+
+  $$A=\left( \begin{array}{rrr} 5 & 2& 1 \\ 2 & 7 & 3 \\ 1 & 3 & 9 \end{array} \right) \quad  b= \left( \begin{array}{c} -9 \\ 0 \\8
+    \end{array} \right).$$
+
+    Initialisez la méthode avec $x_0= (0, 0, 0)$ et $H_0 = I$.
+
+
+
+  \item  Démontrez qu'avec la méthode Davidon-Fletcher-Powell tout  choix
+    de $\alpha_k>0$ pour lequel $p_k^T q_k >0$ est tel que $H_{k+1}$ est définie positive lorsque $H_k$ l'est. Montrez que cette propriété est bien
+    satisfaite lorsque $\alpha_k$ est le point minimant de $F(\alpha)=f(x_k+ \alpha d_k)$. Vous pouvez utiliser le fait que toute matrice
+    symétrique et définie positive $A$ possède une racine carrée $B$ symétrique et définie positive, $A= B B$ avec $B$ symétrique et
+    définie positive.
+
+  \item Nous considérons la méthode DFP. Supposons que la fonction $F(\alpha)= f(x_k+ \alpha d_k)$  possède unique minimum $\alpha'$ et est
+    dérivable pour
+    $\alpha >0$. Démontrez que tout choix de $\alpha_k > \alpha'$ pour $x_{k+1}=x_k + \alpha_k d_k$ est tel que
+    $p_k^T q_k >0$.
+
+
+\end{enumerate}
+
+
+
+\end{document}
+
+
+%  ____                               
+% |  _ \ ___  ___  ___ _ ____   _____ 
+% | |_) / _ \/ __|/ _ \ '__\ \ / / _ \
+% |  _ <  __/\__ \  __/ |   \ V /  __/
+% |_| \_\___||___/\___|_|    \_/ \___|
+
+
+\item Soit $f_1, \ldots, f_m$ des fonctions convexes de $\R^n$ dans $\R$ et $f(x)=
+  \sum_{i=1}^m f_i(x)$. Montrez que $f$ est convexe.
+
+
+\item Montrez que pour un ensemble convexe $C$ de $\R^n$, toute combinaison convexe
+  de points de C appartient a C.
