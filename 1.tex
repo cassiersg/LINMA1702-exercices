@@ -38,37 +38,26 @@ $-\infty$}.\\
     les cours ont la même pondération et l'étudiant désire obtenir la  moyenne la plus élevée possible.  Formulez ce problème comme un problème d'optimisation
     linéaire (solution lors d'une séance ultérieure).
     \begin{solution}
-      Soient $x_{A}, x_{B}~et~x_{C}$ le nombre d'heures consacrées aux cours $A, B$ et $C$. La valeur de la fonction est sur $20$.\\
-      $$6,317 - min -\frac{1}{3}(\frac{x_{A}}{5} + \frac{2x_{B}}{5} + \frac{3x_{C}}{5})$$
-      sous les contraintes \\
-      \[
-        \begin{pmatrix}
-          -1 & -1 & -1\\
-          1 & 0 & 0\\
-          -1 & 0 & 0 \\
-          0 & 1 & 0 \\
-          0 & -1 & 0 \\
-          0 & 0 & 1 \\
-          0 & 0 & -1
-        \end{pmatrix}
-        \begin{pmatrix}
-          x_{A}\\
-          x_{B}\\
-          x_{C}
-        \end{pmatrix}
-        \stackrel{\ge}{}
-        \begin{pmatrix}
-          -100\\
-          20\\
-          -50\\
-          9,375\\
-          -25\\
-          5,5\\
-          \frac{-50}{3}
-        \end{pmatrix}
-      \]
-      \newline
-      Solution : $X^{*} = (50,25,\frac{50}{3})^{T}$
+      Soient $x_{A}, x_{B}\text{ et }x_{C}$ le nombre d'heures consacrées aux cours $A, B$ et $C$ respectivement.
+      Le problème d'optimisation est le suivant
+      $
+      \begin{array}{llcr}
+        \maxi & x_A + 2x_B + 3x_C\\
+        & 6 + \frac{x_A}{10} & \geq & 10\\
+        & 6.25 + \frac{x_B}{5} & \geq & 10\\
+        & 6.7 + \frac{3x_C}{10} & \geq & 10\\
+        & \frac{x_A}{5} & \leq & 20\\
+        & \frac{2x_B}{5} & \leq & 20\\
+        & \frac{3x_C}{5} & \leq & 20\\
+        & x_A + x_B + x_C & \leq & 100\\
+        & x & \geq & 0
+      \end{array}
+      $
+
+      La solution est
+      $x^{*} = \begin{pmatrix}
+        50 & 25 & \frac{50}{3}
+      \end{pmatrix}^{T}$.
 
     \end{solution}
 
@@ -93,7 +82,7 @@ $-\infty$}.\\
 
     \begin{solution}
       Soient $x_{A}, x_{B}~et~x_{C}$ la quantité de biens $A, B$ et $C$ produite. \\
-      $$- min -6(x_{A} + x_{B} + x_{C})$$
+      $$- \min -6(x_{A} + x_{B} + x_{C})$$
       sous les contraintes \\
       \[
         \begin{pmatrix}
@@ -131,9 +120,8 @@ $-\infty$}.\\
 
 
     \begin{solution}
-      Soit $x_{ijg}$ le nombre d'étudiants d'une commune $i$ allant à l'école $j$ de niveau $g$. \\
-      \newline
-      $$ min \sum_{i=1}^I \sum_{j=1}^J~d_{ij}~\sum_{g=1}^G~x_{ijg} $$
+      Soit $x_{ijg}$ le nombre d'étudiants d'une commune $i$ allant à l'école $j$ de niveau $g$.
+      $$ \min \sum_{i=1}^I \sum_{j=1}^J~d_{ij}~\sum_{g=1}^G~x_{ijg} $$
       sous les contraintes
       $$ \sum_{i=1}^I x_{ijg} \le c_{jg} \qquad \forall j, \forall g$$
       $$ \sum_{j=1}^J x_{ijg} \le s_{ig} \qquad \forall i, \forall g$$
@@ -157,7 +145,7 @@ $-\infty$}.\\
       La solution optimale se situe à un sommet du polyèdre. En observant la fonction objectif, on constate que le sommet est à l'intersection des contraintes 
       $$ x_{1} + x_{2} \le 150$$
       $$ \frac{1}{2}x_{1} + 3x_{2} \le 200$$ 
-      Solution : $X^{*} = (100,50)^{T}$\\
+      Solution : $x^{*} = (100,50)^{T}$\\
       \newline
       La solution est unique parce que la droite n'intersecte qu'un point du domaine lorsque sa valeur est maximale. 
     \end{solution}
@@ -181,16 +169,16 @@ $-\infty$}.\\
 
     \begin{solution}
       Cas I : $c = (-1,0,1)$ \\
-      $$ min -x_{1} + x_{3}$$
-      Solution : $X^{*} = (3,0,0)^{T}$\\
+      $$ \min -x_{1} + x_{3}$$
+      Solution : $x^{*} = (3,0,0)^{T}$\\
       \newline
       Cas II : $c = (0,1,0)$ \\
-      $$ min~x_{2}$$
-      Solution : $X^{*} = (\alpha,0,\beta)^{T}$ avec $ 1\le \alpha \le 3$ et $\beta \geq 0$\\
+      $$ \min x_{2}$$
+      Solution : $x^{*} = (\alpha,0,\beta)^{T}$ avec $ 1\le \alpha \le 3$ et $\beta \geq 0$\\
       \newline
       Cas II : $c = (0,0,-1)$ \\
-      $$ min~-x_{3}$$
-      Solution : $X^{*} = (x_{1},x_{2},\infty)^{T}$ avec $x_{1}$, $x_{2}$ des variables positives telles que $x_{1} + x_{2} \geq 1$ et $x_{1} + 2x_{2} \le 3$. 
+      $$ \min -x_{3}$$
+      Solution : $x^{*} = (x_{1},x_{2},\infty)^{T}$ avec $x_{1}$, $x_{2}$ des variables positives telles que $x_{1} + x_{2} \geq 1$ et $x_{1} + 2x_{2} \le 3$. 
 
     \end{solution}
 
@@ -208,33 +196,33 @@ $-\infty$}.\\
 
     \begin{solution}
       (a) Coût optimal fini et exactement une solution optimale : 
-      $$ min~x_{1} + x_{2}$$
+      $$ \min x_{1} + x_{2}$$
       sous les contraintes 
       $$ x_{1} \le 1$$
       $$ x_{2} \le 3$$
       $$ x_{2} + x_{1} \le 3 $$
       $$ x_{1}, x_{2} \geq 0$$
       (b) Deux solutions optimales : 
-      $$ min ~x_{1}$$
+      $$ \min x_{1}$$
       sous les contraintes
       $$ x_{1} \le 1$$
       $$ x_{2} \le 1$$
       $$ x_{1}, x_{2} \geq 0$$
-      avec $ x_{1}$ et $x_{2}$ entiers. \\
+      avec $x_{1}$ et $x_{2}$ entiers. \\
       \newline
       (c) Coût optimal infini : 
-      $$ min ~ -x_{1} $$ 
+      $$ \min -x_{1} $$ 
       sous les contraintes
       $$ x_{2} \le 1 $$ 
       $$ x_{1}, x_{2} \geq 0$$
       (d) Coût optimal fini et ensemble infini de solutions optimales : 
-      $$ min ~x_{1}$$
+      $$ \min x_{1}$$
       sous les contraintes
       $$ x_{1} \le 1$$
       $$ x_{2} \le 1$$
       $$ x_{1}, x_{2} \geq 0$$
       (e) Coût optimal fini et ensemble de solutions optimales non-borné
-      $$ min ~ x_{1} $$ 
+      $$ \min x_{1} $$ 
       sous les contraintes
       $$ x_{2} \le 1 $$ 
       $$ x_{1}, x_{2} \geq 0$$
@@ -266,7 +254,7 @@ $-\infty$}.\\
     \begin{solution}
 
       Soient $x^{*}, y^{*} \in V$, des solutions optimales du problème 
-      $$ min ~c^{T}x$$
+      $$ \min c^{T}x$$
       $$ Ax \geq b$$
       1. $\lambda x^{*} + (1-\lambda)y^{*} \in V$ ssi $c^{T}(\lambda x^{*} + (1-\lambda)y^{*}) = c^{T}x^{*}$\\
       \newline
@@ -295,7 +283,7 @@ $-\infty$}.\\
 
     \begin{solution}
       Soit $x_{ij}$ la quantité (positive!) de biens circulant de $i$ à $j$ avec $(i,j) \in E$ avec $i \ne j$. 
-      $$ min \sum_{i=1}^I \sum_{j=1}^J c_{ij}x_{ij}$$
+      $$ \min \sum_{i=1}^I \sum_{j=1}^J c_{ij}x_{ij}$$
       sous les contraintes
       $$x_{ij} \le h_{ij} \qquad \forall i,j$$
       $$\sum_{j=1}^J (x_{ij} - x_{ji}) = b_{i} \qquad i \in M_{1}$$

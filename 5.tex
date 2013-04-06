@@ -69,11 +69,6 @@ $
     $
 
     \begin{solution}
-      $$ max ~3y_{1} + 2y_{2} $$
-      $$2y_{1}  + y_{2} \le 3$$
-      $$-y_{1} - y_{2} \le -9$$
-      $$y_{1} -3y_{2} \le 0$$
-      $$y_{i} \geq 0$$
       $
       \begin{array}{llcr}
         \maxi & 3y_1 + 2y_2\\
@@ -99,11 +94,6 @@ $
     $
 
     \begin{solution}
-      $$ max ~3y_{1} -3y_{2} + 2y_{2} - 8y_{4}$$
-      $$ 4y_{1} -4y_{2} + y_{3} -y_{4} \le 3$$
-      $$ -y_{1} +y_{2}-y_{3}+4y_{4} \le -9$$
-      $$ y_{1} -y_{2}-6y_{3} +6y_{4} \le 0$$
-      $$-y_{1} +y_{2} +6y_{3}-6y_{4} \le 0$$
       $
       \begin{array}{lrcr}
         \maxi & 3y_1 + 2y_2 + 8y_3\\
@@ -131,15 +121,11 @@ $
     $
 
     \begin{solution}
-      $$ max ~b^{T}y$$
-      $$a_{1}y_{1} \le c_{1} $$
-      $$a_{2}y_{2} \le c_{2} $$
-      $$a_{3}y_{3} \le c_{3} $$
-      $$y_{1} ~libre, ~y_{2} \geq0, y_{3} \le0$$
       $
       \begin{array}{llcr}
         \maxi & b^T x\\
         & Ay & \leq & c\\
+        & y_1 & & \text{libre}\\
         & y_2 & \geq & 0\\
         & y_3 & \leq & 0
       \end{array}
@@ -161,13 +147,17 @@ $
     $
 
     \begin{solution}
-      $b$ est un scalaire : \\
-      \newline
-      $$max ~b.y$$
-      $$a_{1}y = c_{1}$$
-      $$a_{2}y \le c_{2}$$
-      $$a_{3}y \geq c_{3}$$
-      $$y ~libre$$
+      $b$ est un scalaire
+
+      $
+      \begin{array}{llcr}
+        \maxi & b y\\
+        & a_1 y & = & c_1\\
+        & a_2 y & \leq & c_2\\
+        & a_3 y & \geq & c_3\\
+        & y & & \text{libre}
+      \end{array}
+      $
     \end{solution}
 
   \item Trouvez une formulation duale du  problème
@@ -183,12 +173,6 @@ $
     où $a \geq 0$.
 
     \begin{solution}
-      $$max~b^{T}y_{1} + a^{T}y_{2}$$
-      $$A^{T}y_{1} + Iy_{2} = c$$
-      $$y_{1}~libre ~et~y_{2} \geq0$$
-
-
-
       L'astuce ici est de prendre des nouvelles variables pour chacune des
       (in)équations.
       On réécrit donc le problème d'optimisation linéaire comme suit
@@ -208,6 +192,7 @@ $
       \begin{array}{lrcr}
         \maxi & b^Ty_1+a^Ty_2\\
         & Ay_1 + Iy_2 & = & c\\
+        & y_1 & & \text{libre}\\
         & y_2 & \geq & 0.
       \end{array}
       $
@@ -252,10 +237,15 @@ $
     $
 
     \begin{solution}
-      $$max~ b_{1}^{T}y_{1} + b_{2}^{T}y_{2}$$
-      $$A^{T}y_{1} \le c$$
-      $$A^{T}y_{2} \le c$$
-      $$y_{1} \geq 0 ~et ~y_{2} \le 0$$
+      $
+      \begin{array}{lrcrcrcr}
+        \maxi & b_{1}^{T}y_{1} + b_{2}^{T}y_{2}\\
+        & A^{T}y_{1} & \leq & c\\
+        & A^{T}y_{2} & \geq & c\\
+        & y_1 & \geq & 0\\
+        & y_2 & \leq & 0
+      \end{array}
+      $
     \end{solution}
 
 
@@ -275,11 +265,17 @@ $
 
 
     \begin{solution}
-      Dual : \\
-      $$max~8y_{1} + 19y_{2} +7y_{3}$$
-      $$y_{1} + 3y_{2} +3y_{3} \le50$$
-      $$3y_{1}+4y_{2}+y_{3}\le 25$$
-      $$y_{i} \geq0$$
+      Dual:
+
+      $
+      \begin{array}{llcr}
+        \maxi & 8y_{1} + 19y_{2} + 7y_{3}\\
+        & y_1 + 3y_2 + 3y_3 & \leq & 50\\
+        & 3y_1 + 4y_2 + y_3 & \leq & 25\\
+        & y & \geq & 0
+      \end{array}
+      $
+
       Si $c \geq 0$, alors $y=0$ est une solution admissible de base du dual et on peut directement démarrer l'algorithme dual simple. Par la dualité forte, on aura au final $b^{T}y^{*} = c^{T}x^{*}$.
     \end{solution}
 
@@ -299,21 +295,6 @@ $
     Faites de même pour le dual.
 
     \begin{solution}
-
-      Dual :
-      $$ max~3y_{1} +2y_{2}$$
-      $$2y_{1} + y_{2} \le2$$
-      $$-y_{1}-y_{2} \le -1$$
-      $$-y_{1}+y_{2} \le 0$$
-      $$ y_{i} \geq 0$$
-      \newline
-      Les contraintes d'inégalités imposent : \\
-      $$ \frac{1}{2} \le y_{1} \le \frac{2}{3}$$
-      $$ \frac{1}{3} \le y_{2} \le \frac{2}{3}$$
-      La fonction coût du dual admet comme borne inférieure $\frac{13}{6}$ et comme borne supérieure $\frac{10}{3}$. \\
-      La fonction coût du primal n'admet pas de borne supérieure mais admet $3$ comme borne inférieure.
-
-
 
       $
       \begin{array}{llcr}
@@ -356,11 +337,17 @@ $
 
 
     \begin{solution}
-      Dual : \\
-      $$ max ~ 10y_{1} + 19y_{2} + 9y_{3}$$
-      $$2y_{1} + 3y_{2} + y_{3} \le 7$$
-      $$3y_{1} + 4y_{2} + 2y_{3} \le 10$$
-      $$y_{i} \geq 0$$
+      Dual:
+
+      $
+      \begin{array}{llcr}
+        \max & 10y_{1} + 19y_{2} + 9y_{3}\\
+        & 2y_{1} + 3y_{2} + y_{3} & \leq & 7\\
+        & 3y_{1} + 4y_{2} + 2y_{3} & \leq & 10\\
+        & y_{i} & \geq & 0
+      \end{array}
+      $
+
       La solution $x = (0,2,1)$ est admissible pour le problème dual car $x$ appartient au polyèdre. Et,
       par la dualité forte, $z^{*} = 47$ est une solution admissible optimale car les coûts sont égaux pour les deux problèmes.
 
@@ -402,30 +389,38 @@ $
 
 
     \begin{solution}
-      Dual :
-      $$max ~4y_{1} + 5y_{2} + y_{3} $$
-      $$ 2y_{1} + y_{2}  + 2y_{3} \le 5$$
-      $$ -y_{1} + y_{2}  -y_{3} \le -3$$
-      $$ 4y_{1} + 2y_{2}  + y_{3} \le 0$$
-      $$y_{i} \geq 0$$
-      Solution du primal $x^{*} = (1,2,1)$. Or, par le principe d'exclusion, $x^{*T}(c -A^{T}y) = 0$. Dans ce cas, il faut résoudre le système d'équations suivant : \\
+      Dual:
+
+      $
+      \begin{array}{llcr}
+        \max & 4y_{1} + 5y_{2} + y_{3}\\
+        & 2y_{1} + y_{2}  + 2y_{3} & \leq & 5\\
+        & -y_{1} + y_{2}  -y_{3} & \leq & -3\\
+        & 4y_{1} + 2y_{2}  + y_{3} & \leq & 0\\
+        & y_{i} & \geq & 0
+      \end{array}
+      $
+
+      Solution du primal $x^{*} = (1,2,1)$.
+      Or, par le principe d'exclusion, $x^{*T}(c -A^{T}y) = 0$.
+      Dans ce cas, il faut résoudre le système d'équations suivant:
       \[
-      \begin{pmatrix}
-      2 & 1 & 2\\
-      -1 & 1 & -3\\
-      4 & 2 & 1
-      \end{pmatrix}
-      \begin{pmatrix}
-      y_{1}\\
-      y_{2}\\
-      y_{3}
-      \end{pmatrix}
-      \stackrel{=}{}
-      \begin{pmatrix}
-      5\\
-      -3\\
-      0
-      \end{pmatrix}
+        \begin{pmatrix}
+          2 & 1 & 2\\
+          -1 & 1 & -3\\
+          4 & 2 & 1
+        \end{pmatrix}
+        \begin{pmatrix}
+          y_{1}\\
+          y_{2}\\
+          y_{3}
+        \end{pmatrix}
+        \stackrel{=}{}
+        \begin{pmatrix}
+          5\\
+          -3\\
+          0
+        \end{pmatrix}
       \]
       Comme $det(A) \ne 0$, la solution est unique. $y = (-2.8889, 4.1111,3.3333)$. Cette solution n'est pas admissible.
     \end{solution}

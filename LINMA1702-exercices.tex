@@ -19,17 +19,37 @@
 \usepackage{accents}
 \usepackage{url}
 
+\newenvironment{myindentpar}[1]%
+{\begin{list}{}%
+         {\setlength{\leftmargin}{#1}}%
+         \item[]%
+}
+{\end{list}}
+\usepackage{longtable}
 \usepackage{framed}
+\usepackage{changepage}   % for the adjustwidth environment
 \newenvironment{solution}%
 {\par\rule{1ex}{1ex}
 \hspace{\stretch{1}}
 \textbf{Solution}
-\hspace{\stretch{1}}\rule{1ex}{1ex}\par%
+\hspace{\stretch{1}}
+\rule{1ex}{1ex}\par%
 \hspace{2ex}% indente tout de 2ex
+%\begin{myindentpar}{7ex}
+%\quote \quote
 \begin{minipage}{0.95\linewidth}% s'arrête un peu avant les carrés de droite
 \begin{framed}}% met un contour noir
+%\addtolength{\leftskip}{4cm}
+%\begin{adjustwidth}{6cm}{}
+%\begin{longtable}{|p{1.1\linewidth}|}
+%\hline}
 {\end{framed}\end{minipage}
-\par\rule{1ex}{1ex}\hspace{\stretch{1}}
+%{\\\hline\end{longtable}
+%\end{adjustwidth}
+%\end{myindentpar}
+%\endquote \endquote
+\par
+\rule{1ex}{1ex}\hspace{\stretch{1}}
 \hspace{\stretch{1}}\rule{1ex}{1ex}\par}
 \newcommand{\maxi}{\mbox{maximiser}}
 \newcommand{\mini}{\mbox{minimiser}}
