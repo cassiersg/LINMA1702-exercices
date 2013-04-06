@@ -9,6 +9,7 @@ PDFVIEWER=xdg-open # Default pdf viewer - GNU/Linux
 MAIN_NAME=LINMA1702-exercices
 EXT=pdf
 PDF_NAME=$(MAIN_NAME).$(EXT)
+SRC=$(MAIN_NAME).tex 1.tex 2.tex 3.tex 4.tex 5.tex 6.tex 7.tex
 
 # If you want the pdf to be opened by your preferred pdf viewer
 # after `$ make', comment the following line and uncomment the
@@ -18,7 +19,7 @@ default: show
 
 all: $(MAIN_NAME).$(EXT)
 
-$(MAIN_NAME).$(EXT): $(MAIN_NAME).tex
+$(MAIN_NAME).$(EXT): $(SRC)
 	pdflatex -shell-escape -enable-write18 $(MAIN_NAME).tex
 
 clean:

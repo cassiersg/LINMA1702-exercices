@@ -1,0 +1,311 @@
+\section{Dualit\'e II: interprétation, analyse postoptimale}
+
+\begin{enumerate}
+
+  \item On considère le problème diététique suivant:
+    Il s'agit d'acheter à un coût minimum des fruits, des légumes et
+    de la viande afin d'obtenir suffisamment de vitamines A et B.
+    Pour une alimentation saine, on considère qu'il faut consommer
+    11 unités de vitamines A et 4 unités de vitamines B. Les valeurs
+    nutritives des aliments (par unité de poids) sont données dans
+    le tableau ci-dessous: \\
+
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      & Légumes & Fruits & Viande \\
+      \hline
+      Vitamine A & 1 & 5 & 1 \\
+      \hline
+      Vitamine B & 2 & 1 & 1 \\
+      \hline
+    \end{tabular}\\
+
+    Les coûts par unité de poids des aliments sont de 3 (légumes),
+    2 (fruits) et 10 (viande). Modélisez ce problème et résolvez-le.
+
+    On considère ensuite le problème de l'entreprise pharmaceutique qui synthétise
+    artificiellement de la vitamine A et B et qui vend la vitamine pure au diététicien.  L'entreprise cherche à déterminer les prix
+    de vente des vitamines qui lui assurent d'emporter tout le marché tout en maximisant son profit. Modélisez ce problème
+    et résolvez-le. Laquelle des deux vitamines est la plus chère?
+
+    Contre toute attente, l'entreprise décide de mettre de la vitamine A et B sur le marché à des prix de 1 et 0.5. Comment le
+    diététicien compose-t-il le mélange?
+
+    \begin{solution}
+      Soient $X_{A}, X_{B}$ et $X_{C}$ les quantités respectives de légumes, fruits et viande. \\
+      Primal : \\
+      $$ \min ~3X_{A} + 2X_{B} + 10X_{C}$$
+      $$X_{A} + 5X_{B} + X_{C} \geq 11$$
+      $$2X_{A} + X_{B} + X_{C} \geq 4$$
+      $$ X_{A}, X_{B}, X_{C} \geq 0$$
+      Dual : \\
+      Soient $y_{1}$ et $y_{2}$ le profit généré par le vente de la vitamine $A$ et $B$.
+      $$ \max 11y_{1} + 4y_{2}$$
+      $$ y_{1} + 2y_{2} \le 3$$
+      $$ 5y_{1} + y_{2}  \le 2$$
+      $$ y_{1} + y_{2} \le 10$$
+      $$y_{i} \geq 0$$
+      En effectuant l'algorithme du simplexe pour le dual, on obtient $y^{*} = (\frac{1}{9},\frac{13}{9})$. Par le principe d'exclusion, il faut nécessairement que $Ax = b$. On obtient $x^{*} = A^{-1}b = (1,2,0)$. En conclusion, la vitamine $B$ est la plus chère. \\
+      Si l'entreprise décide de mettre la vitamine $A$ et $B$ sur le marché à des prix de 1 et 0.5, le problème du primal devient : \\
+      $$ \min ~3X_{A} + 2X_{B} + 10X_{C} + X_{D} + \frac{1}{2}X_{E}$$
+      $$X_{A} + 5X_{B} + X_{C} + X_{D} \geq 11$$
+      $$2X_{A} + X_{B} + X_{C} + X_{E} \geq 4$$
+      $$ X_{A}, X_{B}, X_{C}, X_{D}, X_{E} \geq 0$$
+    \end{solution}
+
+  \item On considère le problème suivant:
+
+    $
+    \begin{array}{llcr}
+      \maxi & x_1+2x_2+ x_3+x_4\\
+      & 2x_1+x_2+5x_3+x_4 & \leq & 8 + \delta\\
+      & 2x_1+ 2x_2+ 4x_4 & \leq & 12\\
+      & 3x_1+ x_2+ 2x_3 & \leq & 18\\
+      & x_1, x_2, x_3, x_4 & \geq & 0
+    \end{array}
+    $
+
+    La solution associée à la base $(x_2, x_3, x_7)$ est optimale pour $\delta = 0$ ($x_7$ est la variable d'écart de la 3ème contrainte); la solution
+    correspondante est donnée par $(x_1, x_2, x_3, x_4)=(0, 6, 0.4, 0)$. Pour quelles valeurs de
+    $\delta$ la base reste-t-elle optimale?
+
+
+
+    \begin{solution}
+      Une base est admissible si $B^{-1}b \geq 0$ et est optimale si $c_{N}^{T} - c_{B}^{T}B^{-1}N \geq0 $. En formant le tableau pour obtenir la base $(x_{2},x_{3},x_{7})$, on observe que $c_{N}^{T} - c_{B}^{T}B^{-1}N$ est positif et que $b = (6, \frac{\delta +2}{5}, \frac{56 - 2\delta}{5})^{T}$ est positif si $ -2 \le \delta \le 28$.
+    \end{solution}
+
+  \item On considère le problème suivant:
+
+    $
+    \begin{array}{llcr}
+      \maxi & 3x_1+13x_2+13x_3\\
+      & x_1+x_2 & \leq & 7\\
+      & x_1+ 3x_2+ 2x_3 & \leq & 15\\
+      &  2x_2+ 3x_3 & \leq & 9\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Une base optimale est donnée par $(x_1, x_2, x_3)$. Pour cette base on obtient
+
+    $$
+    B^{-1}=
+    \left[
+      \begin{array}{ccc}
+        5/2 & -3/2 & 1\\
+        -3/2 & 3/2 & -1\\
+        1 & -1 & 1
+      \end{array}
+    \right]
+    $$
+
+    \begin{enumerate}
+      \item Donnez une solution du primal et une solution du dual.
+      \item Comment évolue l'objectif optimal lorsque le terme de droite de la deuxième contrainte décroît?
+      \item De combien d'unités le terme de droite de la première contrainte peut-il varier sans modifier la base optimale?
+      \item De combien d'unités le coefficient objectif associé à $x_1$ peut-il varier sans modifier la base
+        optimale?
+      \item La base resterait-elle optimale si on ajoutait une nouvelle variable $x_4$ de coefficient objectif $5$ et de vecteur de contrainte $(2, -1, 5)$?
+      \item Trouvez une solution du problème obtenu en ajoutant la contrainte $x_1-x_2+2x_3 \leq 10$.
+
+    \end{enumerate}
+
+
+    \begin{solution}
+      (a) La solution du primal est $x_{B} = B^{-1}b = (4,3,1)^{T}$. Le vecteur est bien positif et il vérifie bien les contraintes. La solution du dual est $y^{*} = (1,2,3)^{T}$. La valeur de la fonction coût est identique pour le primal et le dual.
+      (b) Le coût de la fonction devient plus petit.
+    \end{solution}
+
+  \item Les joueurs $A$ et $B$ choisissent indépendamment l'un de l'autre un nombre entre 1 et 100. L'issue du jeu est nulle si les
+    deux joueurs choisissent le même nombre. Sinon, le joueur qui a choisi le plus petit nombre gagne; sauf si ce nombre est d'une unité
+    inférieur à celui choisi par l'autre joueur, auquel cas l'autre joueur gagne. Montrez comment la recherche de la stratégie aléatoire
+    optimale peut-être exprimée comme un problème d'optimisation linéaire.
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Une firme textile produit trois biens en quantités $x_1, x_2, x_3$. Le planning de production pour le prochain mois satisfait
+    les contraintes suivantes
+
+    $
+    \begin{array}{llcr}
+      & x_1+2x_2 +2x_3 & \leq & 12\\
+      & 2x_1+4x_2 +x_3 & \leq & 10\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    La première contrainte résulte de limitations techniques. La deuxième contrainte exprime une limitation due à la quantité de coton
+    disponible sur le marché. Les profits associés aux produits $x_1, x_2, x_3$
+    sont de 2, 3 et 3. Comment évolue le profit  lorsque la quantité de coton disponible passe de 10 à $10+ \epsilon$ pour
+    $\epsilon >0$? et lorsque elle passe de 10 à 12? Remplacez la deuxième
+    contrainte par $2x_1+4x_2 +x_3 \leq c$ et utilisez un argument géométrique pour trouver l'évolution du profit en fonction de $c$.
+
+
+
+
+
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item  Une université belge dispose d'au plus 5000 places pour des étudiants. Elle recrute des étudiants belges et
+    des étudiants étrangers. L'université compte 440 professeurs. L'encadrement est d'au moins un professeur pour 12 belges et d'un professeur pour 10
+    étrangers. L'université possède 2800 places dans des kots universitaires, elle garantit  qu'au moins 40 \% des étudiants belges et 80 \% des étudiants
+    étrangers trouveront place  dans un kot universitaire. L'université reçoit des subsides de 2000 EUR par étudiant belge et un minerval de 3000 EUR par
+    étudiant étranger. On suppose que l'université cherche à maximiser sont profit.  On vous demande de répondre aux questions suivantes.
+
+    \begin{enumerate}
+      \item  Formulez le problème de la maximisation du profit comme un problème d'optimisation linéaire. Résolvez le problème.
+
+      \item Trouvez la formulation  duale de ce problème. Soit $y_*$ une solution optimale du dual. Proposez une interprétation pour les
+        différentes composantes de
+        $y_*$.
+
+      \item   L'université a-t-elle avantage a recruter des professeurs supplémentaires pour 10000 EUR par professeur et par an?
+
+      \item L'université engage des professeurs supplémentaires à 8000 EUR par an. Combien de professeurs a-t-elle avantage \`a engager?
+
+    \end{enumerate}
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item  Une firme d\'esire produire un nouvel alliage comportant au minimum
+    30 $\%$ de cuivre et 20 $\%$ de zinc. La firme dispose des alliages suivants:
+
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      alliage &  $\%$ de cuivre & $\%$ de zinc & $\%$ autres m\'etaux & prix (Euro/kilo) \\
+      \hline
+      1 & 66 & 22 & 12 & 33 \\
+      \hline
+      2 & 20 & 10 & 70 & 20 \\
+      \hline
+      3 & 45 & 45 & 10 & 30 \\
+      \hline
+      4 & 20 & 50  & 30 & 40\\
+      \hline
+      5 & 0 & 0 & 100 & 0 \\
+      \hline
+    \end{tabular}
+
+
+    Remarquez que la firme dispose gratuitement d'un alliage ne comportant ni cuivre ni zinc.
+    Le but est de trouver les proportions de ces alliages qui doivent
+    \^etre m\'elang\'ees  pour produire le nouvel alliage \`a un co\^ut minimum. On vous demande de r\'epondre aux questions suivantes.
+
+    \begin{enumerate}
+      \item  Formulez le probl\`eme de la minimisation du co\^ut comme un probl\`eme
+        d'optimisation lin\'eaire.
+
+      \item Trouvez la formulation duale de ce probl\`eme. Soit $y_*$ une solution
+        optimale du dual. Proposez une interpr\'etation pour les
+        diff\'erentes composantes de
+        $y_*$. R\'esolvez ce probl\`eme dual et trouvez sa solution $y_*$.
+      \item   On suppose que le pourcentage minimum requis de cuivre augmente l\'eg\`erement
+        (il passe de 30 $\%$ \`a (30+$\delta$) $\%$ avec $\delta$ petit).
+        Comment \'evolue le co\^ut optimal de production du nouvel alliage?
+        Soyez aussi pr\'ecis que possible.
+
+      \item Que vaut le co\^ut optimal de production du probl\`eme initial?
+    \end{enumerate}
+
+
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item  Un épargnant investit 1000 EUR. Il a le choix entre trois investissements A, B et C. Les résultats attendus et
+    garantis pour ces investissements sont les suivants (pour 1 EUR):\\
+
+
+    \begin{tabular}{ccc}
+      & attendu & garanti\\
+      A & 1.4 & 0.9\\
+      B & 1.2 & 1.2\\
+      C & 1.6 & 0.5\\
+    \end{tabular}
+
+    \hspace{10mm}
+
+    L'épargnant a promis d'investir au moins 600 EUR en  B et C. Il souhaite en outre un intérêt global
+    d'au moins
+    $5 \%$ et cherche la répartition de son investissement  qui maximise l'espérance de son gain.
+
+    \begin{enumerate}
+      \item Formulez ce problème comme un problème d'optimisation linéaire et résolvez-le. Pour trouver la
+        solution vous pouvez, si vous le souhaitez, choisir comme solution de départ celle qui consiste à investir 1000
+        EUR dans B.
+      \item L'épargnant choisit d'investir \emph{au plus}   1000 EUR. Formulez ce problème comme un problème
+        d'optimisation linéaire. La solution optimale que vous obtenez pour cette version modifiée est-elle
+        différente de celle obtenue en 1?
+      \item Ecrivez le dual du problème obtenu en 1 et proposez une interprétation pour les variables duales
+        optimales.
+    \end{enumerate}
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Jacques choisit un nombre de 1 \'a $m$, son adversaire, Yvan,
+    choisit ind\'ependamment de Jacques, un nombre de 1 \`a $n$. Si
+    Jacques choisit $i$ et Yvan $j$, Jacques re\c coit $a_{ij}$ d'Yvan.
+    Jacques et Yvan appliquent des strat\'egies probabilistes; Jacques
+    choisit $i$ avec une probabilit\'e $x_i$  ($x_i \geq 0$ et $\sum_1^m
+    x_i =1$) et Yvan choisit $j$ avec une probabilit\'e $y_j$ ($y_j \geq
+    0$ et $\sum_1^n y_i =1$).
+
+    \begin{enumerate}
+      \item Soit $x$ et $y$ les strat\'egies de Jacques et d'Yvan. Quel
+      est le gain moyen de Jacques par partie? \item Jacques divulgue la
+        strat\'egie probabiliste qu'il applique. Quelle strat\'egie Yvan
+        doit-il appliquer pour maximiser son gain? Formulez ce probl\`eme
+      comme un probl\`eme d'optimisation. \item \label{l1} Nous
+        consid\'erons maintenant un jeu pr\'ecis. Jacques et Yvan
+        choisissent tout les deux un nombre de  1 \`a 3. Le joueur ayant
+        choisi le nombre le plus \'elev\'e re\c coit 1 EUR de son
+        adversaire, sauf si ce nombre est exactement d'une unit\'e
+        sup\'erieur au nombre choisi par l'adversaire, auquel cas, il donne
+        3 EUR \`a son adversaire. Lorsque les nombres choisis sont \'egaux,
+        les joueurs font match nul et personne ne gagne rien. Jacques
+        annonce sa strat\'egie probabiliste: il joue 1, 2 et 3 avec les
+        probabilit\'es $0$, $1/2$ et $1/2$. Quelle strat\'egie Yvan doit-il
+        choisir pour maximiser son gain et quel est son gain moyen par
+      partie? La strat\'egie optimale pour Yvan est-elle unique? \item
+        \label{t1} On consid\`ere le jeu d\'ecrit en \ref{l1}. Jacques sait
+        que s'il joue suivant la strat\'egie probabilitiste $x$; Yvan
+        choisira la strat\'egie probabiliste $y$ qui maximise son gain
+        moyen. Sachant cela, quelle strat\'egie Jacques doit-il adopter pour
+        maximiser son gain moyen? Ecrivez ce probl\`eme sous forme d'un
+        probl\`eme d'optimisation lin\'eaire.
+
+      \item R\'esolvez le probl\`eme formul\'e en
+        \ref{t1}. Quel est le gain moyen de Jacques?
+
+    \end{enumerate}
+
+    \begin{solution}
+      La théorie des jeux constitue une approche mathématique de problèmes de stratégie tels quÕon en trouve en recherche opérationnelle et en économie. Elle étudie les situations où les choix de deux protagonistes Ñ ou davantage Ñ ont des conséquences pour lÕun comme pour lÕautre (source Wikipédia). \\
+      \newline
+      Le tableau qui contient les indices $a_{ij}$ correspond au tableau usuel que l'on retrouve dans l'analyse des probabilités. Ce sont toutes les combinaisons possibles dont la somme des probabilités associées à chaque couple d'entier vaut 1 et donc chaque case correspond au gain d'un des protagoniste. \\
+      \newline
+      (a) Soit $a_{ij}$, le gain réel de Jacques. L'espérance de Jacques est de $$\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$ \\
+      (b) Si Yvan veut maximiser son gain, il doit minimiser le gain espéré de Jacques, c'est-à-dire, \\
+      $$\min_y ~\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$
+      $$ 0\le \sum_{j}^{n} y_{j} \le 1$$
+      $$ 0 \le y_{j} \le1~j = 1, \dots, n$$ \\
+      (c) Pour maximiser son gain, Yvan doit choisir 1, 2 et 3 avec une probabilité de 0, 1 et 0. Soit les deux joueurs choisissent en même temps 2 auquel cas le gain est nul, soit Yvan joue 2 et Jacques 3 auquel cas Yvan remporte 3 EUR. Le gain espéré est de 1.5 EUR. Dans les autres stratégies, le gain espéré de Jacques est plus faible. \\
+      \newline
+      (d) Si on se limite au cas particulier du (c), il faudra que Jacques choisisse tout le temps 1. Le gain espéré est dans ce cas de 3 EUR. Formellement, le problème devient \\
+      $$\max_x ~\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$
+      $$ 0\le \sum_{i}^{n} x_{i} \le 1$$
+      $$ 0 \le x_{i} \le1~j = 1, \dots, n$$ \\
+    \end{solution}
+
+\end{enumerate}

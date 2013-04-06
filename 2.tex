@@ -1,0 +1,325 @@
+\section{Formes canoniques}
+
+
+
+{\bf Forme géométrique}
+
+$$
+\begin{array}{ll}
+  \mini &  c^T x \\
+  \mbox{ }
+  & A x \geq b
+\end{array}
+$$
+
+
+{\bf Forme standard}
+
+$$
+\begin{array}{lrcr}
+  \mini &  c^T x \\
+  \mbox{ }
+  & A x & = &  b\\
+  & x & \geq & 0
+\end{array}
+$$
+\\
+
+
+
+\newpage
+
+
+
+\begin{enumerate}
+
+
+  \item Ecrivez  le programme linéaire suivant sous forme géométrique
+
+    $
+    \begin{array}{lrcr}
+      \maxi & -x_1 + 8 x_2 \\
+      & x_1 + x_2 & = & 1\\
+      & x_1 + 2x_2 & \leq & 3\\
+      & x_1 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $$ -~min ~x_{1}-8x_{2}$$
+      sous les contraintes
+      $$ x_{1} + x_{2} \geq 1$$
+      $$ -x_{1} - x_{2} \geq -1$$
+      $$ -x_{1} - 2x_{2} \geq -3$$
+      $$ x_{1} \geq 0$$
+    \end{solution}
+
+
+  \item Ecrivez  le programme linéaire suivant sous forme standard
+
+    $
+    \begin{array}{lrcr}
+      \mini & -x_1 + 8 x_2 \\
+      & x_1 + x_2 & \geq & 1\\
+      & x_1 + 2x_2 & \leq & 3\\
+      & x_1 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $$ min~ -x_{1} + 8(x_{2}^{+} - x_{2}^{-})$$
+      sous les contraintes
+      $$x_{1} + x_{2}^{+} - x_{2}^{-} - x_{3} = 1$$
+      $$x_{1} + 2(x_{2}^{+} - x_{2}^{-}) + x_{4} = 3$$
+      $$x_{1},x_{2}^{+},x_{2}^{-},x_{3}, x_{4} \geq 0$$
+    \end{solution}
+
+
+  \item Ecrivez  le programme linéaire suivant sous forme standard
+
+    $
+    \begin{array}{lrcr}
+      \mini & x_1-5x_2-7x_3\\
+      & 5x_1-2x_2+6x_3  & \geq & 5\\
+      &3x_1+4x_2-9x_3 & = & 3\\
+      &7x_1+3x_2+ 5x_3 & \leq & 9\\
+      & x_1  & \geq & -2\\
+    \end{array}
+    $
+
+    \begin{solution}
+      $$min~x_{1}^{+} - x_{1}^{-}-5(x_{2}^{+} - x_{2}^{-})-7(x_{3}^{+} - x_{3}^{-})$$
+      $$5(x_{1}^{+} - x_{1}^{-})-2(x_{2}^{+} - x_{2}^{-})+6(x_{3}^{+} - x_{3}^{-}) - x_{4}= 5$$
+      $$3(x_{1}^{+} - x_{1}^{-})+4(x_{2}^{+} - x_{2}^{-})-9(x_{3}^{+} - x_{3}^{-}) = 3$$
+      $$7(x_{1}^{+} - x_{1}^{-})+3(x_{2}^{+} - x_{2}^{-})+5(x_{3}^{+} - x_{3}^{-}) + x_{5} = 9$$
+      $$x_{1}^{+} - x_{1}^{-} - x_{6} = -2 $$
+      $$x_{1}^{+}, x_{1}^{-}, x_{2}^{+}, x_{2}^{-}, x_{3}^{+}, x_{3}^{-}, x_{4}, x_{5}, x_{6} \geq 0 $$
+    \end{solution}
+
+  \item Soit le problème d'optimisation
+
+    $
+    \begin{array}{lrcr}
+      \mini   &  2x_1+3 \; | x_2-10|\\
+      & |x_1+2| + |x_2| & \leq & 5
+    \end{array}
+    $
+
+    Formulez ce problème comme un problème d'optimisation linéaire.
+
+    \begin{solution}
+      $$min~t$$
+      $$-2x_{1}-3x_{2} \geq -t -30$$
+      $$-2x_{1}+3x_{2} \geq -t +30$$
+      $$-x_{1} - x_{2} \geq 3$$
+      $$x_{1} - x_{2} \geq -7$$
+      $$-x_{1} + x_{2} \geq -3$$
+      $$x_{1} + x_{2} \geq -7 $$
+    \end{solution}
+
+
+  \item Un problème d'optimisation linéaire peut-il toujours s'écrire sous la forme $\min c^Tx$ sous la contrainte $A = b$? Si oui, démontrez, si non, justifiez.
+
+    \begin{solution}
+      $$min~c^{T}x$$
+      $$Ax = b$$
+      Il n'est pas possible de résoudre le problème de minimisation car il manque la condition $x \geq 0$.
+    \end{solution}
+
+  \item Une fusée se déplace en suivant une trajectoire rectiligne. Soit $x_t$, $v_t$
+    et $a_t$ la position, la vitesse et l'accélération de la fusée au temps $t$. En discrétisant le temps et en considérant un incrément
+    unité, trouvez des expressions pour $x_{t+1}$ et $v_{t+1}$ en fonction de $x_t, v_t$ et $a_t$. Nous supposons que l'accélération $a_t$ est sous notre
+    contrôle. Par ailleurs, la fusée est au repos à l'origine au temps
+    $t=0$ ($x_0=0$ et
+    $v_0=0$). Nous désirons faire décoller la fusée pour la faire atterrir  en douceur au temps $T$ à une
+    distance d'une unité de son point de départ ($x_T=1$ et $v_T=0$). De plus, nous désirons atteindre cet
+    objectif en minimisant la consommation totale de carburant
+    $\sum_{t=0}^{T-1} |a_t|$.  Formulez ce problème comme un problème d'optimisation linéaire.
+
+    \begin{solution}
+      Il faut minimiser la norme $l^{1}$ puisqu'il s'agit de minimiser la consommation \textit{totale} de carburant $\sum_{t=0}^{T-1} \mid a_{t} \mid$ : 
+      $$min~\sum_{t=0}^{T-1} t_{i}$$
+      $$-t_{i} \le a_{i} \le t_{i}~ i = 1,2,\dots,T-1$$
+    \end{solution}
+
+
+
+  \item Nous considérons l'ensemble $P=\{ x \in \R^n \; | \; a_i^T x \leq b_i \; , \;  i=1, \ldots, m \}$. Nous désirons trouver la
+    plus grande boule entièrement contenue dans cet ensemble. Le centre de cette boule est  le {\it centre de Chebychev} de $P$.  Formulez
+    ce problème comme un problème d'optimisation linéaire. (Indication:  La distance entre l'hyperplan $\{x \in \R^n | \;  a^Tx=b \}$ et le point $x_0 \in \R^n$
+    est donnée par
+    $|a^Tx_0 - b|/\|a\|$ avec $\|a\|=\sqrt{a_1^2+ \ldots + a_n^2}$.)
+
+    \begin{solution}
+      Il faut minimiser la norme $l^{\infty}$ puisqu'il s'agit de maximiser \textit{la} plus petite des distances $\frac{\mid a^{T}x_{0} - b \mid}{\|a\|}$: 
+      $$ min~r$$
+      $$-r \le \frac{a_{i}^{T}x_{0} - b_{i}}{\|a_{i}\|} \le r ~~i = 1,2, \dots, n$$
+    \end{solution}
+
+
+
+
+
+  \item Nous considérons un ensemble de $m$ lampes disposées aux points $l_1, \ldots, l_m \in \R^2$ du plan et éclairant $n$
+    tronçons. Les tronçons sont des segments de droites. Le tronçon $i$ est donné par $[v_i, v_{i+1}]$ où $v_1, \ldots, v_{n+1}
+    \in \R^2$.  Les variables du problème sont les puissances des lampes $p_1, \ldots, p_m$, qui peuvent varier entre 0 et 1.
+    L'illumination $I_i$ du point milieu du tronçon $i$ dépend de la position des lampes et de leurs
+    puissances. Nous utilisons un modèle simple d'illumination
+
+    $$I_i = \sum_{j=1}^m a_{ij} p_j, \qquad a_{ij}=r_{ij}^{-2} \max \{\cos \theta_{ij}, 0 \}$$
+
+    où $r_{ij}$ représente la distance entre la lampe $j$ et le point milieu du tronçon $i$, et $\theta_{ij}$ représente l'angle
+    entre la normale du tronçon $i$ et le segment de droite qui lie le point milieu du tronçon $i$ et la lampe $j$ (voir Figure). Ce
+    modèle rend compte du fait qu'un tronçon n'est illuminé que par les lampes situées dans le demi-plan qui lui fait face,
+    mais ne prend pas en compte l'illumination des tronçons entre eux par réflexion.  Le problème consiste à déterminer la puissance des lampes de façon à ce
+    que les niveaux d'illumination des  tronçons soient tous proches du niveau désiré $I_{des}$. Nous choisissons la déviation maximum
+
+    $$\max_{i=1, \ldots, n} | I_i -I_{des}|$$
+
+    pour quantifier la déviation globale par rapport au niveau d'illumination désiré. Formulez ce problème comme un problème d'optimisation linéaire.
+
+    \begin{solution}
+      Il faut minimiser la norme $l^{\infty}$ puisqu'il s'agit de quantifier la déviation \textit{globale} 
+      $$ max \mid I_{i} - I_{des} \mid $$ 
+      Le problème d'optimisation linéaire peut s'écrire sous la forme : 
+      $$ min ~t$$
+      $$ -t \le \sum_{j}a_{ij}p_{j} - I_{des} \le t ~~i = 1, 2, \dots, m $$
+      $$ 0 \le p_{j} \le 1$$
+      $$a_{ij} \geq 0$$
+    \end{solution}
+
+
+
+  \item Les résultats finaux $x_i$ pour l'examen INMA2702 sont les suivants (par ordre croissant, résultats sur 100): 28, 62, 80,
+    83, 86, 87,  92, 95, 98. On cherche à exprimer au moyen d'un seul nombre la manière dont l'examen a été réussi. La moyenne des résultats
+    est de
+    $\overline x = \sum_i x_i /9 = 79$. Un étudiant ayant
+    obtenu 80 fait donc mieux que la moyenne des résultats. Il fait toutefois moins bien que plus de la moitié des étudiants. La
+    \emph{médiane}  des résultats est un résultat qui partage l'ensemble des résultats en deux ensembles de  tailles égales. Dans notre
+    exemple, la médiane est donnée par $86$. Montrez que la moyenne et la médiane s'obtiennent comme solutions optimales des problèmes
+    d'optimisation
+    $$\min_x \sum_i (x-x_i)^2$$
+    et
+    $$\min_x \sum_i |x-x_i|.$$
+    Quelle est la solution du problème
+    $$\min_x \max_i | x-x_i| ?$$
+
+    \begin{solution}
+      I¡ Partie : \\
+      \newline
+      Soit $f = \sum_{i}^{n}(x-x_{i})^{2}$. En annulant la dérivée, on obtient : 
+      $$ 2\sum_{i}^{n}(x-x_{i}) = 0$$
+      $$ nx = \sum_{i}^{n} x_{i}$$
+      $$ x = \frac{1}{n}\sum_{i}^{n} x_{i}$$
+      \newline
+      II¡ Partie : \\
+      \newline`
+      Soit $f(x) = \sum_{i}^{n}\mid x-x_{i}\mid = \sum_{x \geq x_{i}} (x-x_{i}) - \sum_{x \le x_{i}} (x-x_{i})$\\
+      \newline
+      $f(x + \vartriangle x) = f(x) + \sum_{x \geq x_{i}} \vartriangle x - \sum_{x \le x_{i}} \vartriangle x$ \\
+      \newline
+      Si on est à la médiane, alors $x = x^{*}$. Dans ce cas, $f(x + \vartriangle x) = f(x) $. Or, $\sum_{x \geq x_{i}} \vartriangle x \geq 0$ et $  \sum_{x \le x_{i}} (x-x_{i}) \geq 0$. Donc, $x^{*}$ est la solution optimale. \\
+      \newline
+      III¡ Partie : \\
+      \newline
+      $$x_{*} = \frac{x_{0} + x_{n}}{2}$$
+    \end{solution}
+
+
+
+  \item  Soit $\{b_1, b_2, \ldots, b_m\}$ un ensemble de points du plan. Le \emph{centro\"ide}
+    $$\overline x = \frac{1}{m} \sum_i b_i$$
+    minimise la somme des carrés des distances aux points de l'ensemble. Comment trouver le point qui minimise la somme des distances (et
+    non pas la somme des carrés)? Trouvez une description explicite de ce point pour les cas $m=2$ et $m=3$.
+
+    \begin{solution}
+      $$ min \sum_{i} \mid x - b_{i} \mid $$
+    \end{solution}
+
+
+
+
+  \item  Les composants d'une puce électronique sont placés sur
+    une puce carrée $\{ (x, y) \; |  -1 \leq x, y \leq 1\}$.
+    Chaque composant possède plusieurs bornes qui sont connectées à
+    des bornes d'autres composants, ou aux bornes d'entrée/\-sortie situées sur le périmètre de la puce.  Les connexions et les
+    positions des bornes d'entrée/sortie sont fixées; les seules variables sont les coordonnées   $(x_i, y_i)$ des $n$
+    composants.  Les connexions entre les composants
+    sont précisés de la manière suivante. On définit les vecteurs
+
+
+    $$x=
+    \left(
+    \begin{array}{c}
+      x_1\\
+      \vdots\\
+      x_n
+    \end{array}
+    \right)
+    \mbox{ et }
+    y=
+    \left(
+    \begin{array}{c}
+      y_1\\
+      \vdots\\
+      y_n
+    \end{array}
+    \right)
+    $$
+
+
+
+    et on construit une matrice $A \in \R^{m \times n}$ et deux vecteurs $b_x \in \R^m, b_y \in \R^m$.
+    Chaque ligne de
+    $A$ et chaque entrée de $b_x$ et de $b_y$ décrivent une connexion. Pour chaque $i=1, \ldots, m$, nous pouvons distinguer deux cas
+    suivant que la ligne $i$ de $A$ décrit une connexion entre deux composants, ou entre un composant et une borne d'entrée/sortie.
+    \begin{itemize}
+      \item Si $i$ décrit une connexion entre deux composants $j$ et $k$ (avec $j < k$), alors
+
+        $$a_{il}=
+        \left\{
+          \begin{array}{rl}
+            1 & \mbox{si } l=j\\
+            -1 & \mbox{si } l=k\\
+            0 & \mbox{sinon}
+          \end{array}
+        \right.
+        \mbox{ et }
+        b_{x, i}=0, b_{y,i}=0
+        $$
+
+        et nous avons  $a_i^Tx-b_{x,i}=x_j-x_k$ et $a_i^Ty-b_{y,i}=y_j-y_k.$
+
+      \item Si $i$ décrit une connexion entre un composant $j$ et une borne d'entrée/sortie de coordonnée $(\bar x, \bar y)$, alors
+
+        $$a_{il}=
+        \left\{
+          \begin{array}{rll}
+            1 & \mbox{si } l=j\\
+            0 & \mbox{sinon}
+          \end{array}
+        \right.
+        \mbox{ et }
+        b_{x, i}=\bar x, b_{y,i}=\bar y
+        $$
+
+        et nous avons $a_i^Tx-b_{x,i}=x_j-\bar x$ et $a_i^Ty-b_{y,i}=y_j-\bar y.$
+
+    \end{itemize}
+
+    Le problème consiste à déterminer les coordonnées des composants qui minimisent
+    la plus grande distance de Manhattan
+    entre deux composants connectés, ou entre un composant et une borne. (Remarque: La distance de Manhattan entre les
+    points de coordonnées
+    $(x_0, y_0)$ et
+    $(x_1, y_1)$ est donnée par
+    $|x_1-x_0|+|y_1-y_0|$.) Formulez ce problème sous la forme d'un problème
+    d'optimisation. En utilisant la propriété
+    $|a|+|b|=\max(a+b, a-b, -a+b, -a-b)$, formulez le problème sous la
+    forme d'un problème d'optimisation linéaire.
+
+    \begin{solution}
+
+    \end{solution}
+
+\end{enumerate}

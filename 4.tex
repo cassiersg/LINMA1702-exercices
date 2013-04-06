@@ -1,0 +1,361 @@
+\section{Méthode du simplexe}
+
+\begin{enumerate}
+
+  \item Soit le problème d'optimisation
+
+    $
+    \begin{array}{lrcr}
+      \mini & -2x_1 - x_2 \\
+      & x_1 - x_2 & \leq & 2\\
+      & x_1 +  x_2 & \leq & 6\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    Convertissez ce problème sous forme standard et trouvez un sommet pour lequel $x_1 =x_2=0$. Résolvez le problème au moyen de la méthode
+    du simplexe. Tracez une représentation graphique en terme des variables $x_1, x_2$ et indiquez le chemin suivi par la méthode.
+
+    \begin{solution}
+      $x^{*} = (4,2,0,0)$
+    \end{solution}
+
+  \item Considérez le problème
+
+
+
+    $
+    \begin{array}{llcr}
+      \mini & 20 x_1+\alpha x_2+12 x_3\\
+      & x_1  & \leq & 400\\
+      &2x_1+\beta x_2+x_3 & \leq & 1000\\
+      &2x_1+\gamma x_2+ 3x_3 & \leq & 1600\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Proposez, si possible, des valeurs pour $\alpha, \beta$ et $\gamma$ pour lesquelles:
+
+    \begin{enumerate}
+
+      \item Le coût optimal est fini et la solution optimale est unique.
+
+      \item Le coût optimal est fini et il y a une infinité de solutions optimales.
+
+      \item Le coût optimal est non borné (trouvez une paramétrisation de valeurs de $x$ parmi lesquelles se trouvent des solutions de coûts
+        arbitrairement faibles).
+
+      \item Le poly\`edre possède un sommet dégénéré.
+
+
+
+
+    \end{enumerate}
+
+
+
+
+
+
+
+    \begin{solution}
+      Néant
+    \end{solution}
+
+  \item
+    Résoudre par l'algorithme du simplexe les problèmes
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 2x_1+3x_2\\
+      & x_1+2x_2 & \leq & 4\\
+      & x_1+x_2 & = & 3\\
+      & x_1, x_2& \geq & 0
+    \end{array}
+    $
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 20 x_1+16x_2+12 x_3\\
+      & x_1  & \leq & 400\\
+      &2x_1+x_2+x_3 & \leq & 1000\\
+      &2x_1+2x_2+ 3x_3 & \leq & 1600\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 4x_1+3x_2+6x_3\\
+      & 3x_1+x_2+3x_3 & \leq & 30\\
+      & 2x_1+2x_2+3x_3 & \leq & 40\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & -x_1+4x_2\\
+      & -3x_1+4x_2 & \leq & 6\\
+      & x_1+2x_2 & \leq & 4\\
+      & x_2& \geq & -3
+    \end{array}
+    $
+
+
+
+
+
+
+
+
+    \begin{solution}
+      a) $x^{*} = (2,1,0)$ \\
+      \newline
+      $\begin{array}
+      {ccc|l}
+      0 & 0 & 1 & -z+7\\ \hline
+      1 & 0 & -1 & 2 \\
+      0 & 1 & 1 & 1
+      \\\end{array}$ \\
+      \newline
+      \newline
+      b) $ x^{*} = (200,600,0,300,0,0)$ \\
+      \newline
+      $\begin{array}
+      {cccccc|l}
+      0 & 0 & 10 & 0 & 4 & 6 & -z + 13600 \\  \hline
+      1 & 0 & -0.5 & 0 & 1 & -0.5 & 200 \\
+      0 & 1 & 2 & 0 & -1 & 1 & 600 \\
+      0 & 0 & 0.5 & 1 & -1 & 0.5 & 200
+      \\\end{array}$\\
+      \newline
+      \newline
+      c) $x^{*} = (0,10,\frac{20}{3}, 0,0)$ \\
+      \newline
+      $\begin{array}
+      {ccccc|l}
+      1 & 0 & 0 & \frac{5}{2} & 1 & -z +70 \\ \hline
+      \frac{4}{3} & 0 & 1 & \frac{2}{3} & -\frac{1}{3} & \frac{20}{3} \\
+      -1 & 1 & 0 & - \frac{1}{2} & 1 & 10
+      \\\end{array}$\\
+      \newline
+      \newline
+      d) $x^{*} = (\frac{2}{5}, \frac{9}{5}, 0,0,\frac{24}{5})$ \\
+      \newline
+      $\begin{array}
+      {ccccc|l}
+      0 & 0 & \frac{3}{5} & \frac{4}{5} & 0 & - z + \frac{34}{5} \\ \hline
+      0 & 1 & \frac{1}{10} & \frac{3}{10} & 0 & \frac{9}{5} \\
+      1 & 0 & -\frac{1}{5} & \frac{2}{5} & 0 & \frac{2}{5} \\
+      0 & 0 & \frac{1}{10} & \frac{3}{10} & 1 & \frac{24}{5}
+      \\\end{array}$\\
+      \newline
+      \newline
+    \end{solution}
+
+  \item Nous reprenons un des problèmes précédents. Un étudiant dispose de 100 heures de travail pour
+    étudier les examens A, B et C. Il pense gagner par heure de travail sur chaque cours 1/5 de points pour
+    le cours A, 2/5 de points pour le cours B et 3/5 pour le cours C. Chaque examen est coté sur 20. Les
+    exercices de ces cours comptent pour la moitié de la cote finale. Ses résultats pour les exercices lui
+    ont été communiqués. Il a obtenu 12/20 pour A, 12.5/20 pour B et 13.4/20 pour C.  L'étudiant doit obtenir au minimum une cote globale de 10/20 pour chaque
+    cours. Tous les cours ont la même pondération et l'étudiant désire obtenir la   moyenne la plus élevée possible.
+
+    Formulez ce problème comme un problème d'optimisation linéaire  et résolvez-le. Vous pouvez utiliser le fait que l'étudiant a avantage à utiliser la
+    totalité des 100 heures de travail. L'étudiant obtiendra-t-il une distinction?
+
+
+
+
+
+    \begin{solution}
+      Soient $t_{A}$, $t_{B}$ et $t_{C}$, le nombre d'heures étudiées pour $A$, $B$ et $C$.
+      \newline
+      $$ \frac{37.9}{120} - min - \frac{1}{120}(t_{A} + 2t_{B} + 3t_{C}) $$
+      avec les contraintes : \\
+      \newline
+      $40 \le t_{A} \le 140$ \\
+      $18.75 \le t_{B} \le 68.75 $ \\
+      $11 \le t_{C} \le 43.3333$ \\
+      $t_{A} + t_{B} + t_{C} = 100$ \\
+      \newline
+      Le tableau initial est donné par : \\
+      \newline
+      $\begin{array}
+      {ccccccccc|l}
+      -\frac{1}{120} & -\frac{2}{120} & -\frac{3}{120} &0&0&0&0&0&0& -z + 0.316\\ \hline
+      1&0&0&1&0&0&0&0&0&140 \\
+      1&0&0&0&-1&0&0&0&0&40 \\
+      0&1&0&0&0&1&0&0&0&68.75 \\
+      0&1&0&0&0&0&-1&0&0&18.75 \\
+      0&0&1&0&0&0&0&1&0&43.3333 \\
+      0&0&1&0&0&0&0&0&-1&11 \\
+      1&1&1&0&0&0&0&0&0&100
+      \\\end{array}$\\
+      \newline
+      \newline
+      Solution : $T^{*} = (40,18.75,41.25,\dots) \in \mathbb{R}^{9}$ soit une moyenne de $65,13$\% (Satisfaction).
+    \end{solution}
+
+  \item Une société produit des biens A, B et C. La production des biens nécessite l'utilisation de 4 machines. Les temps de
+    production et les profits générés sont repris dans le tableau\\
+
+    $
+    \begin{array}{l|llll|l}
+      & 1 & 2 & 3 & 4 & \mbox{profit}\\
+      \hline
+      A & 1 & 3 & 1 & 2 & 6\\
+      B & 6 & 1 & 3 & 3 & 6\\
+      C & 3 & 3 & 2 & 4 & 6
+    \end{array}
+    $
+    \\
+
+    Si les temps de production disponibles sur les machines 1, 2, 3 et 4  sont de 84, 42, 21 et 42,
+    déterminez la quantité de biens à produire pour maximiser le profit.
+
+
+
+
+
+
+    \begin{solution}
+      Soit $x_{ij}$ la quantité de biens $i$ produite par la machine $j$ et $t_{ij}$, le temps de production du bien $i$ par la machine $j$.
+      \newline
+      $$ -min -6\sum_{i}^{3} \sum_{j}^{4}x_{ij}$$
+      sous les contraintes \\
+      $$ \sum_{i}^{3} t_{i1}x_{i1} \le 84$$
+      $$ \sum_{i}^{3} t_{i2}x_{i2} \le 42$$
+      $$ \sum_{i}^{3} t_{i3}x_{i3} \le 21$$
+      $$ \sum_{i}^{3} t_{i4}x_{i4} \le 42$$
+      Le tableau final est :\\
+      \newline
+      $\begin{array}
+      {cccccccccccccccc|l}
+      0&12&0&0&30&0&12&3&12&12&6&6&10&6&0&4.5&-z+1008 \\ \hline
+      1&0&0&0&6&0&0&0&3&0&0&0&1&0&0&0&84\\
+      0&3&0&0&0&1&0&0&0&3&0&0&0&1&0&0&42\\
+      0&0&1&0&0&0&3&0&0&0&2&0&0&0&1&0&21\\
+      0&0&0&1&0&0&0&\frac{3}{2}&0&0&0&2&0&0&0&1&21
+      \\\end{array}$\\
+    \end{solution}
+
+  \item Résoudre par la méthode du simplexe en utilisant la règle de Bland
+
+
+
+    $
+    \begin{array}{llcr}
+      \maxi & 10 x_1-57 x_2-9x_3-24x_4\\
+      & 0.5x_1-5.5x_2-2.5x_3+9x_4 & \leq & 0\\
+      & 0.5x_1-1.5x_2-0.5x_3+x_4 & \leq & 0\\
+      & x_1 & \leq &1\\
+      & x_1, x_2, x_3, x_4 & \geq & 0
+    \end{array}
+    $
+
+
+    \begin{solution}
+      La règle de Bland consiste à choisir la variable $x_{r}$ de plus petit indice $r$ parmi les variables candidates à l'entrée $i = 1,2, \dots, n$ (idem pour les variables candidates à la sortie). \\
+      \newline
+      Néant
+    \end{solution}
+
+  \item Proposez une méthode de recherche d'un sommet du polyhèdre
+
+    $
+    \begin{array}{lrcr}
+      & 2x_1-3x_2 +2x_3 & \geq & 3\\
+      & -x_1+x_2 +x_3 & \geq & 5\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+       Le tableau d'initialisation est : \\
+       \newline
+      $\begin{array}
+      {ccccccc|l}
+      0&0&0&0&0&1&1&z  \\ \hline
+      2&-3&2&-1&0&1&0&5 \\
+      -1&1&1&0&-1&0&1&5
+      \\\end{array}$\\
+      \newline
+      \newline
+      $x^{*} = (0,0,0,0,0,5,5)$ est un sommet de ce polyèdre.
+    \end{solution}
+
+  \item  Considérez le problème d'optimisation
+
+    $
+    \begin{array}{llcr}
+      \mini & 20 x_1+\alpha x_2+12 x_3\\
+      & x_1  & \leq & 4\\
+      &2x_1 - x_2+x_3 & \leq & 10\\
+      &2x_1+\beta x_2+ 3x_3 & \leq & 16\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+
+    Trouvez une solution optimale au moyen de l'algorithme du simplexe lorsque $\alpha=-2$ et $\beta =1$. Proposez des
+    valeurs pour
+    $\alpha$ et $\beta$  pour lesquelles le coût optimal est non borné et proposez dans ce cas une solution pour laquelle le coût
+    optimal est inférieur à -1000.
+
+
+
+
+
+    \begin{solution}
+      Pour $\alpha = -2$ et $\beta = 1$, le tableau final devient : \\
+       \newline
+      $\begin{array}
+      {cccccc|l}
+      24&0&18&0&0&2&z+32 \\ \hline
+      1&0&0&1&0&0&4 \\
+      4&0&4&0&1&0&26 \\
+      2&1&3&0&0&1&16
+      \\\end{array}$\\
+      \newline
+      La solution vaut $x^{*} = (0,16,0,4,26,0)$. \\
+      \newline
+      Le coût est non-borné pour $\alpha$ et $\beta$ strictement négatifs. (Voir CM4, tr. 16) \\
+      Pour obtenir un coût inférieur à -1000, il faut paramétrer la demi-droite totalement contenue dans le polyèdre : \\
+      On pose $x_{2} = \lambda \geq 0$. Dans ce cas, la demi-droite $(0,\lambda,,0,4,10+\lambda,16-\beta \lambda)$ appartient au polyèdre. On a donc $z = \alpha \lambda$. Pour obtenir un coût inférieur à -1000, on peut prendre par exemple : \\
+      \newline
+      $\lambda = 1$ \\
+      $\beta = -1$ \\
+      $\alpha = -2000$
+    \end{solution}
+
+  \item  Considérez le problème d'optimisation
+
+    $
+    \begin{array}{llcr}
+      \maxi & \alpha x_1+16x_2+12 x_3\\
+      & x_1  & \leq & 400\\
+      &2x_1+x_2+x_3 & \leq & 1000\\
+      &2x_1+2x_2+ 3x_3 & \leq & 1600\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Trouvez une solution optimale au moyen de l'algorithme du simplexe lorsque $\alpha=20$.  Existe-t-il une valeur de $\alpha$ pour laquelle le coût optimal
+    est non borné? Si oui,  proposez une solution pour laquelle le coût  est supérieur à 10000. Si non, justifiez votre réponse.
+
+    \begin{solution}
+      Même principe.
+    \end{solution}
+
+\end{enumerate}

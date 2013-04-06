@@ -1,0 +1,631 @@
+\section{Dualité I: formulation, relations d'exclusion, solution}
+
+
+{\bf Forme géométrique}
+
+Problème primal
+
+$
+\begin{array}{lrcr}
+  \mini & c^T x\\
+  & A x & \geq &  b\\
+  & x   & \geq & 0
+\end{array}
+$
+
+Problème dual
+
+$
+\begin{array}{lrcr}
+  \maxi & b^Ty\\
+  & A^T y & \leq &  c\\
+  & y   & \geq & 0
+\end{array}
+$\\
+
+
+{\bf Forme standard}
+
+
+
+Problème primal
+
+$
+\begin{array}{lrcr}
+  \mini & c^T x\\
+  & A x & = &  b\\
+  & x   & \geq & 0
+\end{array}
+$
+
+
+
+Problème dual
+
+
+$
+\begin{array}{lrcr}
+  \maxi & b^T y\\
+  & A^T y & \leq &  c
+\end{array}
+$
+
+
+\newpage
+
+
+
+\begin{enumerate}
+
+  \item \label{e5.1} Trouvez le dual du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 3x_1-9x_2\\
+      & 2x_1-x_2+x_3 & \geq & 3\\
+      & x_1-x_2 -3x_3 & \geq & 2\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $$ max ~3y_{1} + 2y_{2} $$
+      $$2y_{1}  + y_{2} \le 3$$
+      $$-y_{1} - y_{2} \le -9$$
+      $$y_{1} -3y_{2} \le 0$$
+      $$y_{i} \geq 0$$
+      $
+      \begin{array}{llcr}
+        \maxi & 3y_1 + 2y_2\\
+        & 2y_1 + y_2 & \leq & 3\\
+        & -y_1 - y_2 & \leq & -9\\
+        & y_1 - 3y_2 & \leq & 0\\
+        & y & \geq & 0
+      \end{array}
+      $
+    \end{solution}
+
+
+  \item Trouvez le dual du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 3x_1-9x_2\\
+      & 4x_1-x_2+x_3 & = & 3\\
+      & x_1-x_2 -6x_3 & \geq & 2\\
+      & x_1-4x_2 -6x_3 & \leq & 8\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $$ max ~3y_{1} -3y_{2} + 2y_{2} - 8y_{4}$$
+      $$ 4y_{1} -4y_{2} + y_{3} -y_{4} \le 3$$
+      $$ -y_{1} +y_{2}-y_{3}+4y_{4} \le -9$$
+      $$ y_{1} -y_{2}-6y_{3} +6y_{4} \le 0$$
+      $$-y_{1} +y_{2} +6y_{3}-6y_{4} \le 0$$
+      $
+      \begin{array}{lrcr}
+        \maxi & 3y_1 + 2y_2 + 8y_3\\
+        & 4y_1 + y_2 + y_3 & \leq & 3\\
+        & -y_1 + -y_2 -4y_3 & \leq & 2\\
+        & y_1 -6y_2 -6y_3 & = & 0\\
+        & y_2 & \geq & 0\\
+        & y_3 & \leq & 0
+
+      \end{array}
+      $
+    \end{solution}
+
+
+  \item Trouvez le dual du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & c^T x\\
+      & a_1^T x& = & b_1\\
+      & a_2^T  x & \geq & b_2\\
+      & a_3^T x & \leq & b_3\\
+      & x& \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $$ max ~b^{T}y$$
+      $$a_{1}y_{1} \le c_{1} $$
+      $$a_{2}y_{2} \le c_{2} $$
+      $$a_{3}y_{3} \le c_{3} $$
+      $$y_{1} ~libre, ~y_{2} \geq0, y_{3} \le0$$
+      $
+      \begin{array}{llcr}
+        \maxi & b^T x\\
+        & Ay & \leq & c\\
+        & y_2 & \geq & 0\\
+        & y_3 & \leq & 0
+      \end{array}
+      $
+
+      où $A = \begin{pmatrix}a_1 & a_2 & a_3\end{pmatrix}$
+    \end{solution}
+
+  \item Trouvez le dual du problème de trois variables
+
+    $
+    \begin{array}{llcr}
+      \mini & c^T x\\
+      & a^T x& = & b\\
+      & x_1 &  & \mbox{libre}\\
+      & x_2 & \geq & 0\\
+      & x_3 & \leq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $b$ est un scalaire : \\
+      \newline
+      $$max ~b.y$$
+      $$a_{1}y = c_{1}$$
+      $$a_{2}y \le c_{2}$$
+      $$a_{3}y \geq c_{3}$$
+      $$y ~libre$$
+    \end{solution}
+
+  \item Trouvez une formulation duale du  problème
+
+    $
+    \begin{array}{lrcr}
+      \mini & c^T x\\
+      & A x & = &  b\\
+      & x   & \geq & a
+    \end{array}
+    $
+
+    où $a \geq 0$.
+
+    \begin{solution}
+      $$max~b^{T}y_{1} + a^{T}y_{2}$$
+      $$A^{T}y_{1} + Iy_{2} = c$$
+      $$y_{1}~libre ~et~y_{2} \geq0$$
+
+
+
+      L'astuce ici est de prendre des nouvelles variables pour chacune des
+      (in)équations.
+      On réécrit donc le problème d'optimisation linéaire comme suit
+
+      $
+      \begin{array}{lrcr}
+        \mini & c^T x\\
+        & A x & = &  b\\
+        & I x   & \geq & a\\
+        & x & & \mbox{ libre}
+      \end{array}
+      $
+
+      où le dual appairait plus clairement
+
+      $
+      \begin{array}{lrcr}
+        \maxi & b^Ty_1+a^Ty_2\\
+        & Ay_1 + Iy_2 & = & c\\
+        & y_2 & \geq & 0.
+      \end{array}
+      $
+
+      Si $x$ était un vecteur, $y_1$ et $y_2$ seront des vecteurs également.
+
+      On peut s'en sortir avec moins de variables $y_i$ en faisant
+      le changement de variable $x' + a = x$, d'où
+
+      $
+      \begin{array}{lrcr}
+        \mini & c^T x' + c^Ta\\
+        & A x' & = &  b - Aa\\
+        & x'   & \geq & 0.
+      \end{array}
+      $
+
+      On peut retirer $c^Ta$ car c'est une constante.
+      Le dual est alors
+
+      $
+      \begin{array}{lrcr}
+        \maxi & (b-Aa)^Ty\\
+        & A^Ty & \leq & c
+      \end{array}
+      $
+
+      \textbf{TODO} comment utilise-t-on le fait que $a \geq 0$ ?
+
+      \textbf{TODO} ça a du sens de prendre le dual si on a fait un changement
+      de variable ?
+    \end{solution}
+
+  \item Trouvez une formulation duale du  problème
+
+    $
+    \begin{array}{lrcrcrcr}
+      \mini & c^T x\\
+      & b_1 & \leq & A x & \leq &  b_2\\
+      & x   & \geq & 0
+    \end{array}
+    $
+
+    \begin{solution}
+      $$max~ b_{1}^{T}y_{1} + b_{2}^{T}y_{2}$$
+      $$A^{T}y_{1} \le c$$
+      $$A^{T}y_{2} \le c$$
+      $$y_{1} \geq 0 ~et ~y_{2} \le 0$$
+    \end{solution}
+
+
+  \item Comment résoudre le problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 50x_1+25x_2\\
+      & x_1+3x_2 & \geq & 8\\
+      & 3x_1+4x_2 & \geq & 19\\
+      & 3x_1+x_2 & \geq & 7\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    sans effectuer de phase d'initialisation?
+
+
+    \begin{solution}
+      Dual : \\
+      $$max~8y_{1} + 19y_{2} +7y_{3}$$
+      $$y_{1} + 3y_{2} +3y_{3} \le50$$
+      $$3y_{1}+4y_{2}+y_{3}\le 25$$
+      $$y_{i} \geq0$$
+      Si $c \geq 0$, alors $y=0$ est une solution admissible de base du dual et on peut directement démarrer l'algorithme dual simple. Par la dualité forte, on aura au final $b^{T}y^{*} = c^{T}x^{*}$.
+    \end{solution}
+
+  \item Soit le problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 2x_1-x_2\\
+      & 2x_1-x_2 -x_3 & \geq & 3\\
+      & x_1-x_2 +x_3 & \geq & 2\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Quel est le dual de ce problème?
+    Proposez des bornes supérieures et inférieures aussi précises que possible pour l'objectif optimal du primal.
+    Faites de même pour le dual.
+
+    \begin{solution}
+
+      Dual :
+      $$ max~3y_{1} +2y_{2}$$
+      $$2y_{1} + y_{2} \le2$$
+      $$-y_{1}-y_{2} \le -1$$
+      $$-y_{1}+y_{2} \le 0$$
+      $$ y_{i} \geq 0$$
+      \newline
+      Les contraintes d'inégalités imposent : \\
+      $$ \frac{1}{2} \le y_{1} \le \frac{2}{3}$$
+      $$ \frac{1}{3} \le y_{2} \le \frac{2}{3}$$
+      La fonction coût du dual admet comme borne inférieure $\frac{13}{6}$ et comme borne supérieure $\frac{10}{3}$. \\
+      La fonction coût du primal n'admet pas de borne supérieure mais admet $3$ comme borne inférieure.
+
+
+
+      $
+      \begin{array}{llcr}
+        \maxi & 3y_1 + 2y_2\\
+        & 2y_1 + y_2 & \leq & 2\\
+        & -y_1 - y_2 & \leq & -1\\
+        & -y_1 + y_2 & \leq & 0\\
+        & y_1, y_2 & \geq & 0
+      \end{array}
+      $
+
+      Pour l'objectif du primal, on sait que que $z^* \geq 3$ car,
+      par la première inéquation, on a $z = 2x_1 - x_2 \geq 3 + x_3$ et on
+      a aussi par la dernière inéquation $x_3 \geq 0$.
+      De plus, on remarque que $(2, 0, 0)$ est une solution admissible donnant
+      $z = 2\cdot 2 - 0 = 4$ donc $3 \leq z^* \leq 4$.
+
+      Pour l'objectif du dual, on a, par la première inéquation du dual,
+      $$ z = 3y_1 + 2y_2 \leq 4y_1 + 2y_2 \leq 4 $$
+      Comme $(1, 0)$ est une solution admissible du dual donnant $w = 3$,
+      on a $3 \leq w^* \leq 4$.
+
+      Pour les petits curieux, la solution optimal vaut $10/3$ et correspond
+      à $(y_1, y_2) = (2/3, 2/3)$ et $(x_1, x_2, x_3) = (5/3, 0, 1/3)$.
+    \end{solution}
+
+  \item L'objectif optimal du problème
+
+    $
+    \begin{array}{llcr}
+      \mini & 7x_1+10x_2\\
+      & 2x_1+3x_2 & \geq & 10\\
+      & 3x_1+4x_2 & \geq & 19\\
+      & x_1+2x_2 & \geq & 9\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    est égal à $z_*=47$. La solution $(0, 2, 1)$ est elle une solution admissible optimale du dual?
+
+
+    \begin{solution}
+      Dual : \\
+      $$ max ~ 10y_{1} + 19y_{2} + 9y_{3}$$
+      $$2y_{1} + 3y_{2} + y_{3} \le 7$$
+      $$3y_{1} + 4y_{2} + 2y_{3} \le 10$$
+      $$y_{i} \geq 0$$
+      La solution $x = (0,2,1)$ est admissible pour le problème dual car $x$ appartient au polyèdre. Et,
+      par la dualité forte, $z^{*} = 47$ est une solution admissible optimale car les coûts sont égaux pour les deux problèmes.
+
+
+
+
+      La solution admissible optimal du dual est $y^{*} = (\frac{7}{2}, \frac{1}{2})$. Le principe d'exclusion stipule que $x^{T}(c-A^{T}y) = 0$ ce qui entraîne la condition $x_{1} = 0$.  Pour minimiser le problème du primal, il suffit de serrer les contraintes pour $x_{2}$ et $x_{3}$. On obtient $x^{*} = (0, \frac{1}{3}, \frac{1}{3})$.
+    \end{solution}
+
+  \item Soit le problème suivant
+
+    $
+    \begin{array}{llcr}
+      \mini & 2x_1+9x_2+3x_3\\
+      & -2x_1+2x_2 +x_3 & \geq & 1\\
+      & x_1+4x_2 -x_3 & \geq & 1\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Trouvez le dual de ce problème et résolvez-le graphiquement. Utilisez les relations d'exclusion pour obtenir une solution du primal.
+
+    \begin{solution}
+    \end{solution}
+
+  \item Soit le problème suivant
+
+    $
+    \begin{array}{llcr}
+      \mini & 5x_1-3x_2\\
+      & 2x_1-x_2 +4x_3 & \leq & 4\\
+      & x_1+x_2 +2x_3 & \leq & 5\\
+      & 2x_1-x_2 +x_3 & \geq & 1\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Le sommet associé à la base $(x_1, x_2, x_3)$ est un sommet optimal de ce problème. Quel est le dual de ce problème? Trouvez une solution du problème dual.
+
+
+    \begin{solution}
+      Dual :
+      $$max ~4y_{1} + 5y_{2} + y_{3} $$
+      $$ 2y_{1} + y_{2}  + 2y_{3} \le 5$$
+      $$ -y_{1} + y_{2}  -y_{3} \le -3$$
+      $$ 4y_{1} + 2y_{2}  + y_{3} \le 0$$
+      $$y_{i} \geq 0$$
+      Solution du primal $x^{*} = (1,2,1)$. Or, par le principe d'exclusion, $x^{*T}(c -A^{T}y) = 0$. Dans ce cas, il faut résoudre le système d'équations suivant : \\
+      \[
+      \begin{pmatrix}
+      2 & 1 & 2\\
+      -1 & 1 & -3\\
+      4 & 2 & 1
+      \end{pmatrix}
+      \begin{pmatrix}
+      y_{1}\\
+      y_{2}\\
+      y_{3}
+      \end{pmatrix}
+      \stackrel{=}{}
+      \begin{pmatrix}
+      5\\
+      -3\\
+      0
+      \end{pmatrix}
+      \]
+      Comme $det(A) \ne 0$, la solution est unique. $y = (-2.8889, 4.1111,3.3333)$. Cette solution n'est pas admissible.
+    \end{solution}
+
+  \item  Jacques choisit un nombre de 1 à $m$, son adversaire, Yvan, choisit indépendamment
+    de Jacques, un nombre de 1 à $n$. Si Jacques choisit $i$ et Yvan $j$, Jacques reçoit
+    $a_{ij}$ d'Yvan. Jacques et Yvan appliquent des stratégies probabilistes; Jacques
+    choisit
+    $i$ avec une probabilité
+    $x_i$  ($x_i \geq 0$ et $\sum_1^m x_i =1$) et Yvan choisit $j$ avec une probabilité
+    $y_j$ ($y_j \geq 0$ et $\sum_1^n y_i =1$).
+
+    \begin{enumerate}
+      \item Soit $x$ et $y$ les stratégies de Jacques et d'Yvan. Quelle est le gain moyen de
+        Jacques par partie?
+      \item Jacques divulgue la stratégie probabiliste qu'il applique. Quelle stratégie Yvan
+        doit-il appliquer pour maximiser son gain? Formulez ce problème comme un problème
+        d'optimisation.
+      \item \label{l1} Nous considérons maintenant un jeu précis. Jacques et Yvan choisissent tout les deux un nombre
+        de  1 à 3. Le joueur ayant choisi le nombre le plus élevé reçoit 1 EUR de son adversaire, sauf si ce
+        nombre est exactement d'une unité supérieur au nombre choisi par l'adversaire, auquel cas,
+        il donne 3 EUR à son adversaire. Lorsque les nombres choisis sont égaux, les joueurs font
+        match nul et personne ne gagne rien. Jacques annonce sa stratégie probabiliste: il joue 1,
+        2 et 3 avec les probabilités $0$,
+        $1/2$ et $1/2$. Quelle stratégie Yvan doit-il choisir pour maximiser son gain et quel est
+        son gain moyen par partie? La stratégie optimale pour Yvan est-elle unique?
+      \item \label{t1} On considère le jeu décrit en \ref{l1}. Jacques sait que s'il joue suivant la stratégie
+        probabilitiste
+        $x$; Yvan choisira la stratégie probabiliste $y$ qui maximise son gain moyen. Sachant cela, quelle stratégie
+        Jacques doit-il adopter pour maximiser son gain moyen? Ecrivez ce
+        problème sous forme d'un problème d'optimisation linéaire.
+
+      \item Résolvez le problème formulé en \ref{t1}. Quel est le gain moyen de Jacques?
+
+    \end{enumerate}
+
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Soit le problème d'optimisation linéaire suivant:
+
+    $
+    \begin{array}{rrllll}
+      \mini & \sum_{i=1}^n c_i x_i& & \\
+      &\sum_{i=1}^n a_i x_i&=&b  \\
+      &x_i  & \geq & 0 & i=1, \ldots, n
+    \end{array}
+    $
+
+
+
+% polyhedron
+
+    Remarquez que ce problème ne possède qu'une seule contrainte.
+
+    \begin{enumerate}
+      \item  En utilisant un argument élémentaire, trouvez une condition simple d'existence d'une solution admissible.
+
+
+      \item  En  supposant que le coût optimal est fini, proposez une méthode d'obtention d'une solution optimale et justifiez votre réponse. (Indice: pour répondre à cette question vous pouvez si vous le désirez faire appel au théorème fondamental de l'optimisation linéaire.)
+
+      \item Sous quelles conditions le problème possède-t-il plusieurs solutions?
+
+    \end{enumerate}
+
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Soit le problème d'optimisation
+    \begin{eqnarray*}
+      \max_{x_i} & x_1+ x_2+ x_3 &  \\
+      &2 x_1 + x_3  &\leq 2 \\
+      &2 x_2 + x_3  &\leq 2 \\
+      &x_i &\geq 0
+    \end{eqnarray*}
+
+  \begin{enumerate} \item Enumérez les sommets de ce polyèdre. L'un des
+      ces sommets est-il optimal? \item Quelles sont (toutes) les
+      solutions optimales? \item Que deviennent ces solutions optimales si
+      on exige que les solutions soient entières? \item Ecrivez le dual de
+        ce problème, résolvez-le, et faites le lien avec la solution du
+        primal.
+    \end{enumerate}
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Soit le problème d'optimisation
+    \begin{eqnarray*}
+      \min_{x_i} & 3 x_1- x_2+ x_3 &  \\
+      &-x_1 -x_2+ x_3  &\ge 1 \\
+      &x_1- x_2 +\alpha x_3  &= 2 \\
+      &x_1, x_2 &\ge 0
+    \end{eqnarray*}
+    où  $0.25\le\alpha\le4$ est un paramètre.
+    \begin{enumerate}
+      \item Quel est le dual de ce problème?
+      \item Résolvez le dual en fonction
+        du paramètre $\alpha$ par une méthode graphique.
+      \item Déduisez les solutions du primal.
+    \end{enumerate}
+
+
+
+
+
+
+
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Une entreprise vend 20 tonnes de sa production à répartir
+    entre 5 acheteurs (voir les prix payés dans le tableau plus bas).
+    Pour des raisons de logistique:
+    \begin{itemize}
+      \item l'acheteur A a un accord privilégié et achète au moins 2
+      tonnes, dans toutes les circonstances. \item l'acheteur B achète
+      au plus 2 tonnes. \item l'acheteur C achète au moins 2 tonnes ou
+      alors n'achète rien. \item l'acheteur D achète au plus 5 tonnes.
+      \item l'acheteur E achète une quantité qui ne diffère pas de plus
+        de 3 tonnes avec la quantité achetée par D.
+    \end{itemize}
+
+    Les prix payés par les différents acheteurs sont, en milliers
+    d'Euros par tonne:
+    \begin{center}
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline %\vspace{2pt}
+        Acheteur & A & B & C & D & E\\
+        \hline
+        Prix payé & 20 & 50 & 20 & 25 & 15 \\
+        \hline
+      \end{tabular}
+    \end{center}
+
+    \begin{enumerate}
+      \item  Formulez ce problème comme un problème d'optimisation. Ce
+        problème est-il linéaire ? Sinon, reformulez-le comme un problème
+        d'optimisation linéaire.
+%%\\(b) Sans calculer la solution optimale, que pouvez-vous dire du nombre
+%%de contraintes serrées à l'optimal ? Cela vous permet-il d'obtenir
+%%des informations au sujet de la solution optimale ? Si oui,
+%%lesquelles ? Sinon, pourquoi ? Justifiez votre réponse.
+
+      \item %%Supposez que la résolution du problème formulé en (a) vous fournisse un
+%%objectif optimal de valeur $z^*$.
+        Formulez le problème qui consisterait à maximiser la quantité
+        vendue à l'acheteur C, parmi l'ensemble des solutions optimales du
+        problème formulé en (a).
+      \item  Résolvez le problème formulé en (a), en considérant que
+        l'acheteur C n'achète rien.
+
+    \end{enumerate}
+
+
+    \begin{solution}
+    \end{solution}
+
+  \item Vrai ou faux? Justifiez vos choix par quelques lignes, un contre-exemple ou un dessin. Soyez assez précis pour convaincre
+    que vous ne devinez pas la réponse mais ne fournissez toutefois pas une justification formelle et détaillée.
+
+    \begin{enumerate}
+
+
+
+% duality
+
+      \item Le dual d'un problème d'optimisation linéaire existe toujours.
+
+%\item Un problème d'optimisation linéaire  possède exactement autant de variables que son dual.
+
+      \item Si un problème d'optimisation linéaire possède une solution admissible, alors son dual  également et les coûts optimaux sont égaux.
+
+      \item Si un problème d'optimisation linéaire admet un coût optimal fini, alors son dual également.
+
+%\item If a linear optimization problem has an unbounded optimal
+%cost, then its dual is infeasible.
+
+
+%\item If a linear optimization problem is infeasible, then its
+%dual has unbounded optimal cost.
+
+
+%\item L'optimisation linéaire permet de faire une régression linéaire minimisant la norme $||\cdot||_\infty$ des résidus.
+
+
+
+
+    \end{enumerate}
+
+
+    \begin{solution}
+    \end{solution}
+
+
+\end{enumerate}

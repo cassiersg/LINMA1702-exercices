@@ -1,0 +1,309 @@
+\section{Problèmes d'optimisation linéaire}
+
+Soit le problème
+
+$$
+\begin{array}{ll}
+  \mini   &  f(x_1, \ldots, x_n) \\
+  \mbox{sous la contrainte} &  (x_1, \ldots, x_n)  \in \Omega
+\end{array}
+$$
+
+
+Les scalaires $x_1, \ldots, x_n \in \R$ sont les \emph{variables de décision}, $f$  est la \emph{fonction objectif}
+(on parle volontier de \emph{fonction coût} pour un problème de minimisation et de \emph{fonction profit} pour un problème de maximisation), et
+$\Omega$ est le \emph{domaine admissible}. Un élément de $\R^n$ est une \emph{solution}, c'est une \emph{solution admissible}   si
+$x
+\in \Omega$. Si la solution admissible
+$x^\star$ est telle que
+$f(x^\star) \leq f(x)$ pour toute autre solution admissible
+$x$,  la solution $x^\star$ est \emph{optimale}. L'\emph{objectif optimal}   est alors donné par
+$f(x^\star)$. Lorsqu'il existe, le coût optimal est unique. Par contre, il peut y avoir de nombreuses solutions optimales et l'ensemble des solutions
+optimales peut être non borné. Si pour tout
+$K$ il existe une solution admissible $x \in \Omega$ telle que $f(x) \leq K$, le coût est dit \emph{non borné}. On
+dit aussi que le  coût est \emph{égal à
+$-\infty$}.\\
+
+\newpage
+
+
+
+\begin{enumerate}
+
+
+  \item Un étudiant dispose de 100 heures de travail pour étudier les examens A, B et C. Il pense gagner par heure de travail et par
+    cours: 1/5 de points pour le cours A, 2/5 de points pour le cours B et 3/5 pour le cours C. Chaque examen est coté sur 20. Les
+    exercices de ces cours comptent pour la moitié de la cote finale. Ses résultats pour les exercices lui ont été communiqués. Il a
+    obtenu 12/20 pour A, 12.5/20 pour B et 13.4/20 pour C.  L'étudiant doit obtenir au minimum une cote globale de 10/20 pour chaque cours. Tous
+    les cours ont la même pondération et l'étudiant désire obtenir la  moyenne la plus élevée possible.  Formulez ce problème comme un problème d'optimisation
+    linéaire (solution lors d'une séance ultérieure).
+    \begin{solution}
+      Soient $x_{A}, x_{B}~et~x_{C}$ le nombre d'heures consacrées aux cours $A, B$ et $C$. La valeur de la fonction est sur $20$.\\
+      $$6,317 - min -\frac{1}{3}(\frac{x_{A}}{5} + \frac{2x_{B}}{5} + \frac{3x_{C}}{5})$$
+      sous les contraintes \\
+      \[
+        \begin{pmatrix}
+          -1 & -1 & -1\\
+          1 & 0 & 0\\
+          -1 & 0 & 0 \\
+          0 & 1 & 0 \\
+          0 & -1 & 0 \\
+          0 & 0 & 1 \\
+          0 & 0 & -1
+        \end{pmatrix}
+        \begin{pmatrix}
+          x_{A}\\
+          x_{B}\\
+          x_{C}
+        \end{pmatrix}
+        \stackrel{\ge}{}
+        \begin{pmatrix}
+          -100\\
+          20\\
+          -50\\
+          9,375\\
+          -25\\
+          5,5\\
+          \frac{-50}{3}
+        \end{pmatrix}
+      \]
+      \newline
+      Solution : $X^{*} = (50,25,\frac{50}{3})^{T}$
+
+    \end{solution}
+
+
+  \item Une société produit des biens A, B et C. La production des biens nécessite l'utilisation de 4 machines. Les temps de production
+    et les profits générés sont repris dans le tableau suivant\\
+
+    $
+    \begin{array}{l|llll|l}
+      & 1 & 2 & 3 & 4 & \mbox{profit}\\
+      \hline
+      A & 1 & 3 & 1 & 2 & 6\\
+      B & 6 & 1 & 3 & 3 & 6\\
+      C & 3 & 3 & 2 & 4 & 6
+    \end{array}
+    $
+    \\
+
+
+    Les temps de production disponibles sur les machines 1, 2, 3 et 4  sont de 84, 42, 21 et 42 et la société cherche à  maximiser son
+    profit. Formulez ce problème comme un problème d'optimisation linéaire.
+
+    \begin{solution}
+      Soient $x_{A}, x_{B}~et~x_{C}$ la quantité de biens $A, B$ et $C$ produite. \\
+      $$- min -6(x_{A} + x_{B} + x_{C})$$
+      sous les contraintes \\
+      \[
+        \begin{pmatrix}
+          -1 & -6 & -3\\
+          -3 & -1 & -3\\
+          -1 & -3 & -2\\
+          -2 & -3 & -4
+        \end{pmatrix}
+        \begin{pmatrix}
+          x_{A}\\
+          x_{B}\\
+          x_{C}
+        \end{pmatrix}
+        \stackrel{\ge}{}
+        \begin{pmatrix}
+          -84\\
+          -42\\
+          -21\\
+          -42
+        \end{pmatrix}
+      \]
+      avec $x_{A}, x_{B}~et~x_{C}$ des variables positives.\\
+      \newline
+      Solution : $X^{*} = (...,...,...)^{T}$
+
+    \end{solution}
+
+
+  \item Il y a en Belgique $I$ communes, $J$ écoles et $G$ niveaux
+    d'enseignement. L'école $j$ possède  une capacité d'accueil de $c_{jg}$
+    écoliers pour le niveau $g$. Dans la commune $i$, le nombre d'écoliers devant
+    suivre le niveau d'enseignement $g$ est égal à $s_{ig}$. Enfin, la distance de
+    l'école $j$ à la commune $i$ est égale à $d_{ij}$. On demande d'affecter les écoliers dans les écoles de façon à minimiser la
+    distance totale parcourue par l'ensemble des écoliers. Formulez ce problème comme un problème d'optimisation linéaire.
+
+
+    \begin{solution}
+      Soit $x_{ijg}$ le nombre d'étudiants d'une commune $i$ allant à l'école $j$ de niveau $g$. \\
+      \newline
+      $$ min \sum_{i=1}^I \sum_{j=1}^J~d_{ij}~\sum_{g=1}^G~x_{ijg} $$
+      sous les contraintes
+      $$ \sum_{i=1}^I x_{ijg} \le c_{jg} \qquad \forall j, \forall g$$
+      $$ \sum_{j=1}^J x_{ijg} \le s_{ig} \qquad \forall i, \forall g$$
+      avec $x_{ijg} \geq 0$
+    \end{solution}
+
+
+  \item Résolvez géométriquement le problème suivant
+
+    $
+    \begin{array}{lrcl}
+      \maxi & 12 x_1+16 x_2\\
+      & x_1 + x_2 & \leq & 150\\
+      & 1/2 x_1 + 3x_2 & \leq & 200\\
+      & x_1, x_2 & \geq & 0
+    \end{array}
+    $
+
+    La fonction objectif change et devient $17 x_1+16 x_2$. Que se passe-t-il? L'ensemble des solutions optimales est-il toujours fini?
+    \begin{solution}
+      La solution optimale se situe à un sommet du polyèdre. En observant la fonction objectif, on constate que le sommet est à l'intersection des contraintes 
+      $$ x_{1} + x_{2} \le 150$$
+      $$ \frac{1}{2}x_{1} + 3x_{2} \le 200$$ 
+      Solution : $X^{*} = (100,50)^{T}$\\
+      \newline
+      La solution est unique parce que la droite n'intersecte qu'un point du domaine lorsque sa valeur est maximale. 
+    \end{solution}
+
+
+  \item Soit le problème d'optimisation linéaire
+
+    $
+    \begin{array}{lrcr}
+      \mini & c_1 x_1 + c_2 x_2 + c_3 x_3\\
+      & x_1 + x_2 & \geq & 1\\
+      & x_1 + 2x_2 & \leq & 3\\
+      & x_1, x_2, x_3 & \geq & 0
+    \end{array}
+    $
+
+    Représentez l'ensemble des solutions admissibles. Trouvez le coût optimal et les solutions  optimales pour les
+    valeurs suivantes de $c$: $c=(-1, 0, 1)$,
+    $c=(0, 1, 0)$ et
+    $c=(0, 0, -1)$.
+
+    \begin{solution}
+      Cas I : $c = (-1,0,1)$ \\
+      $$ min -x_{1} + x_{3}$$
+      Solution : $X^{*} = (3,0,0)^{T}$\\
+      \newline
+      Cas II : $c = (0,1,0)$ \\
+      $$ min~x_{2}$$
+      Solution : $X^{*} = (\alpha,0,\beta)^{T}$ avec $ 1\le \alpha \le 3$ et $\beta \geq 0$\\
+      \newline
+      Cas II : $c = (0,0,-1)$ \\
+      $$ min~-x_{3}$$
+      Solution : $X^{*} = (x_{1},x_{2},\infty)^{T}$ avec $x_{1}$, $x_{2}$ des variables positives telles que $x_{1} + x_{2} \geq 1$ et $x_{1} + 2x_{2} \le 3$. 
+
+    \end{solution}
+
+
+  \item  Trouvez, si possible, des problèmes d'optimisation linéaire pour lesquels le problème
+
+    \begin{enumerate}
+      \item Poss\`ede un co\^ut optimal fini et exactement une solution optimale.
+      \item Poss\`ede exactement deux solutions optimales.
+      \item Possède un coût optimal infini.
+      \item Possède un coût optimal fini et un ensemble de solutions optimales infini et borné.
+      \item Possède un coût optimal fini et un ensemble de solutions  optimales non-borné.
+
+    \end{enumerate}
+
+    \begin{solution}
+      (a) Coût optimal fini et exactement une solution optimale : 
+      $$ min~x_{1} + x_{2}$$
+      sous les contraintes 
+      $$ x_{1} \le 1$$
+      $$ x_{2} \le 3$$
+      $$ x_{2} + x_{1} \le 3 $$
+      $$ x_{1}, x_{2} \geq 0$$
+      (b) Deux solutions optimales : 
+      $$ min ~x_{1}$$
+      sous les contraintes
+      $$ x_{1} \le 1$$
+      $$ x_{2} \le 1$$
+      $$ x_{1}, x_{2} \geq 0$$
+      avec $ x_{1}$ et $x_{2}$ entiers. \\
+      \newline
+      (c) Coût optimal infini : 
+      $$ min ~ -x_{1} $$ 
+      sous les contraintes
+      $$ x_{2} \le 1 $$ 
+      $$ x_{1}, x_{2} \geq 0$$
+      (d) Coût optimal fini et ensemble infini de solutions optimales : 
+      $$ min ~x_{1}$$
+      sous les contraintes
+      $$ x_{1} \le 1$$
+      $$ x_{2} \le 1$$
+      $$ x_{1}, x_{2} \geq 0$$
+      (e) Coût optimal fini et ensemble de solutions optimales non-borné
+      $$ min ~ x_{1} $$ 
+      sous les contraintes
+      $$ x_{2} \le 1 $$ 
+      $$ x_{1}, x_{2} \geq 0$$
+      (f) Identique question (a)
+
+    \end{solution}
+
+  \item Soit le problème d'optimisation linéaire
+
+    $
+    \begin{array}{ll}
+      \mini &  c^T x \\
+      \mbox{ }
+      & A x \geq b
+    \end{array}
+    $
+
+    Comment évolue l'objectif optimum si on ajoute une contrainte?
+
+    \begin{solution}
+
+      Il y a deux cas possibles. Premièrement, l'objectif optimum a un coût plus grand ou égal au problème de base sans la contrainte. Deuxièmement, cette contrainte est telle qu'il n'existe plus de domaine où la fonction est définie. Dans ce cas, il n'y a plus de solution optimale et le coût n'est plus défini. 
+
+    \end{solution}
+
+  \item Un sous-ensemble $V$ de $\R^n$ est convexe si $x, y \in V \Rightarrow \lambda x + (1-\lambda) y \in V$ pour tout $0 < \lambda <1$. Démontrez que
+    l'ensemble des solutions optimales d'un problème d'optimisation linéaire est un ensemble convexe.
+
+    \begin{solution}
+
+      Soient $x^{*}, y^{*} \in V$, des solutions optimales du problème 
+      $$ min ~c^{T}x$$
+      $$ Ax \geq b$$
+      1. $\lambda x^{*} + (1-\lambda)y^{*} \in V$ ssi $c^{T}(\lambda x^{*} + (1-\lambda)y^{*}) = c^{T}x^{*}$\\
+      \newline
+      Preuve : 
+      $$c^{T}(\lambda x^{*} + (1-\lambda)y^{*}) $$
+      $$= \lambda c^{T}x^{*}  + (1-\lambda)c^{T}y^{*}$$
+      $$ = \lambda c^{T}x^{*}  + (1-\lambda)c^{T}x^{*}$$
+      car $c^{T}x^{*} = c^{T}y^{*}$ \\
+      \newline
+      Et donc, \\
+      $$\lambda c^{T}x^{*}  + (1-\lambda)c^{T}y^{*} = c^{T}x^{*}$$
+
+    \end{solution}
+
+
+  \item On considère  un graphe dirigé donné par un ensemble de noeuds $V$ et d'arcs $E$. L'arc
+    $(i, j) \in E$ a une  capacité maximale de
+    $h_{ij}$ et est de coût unitaire
+    $c_{ij}$. En certains noeuds
+    $i \in V$ il y a une quantité
+    $b_i$ qui entre  ($b_i >0$) ou qui sort ($b_i <0$). Nous supposons que les quantité entrantes et sortantes s'équilibrent, $\sum_i b_i=0$. Nous
+    cherchons un flot admissible de coût minimum.  Formulez ce problème comme un problème d'optimisation linéaire. La solution d'un tel problème est-elle
+    toujours unique? Parmi l'ensemble des solutions, on cherche celle(s) qui maximisent le flot en un noeud donn\'e.
+    Formulez ce probl\`eme comme un probl\`eme d'optimisation lin\'eaire. Montrez comment  rechercher le   plus court chemin entre deux noeuds dans un
+    graphe au moyen de la solution d'un  problème de flot de coût minimum.
+
+    \begin{solution}
+      Soit $x_{ij}$ la quantité (positive!) de biens circulant de $i$ à $j$ avec $(i,j) \in E$ avec $i \ne j$. 
+      $$ min \sum_{i=1}^I \sum_{j=1}^J c_{ij}x_{ij}$$
+      sous les contraintes
+      $$x_{ij} \le h_{ij} \qquad \forall i,j$$
+      $$\sum_{j=1}^J (x_{ij} - x_{ji}) = b_{i} \qquad i \in M_{1}$$
+      $$\sum_{j=1}^J (x_{ij} - x_{ji}) = -b_{i} \qquad i \in M_{2}$$
+      $$\sum_{i=1}^I \sum_{j=1}^J x_{ij} = 0 $$
+
+    \end{solution}
+
+
+
+\end{enumerate}
