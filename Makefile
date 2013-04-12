@@ -27,3 +27,6 @@ clean:
 
 show: $(MAIN_NAME).$(EXT)
 	$(PDFVIEWER) $(MAIN_NAME).$(EXT) 2> /dev/null &
+
+release:
+	./update_dropbox.sh
