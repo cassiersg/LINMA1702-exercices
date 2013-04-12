@@ -19,38 +19,38 @@
 \usepackage{accents}
 \usepackage{url}
 
-\newenvironment{myindentpar}[1]%
-{\begin{list}{}%
-         {\setlength{\leftmargin}{#1}}%
-         \item[]%
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{tikzpagenodes}
+\usetikzlibrary{calc}
+
+%http://tex.stackexchange.com/questions/107191/indented-box-that-split-in-multiple-pages
+\mdfdefinestyle{mysquare}{%
+  leftmargin=0pt,
+  rightmargin={\dimexpr4pt+2ex\relax},
+  innertopmargin=2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  skipbelow={\dimexpr0.5\baselineskip+\topskip\relax},
+  singleextra={%
+  \path let \p1=(P), \p2=(O)
+    in node[font=\bfseries] at ([yshift=-2ex]0.5*\x1-\x2,\y1) {Solution};
+  \fill[black] ([xshift=2pt,yshift=2pt]P) rectangle ++(1ex,1ex);
+  \fill[black] ([xshift=-2pt,yshift=-2pt]O) rectangle ++(-1ex,-1ex);
+  \fill[black] ([xshift=-2pt,yshift=2pt]O|-P) rectangle ++(-1ex,1ex);
+  \fill[black] ([xshift=2pt,yshift=-2pt]O-|P) rectangle ++(1ex,-1ex);
+  },
+  firstextra={%
+  \path let \p1=(P), \p2=(O)
+    in node[font=\bfseries] at ([yshift=-2ex]0.5*\x1-\x2,\y1) {Solution};
+  \fill[fill=black] ([xshift=2pt,yshift=2pt]P) rectangle ++(1ex,1ex);
+  \fill[black] ([xshift=-2pt,yshift=2pt]O|-P) rectangle ++(-1ex,1ex);
+  },
+  secondextra={%
+  \fill[fill=black] ([xshift=2pt,yshift=-2pt]O-|P) rectangle ++(1ex,-1ex);
+  \fill[black] ([xshift=-2pt,yshift=-2pt]O) rectangle ++(-1ex,-1ex);
+  }
 }
-{\end{list}}
-\usepackage{longtable}
-\usepackage{framed}
-\usepackage{changepage}   % for the adjustwidth environment
-\newenvironment{solution}%
-{\par\rule{1ex}{1ex}
-\hspace{\stretch{1}}
-\textbf{Solution}
-\hspace{\stretch{1}}
-\rule{1ex}{1ex}\par%
-\hspace{2ex}% indente tout de 2ex
-%\begin{myindentpar}{7ex}
-%\quote \quote
-\begin{minipage}{0.95\linewidth}% s'arrête un peu avant les carrés de droite
-\begin{framed}}% met un contour noir
-%\addtolength{\leftskip}{4cm}
-%\begin{adjustwidth}{6cm}{}
-%\begin{longtable}{|p{1.1\linewidth}|}
-%\hline}
-{\end{framed}\end{minipage}
-%{\\\hline\end{longtable}
-%\end{adjustwidth}
-%\end{myindentpar}
-%\endquote \endquote
-\par
-\rule{1ex}{1ex}\hspace{\stretch{1}}
-\hspace{\stretch{1}}\rule{1ex}{1ex}\par}
+\newmdenv[style=mysquare]{solution}
+
 \newcommand{\maxi}{\mbox{maximiser}}
 \newcommand{\mini}{\mbox{minimiser}}
 
@@ -158,8 +158,8 @@ Exercices (partie optimisation linéaire)}
 
 \end{document}
 
-%  ____                               
-% |  _ \ ___  ___  ___ _ ____   _____ 
+%  ____
+% |  _ \ ___  ___  ___ _ ____   _____
 % | |_) / _ \/ __|/ _ \ '__\ \ / / _ \
 % |  _ <  __/\__ \  __/ |   \ V /  __/
 % |_| \_\___||___/\___|_|    \_/ \___|
