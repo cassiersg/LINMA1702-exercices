@@ -15,10 +15,10 @@ Les scalaires $x_1, \ldots, x_n \in \R$ sont les \emph{variables de décision}, 
 $\Omega$ est le \emph{domaine admissible}. Un élément de $\R^n$ est une \emph{solution}, c'est une \emph{solution admissible}   si
 $x
 \in \Omega$. Si la solution admissible
-$x^\star$ est telle que
-$f(x^\star) \leq f(x)$ pour toute autre solution admissible
-$x$,  la solution $x^\star$ est \emph{optimale}. L'\emph{objectif optimal}   est alors donné par
-$f(x^\star)$. Lorsqu'il existe, le coût optimal est unique. Par contre, il peut y avoir de nombreuses solutions optimales et l'ensemble des solutions
+$\xopt$ est telle que
+$f(\xopt) \leq f(x)$ pour toute autre solution admissible
+$x$,  la solution $\xopt$ est \emph{optimale}. L'\emph{objectif optimal}   est alors donné par
+$f(\xopt)$. Lorsqu'il existe, le coût optimal est unique. Par contre, il peut y avoir de nombreuses solutions optimales et l'ensemble des solutions
 optimales peut être non borné. Si pour tout
 $K$ il existe une solution admissible $x \in \Omega$ telle que $f(x) \leq K$, le coût est dit \emph{non borné}. On
 dit aussi que le  coût est \emph{égal à
@@ -56,8 +56,8 @@ $-\infty$}.\\
       $
 
       La solution est
-      $x^{*} = \begin{pmatrix}
-        50 & 25 & \frac{50}{3}
+      $\xopt = \begin{pmatrix}
+        40 & \frac{80}{3} & \frac{100}{3}
       \end{pmatrix}^{T}$.
 
     \end{solution}
@@ -82,33 +82,32 @@ $-\infty$}.\\
     profit. Formulez ce problème comme un problème d'optimisation linéaire.
 
     \begin{solution}
-      Soient $x_{A}, x_{B}~et~x_{C}$ la quantité de biens $A, B$ et $C$ produite. \\
-      $$- \min -6(x_{A} + x_{B} + x_{C})$$
-      sous les contraintes \\
-      \[
+      Soient $x_{A}$, $x_{B}$ et $x_{C}$
+      la quantité de biens $A, B$ et $C$ produite.
+      \[ \max 6(x_{A} + x_{B} + x_{C}) \]
+      sous les contraintes
+      \begin{align*}
         \begin{pmatrix}
-          -1 & -6 & -3\\
-          -3 & -1 & -3\\
-          -1 & -3 & -2\\
-          -2 & -3 & -4
+          1 & 6 & 3\\
+          3 & 1 & 3\\
+          1 & 3 & 2\\
+          2 & 3 & 4
         \end{pmatrix}
         \begin{pmatrix}
           x_{A}\\
           x_{B}\\
           x_{C}
         \end{pmatrix}
-        \stackrel{\ge}{}
+        & \leq
         \begin{pmatrix}
-          -84\\
-          -42\\
-          -21\\
-          -42
-        \end{pmatrix}
-      \]
-      avec $x_{A}, x_{B}~et~x_{C}$ des variables positives.\\
-      \newline
-      Solution : $X^{*} = (...,...,...)^{T}$
-
+          84\\
+          42\\
+          21\\
+          42
+        \end{pmatrix}\\
+        x & \geq 0.
+      \end{align*}
+      La solution est $\xopt = (\frac{105}{8},\frac{21}{8},0)^{T}$.
     \end{solution}
 
 
@@ -122,11 +121,13 @@ $-\infty$}.\\
 
     \begin{solution}
       Soit $x_{ijg}$ le nombre d'étudiants d'une commune $i$ allant à l'école $j$ de niveau $g$.
-      $$ \min \sum_{i=1}^I \sum_{j=1}^J~d_{ij}~\sum_{g=1}^G~x_{ijg} $$
+      \[ \min \sum_{i=1}^I \sum_{j=1}^J d_{ij} \sum_{g=1}^G x_{ijg} \]
       sous les contraintes
-      $$ \sum_{i=1}^I x_{ijg} \le c_{jg} \qquad \forall j, \forall g$$
-      $$ \sum_{j=1}^J x_{ijg} \le s_{ig} \qquad \forall i, \forall g$$
-      avec $x_{ijg} \geq 0$
+      \begin{align*}
+        \sum_{i=1}^I x_{ijg} & \leq c_{jg} & \forall j, g\\
+        \sum_{j=1}^J x_{ijg} & = s_{ig} & \forall i, g\\
+        x & \geq 0.
+      \end{align*}
     \end{solution}
 
 
@@ -143,12 +144,54 @@ $-\infty$}.\\
 
     La fonction objectif change et devient $17 x_1+16 x_2$. Que se passe-t-il? L'ensemble des solutions optimales est-il toujours fini?
     \begin{solution}
-      La solution optimale se situe à un sommet du polyèdre. En observant la fonction objectif, on constate que le sommet est à l'intersection des contraintes 
-      $$ x_{1} + x_{2} \le 150$$
-      $$ \frac{1}{2}x_{1} + 3x_{2} \le 200$$ 
-      Solution : $x^{*} = (100,50)^{T}$\\
-      \newline
-      La solution est unique parce que la droite n'intersecte qu'un point du domaine lorsque sa valeur est maximale. 
+      Pour résoudre l'exercice, on prend la droite $12x_1 + 16x_2 = z$.
+      On part de $z = \infty$ et on diminue $z$ jusqu'à intercepter l'ensemble
+      amissible.
+      On constate alors que le sommet est à l'intersection des droites
+      \begin{align*}
+        x_{1} + x_{2} & = 150\\
+        \frac{1}{2}x_{1} + 3x_{2} & = 200.
+      \end{align*}
+      La solution optimale est $\xopt = (100,50)^{T}$.
+      La solution optimale est unique parce que la droite n'intersecte
+      qu'un point du domaine lorsque sa valeur est maximale.
+
+      Avec $17 x_1 + 16x_2$, la solution optimale est à l'intersection de
+      \begin{align*}
+        x_{1} + x_{2} & = 150\\
+        x_2 = 0.
+      \end{align*}
+      Elle vaut donc $\xopt = (150,0)$ et est à nouveau unique.
+      \begin{center}
+        \begin{tikzpicture}[scale=0.02]
+        % Axis
+        \draw[axis] (0,0) -- (200,0) node[right=\nudge cm] {\(x_1\)};
+        \draw[axis] (0,0) -- (0,100) node[above=\nudge cm] {\(x_2\)};
+        \begin{scope}
+          % Avoid going too far
+          \clip (-\nudge,-\nudge) rectangle (200+\nudge,100+\nudge);
+          \draw[line] (0,200/3) -- (400,0) coordinate (ineq1);
+          \draw[line] (0,150) -- (150,0) coordinate (ineq2);
+          \begin{scope}
+          %Clip sélectionne ce qu'il y a dans le polygone dessiné.
+            \clip (0,200/3) |- (150,0) -- (100,50);
+            \fill[hash] (0,0) rectangle (200,100);
+            %\draw[dashed,line] (0,1) -- (2,2) -- (3,1) -- (2,0);
+          % (4,4) to be enough, anyway clip restrict us to the good part
+          \end{scope}
+        \end{scope}
+        %\node[above right] at (ineq1) {\(\mathllap{-}3 x_1 + 4 x_2 = 4\)};
+        %\node[above left] at (ineq1) {\(x_1 + x_2 = 1\)};
+        %\node[above right] at (ineq2) {\(x_1 + 2 x_2 = 3\)};
+        \foreach \coord/\adj in {
+          {(150,0)}/below,
+          {(100,50)}/above right,
+          {(0,200/3)}/left,
+        } {
+          \fill \coord circle (2pt) node[\adj] {\coord};
+        }
+        \end{tikzpicture}
+      \end{center}
     \end{solution}
 
 
@@ -169,18 +212,52 @@ $-\infty$}.\\
     $c=(0, 0, -1)$.
 
     \begin{solution}
-      Cas I : $c = (-1,0,1)$ \\
-      $$ \min -x_{1} + x_{3}$$
-      Solution : $x^{*} = (3,0,0)^{T}$\\
-      \newline
-      Cas II : $c = (0,1,0)$ \\
-      $$ \min x_{2}$$
-      Solution : $x^{*} = (\alpha,0,\beta)^{T}$ avec $ 1\le \alpha \le 3$ et $\beta \geq 0$\\
-      \newline
-      Cas II : $c = (0,0,-1)$ \\
-      $$ \min -x_{3}$$
-      Solution : $x^{*} = (x_{1},x_{2},\infty)^{T}$ avec $x_{1}$, $x_{2}$ des variables positives telles que $x_{1} + x_{2} \geq 1$ et $x_{1} + 2x_{2} \le 3$. 
-
+      \begin{enumerate}
+        \item $c = (-1,0,1)$.
+          $$ \min -x_{1} + x_{3} $$
+          La solution optimale est $\xopt = (3,0,0)^{T}$
+          avec un coût de $-3$.
+        \item $c = (0,1,0)$.
+          $$ \min x_{2} $$
+          La solution optimale est  $\xopt = (\alpha,0,\beta)^{T}$
+          avec $1\le \alpha \le 3$ et $\beta \geq 0$.
+          Le coût est de 0.
+        \item $c = (0,0,-1)$
+          $$ \min -x_{3} $$
+          La solution optimale est $\xopt = (x_{1},x_{2},\infty)^{T}$
+          avec $x_{1}$, $x_{2}$ des variables positives telles que
+          $x_{1} + x_{2} \geq 1$ et $x_{1} + 2x_{2} \le 3$.
+          Le coût est non borné, c'est $-\infty$.
+      \end{enumerate}
+      \begin{center}
+        \begin{tikzpicture}
+        % Axis
+        \draw[axis] (0,0) -- (3,0) node[right=\nudge cm] {\(x_1\)};
+        \draw[axis] (0,0) -- (0,1.5) node[above=\nudge cm] {\(x_2\)};
+        \begin{scope}
+          % Avoid going too far
+          \clip (-\nudge,-\nudge) rectangle (3+\nudge,1.5+\nudge);
+          \draw[line] (-1,2) -- (2,-1) coordinate (ineq1);
+          \draw[line] (-1,2) -- (4,-0.5) coordinate (ineq2);
+          \begin{scope}
+          %Clip sélectionne ce qu'il y a dans le polygone dessiné.
+            \clip (0,1.5) -- (3,0) -- (1,0) -- (0,1);
+            \fill[hash] (0,0) rectangle (3,1.5);
+            %\draw[dashed,line] (0,1) -- (2,2) -- (3,1) -- (2,0);
+          % (4,4) to be enough, anyway clip restrict us to the good part
+          \end{scope}
+        \end{scope}
+        %\node[above right] at (ineq1) {\(\mathllap{-}3 x_1 + 4 x_2 = 4\)};
+        \node[above left] at (ineq1) {\(x_1 + x_2 = 1\)};
+        \node[above right] at (ineq2) {\(x_1 + 2 x_2 = 3\)};
+        \foreach \coord/\adj in {
+          {(3,0)}/above,% or right, left, below left, above right
+          {(0,1.5)}/right,% or right, left, below left, above right
+        } {
+          \fill \coord circle (2pt) node[\adj] {\coord};
+        }
+        \end{tikzpicture}
+      \end{center}
     \end{solution}
 
 
@@ -196,39 +273,31 @@ $-\infty$}.\\
     \end{enumerate}
 
     \begin{solution}
-      (a) Coût optimal fini et exactement une solution optimale : 
-      $$ \min x_{1} + x_{2}$$
-      sous les contraintes 
-      $$ x_{1} \le 1$$
-      $$ x_{2} \le 3$$
-      $$ x_{2} + x_{1} \le 3 $$
-      $$ x_{1}, x_{2} \geq 0$$
-      (b) Deux solutions optimales : 
-      $$ \min x_{1}$$
-      sous les contraintes
-      $$ x_{1} \le 1$$
-      $$ x_{2} \le 1$$
-      $$ x_{1}, x_{2} \geq 0$$
-      avec $x_{1}$ et $x_{2}$ entiers. \\
-      \newline
-      (c) Coût optimal infini : 
-      $$ \min -x_{1} $$ 
-      sous les contraintes
-      $$ x_{2} \le 1 $$ 
-      $$ x_{1}, x_{2} \geq 0$$
-      (d) Coût optimal fini et ensemble infini de solutions optimales : 
-      $$ \min x_{1}$$
-      sous les contraintes
-      $$ x_{1} \le 1$$
-      $$ x_{2} \le 1$$
-      $$ x_{1}, x_{2} \geq 0$$
-      (e) Coût optimal fini et ensemble de solutions optimales non-borné
-      $$ \min x_{1} $$ 
-      sous les contraintes
-      $$ x_{2} \le 1 $$ 
-      $$ x_{1}, x_{2} \geq 0$$
-      (f) Identique question (a)
-
+      \begin{enumerate}
+        \item
+          $$ \min x_1$$
+          sous la contrainte
+          $$ x_{1} \geq 0$$
+        \item C'est impossible car l'ensemble des solutions optimales
+          est un ensemble convexe donc s'il y a deux solutions optimales
+          $\xopt$ et $y^*$. On a aussi une infinité de solution donnée par
+          \[ \lambda x + (1-\lambda) y \]
+          où $0 < \lambda < 1$.
+          Il ne peut donc pas y en avoir exactement 2.
+        \item
+          $$ \max x_1 $$
+          sous la contrainte
+          $$ x_1 \geq 0 $$
+        \item
+          $$ \min x_{1}$$
+          sous les contraintes
+          $$ x_{1} \leq 1$$
+          $$ x_{1} \geq 0$$
+        \item
+          $$ \min x_1 $$
+          sous la contrainte
+          $$ x_1 \geq 0$$
+      \end{enumerate}
     \end{solution}
 
   \item Soit le problème d'optimisation linéaire
@@ -244,30 +313,52 @@ $-\infty$}.\\
     Comment évolue l'objectif optimum si on ajoute une contrainte?
 
     \begin{solution}
-
-      Il y a deux cas possibles. Premièrement, l'objectif optimum a un coût plus grand ou égal au problème de base sans la contrainte. Deuxièmement, cette contrainte est telle qu'il n'existe plus de domaine où la fonction est définie. Dans ce cas, il n'y a plus de solution optimale et le coût n'est plus défini. 
-
+      Il y a deux cas possibles.
+      \begin{itemize}
+        \item Soit l'objectif optimum augmente ou ne change pas.
+          En effet, l'objectif optimum ne peut diminuer car on ne fait
+          que restreindre l'ensemble admissible;
+        \item Soit cette contrainte est telle que l'ensemble optimal
+          devient vide.
+          Dans ce cas, il n'y a plus de solution optimale
+          et le coût n'est plus défini.
+      \end{itemize}
     \end{solution}
 
   \item Un sous-ensemble $V$ de $\R^n$ est convexe si $x, y \in V \Rightarrow \lambda x + (1-\lambda) y \in V$ pour tout $0 < \lambda <1$. Démontrez que
     l'ensemble des solutions optimales d'un problème d'optimisation linéaire est un ensemble convexe.
 
     \begin{solution}
-
-      Soient $x^{*}, y^{*} \in V$, des solutions optimales du problème 
+      On sait que tout problème peut s'écrire sous forme géométrique.
+      Considérons donc cette forme.
+      Soient $\xopt, y^{*}$ des solutions optimales du problème
       $$ \min c^{T}x$$
       $$ Ax \geq b$$
-      1. $\lambda x^{*} + (1-\lambda)y^{*} \in V$ ssi $c^{T}(\lambda x^{*} + (1-\lambda)y^{*}) = c^{T}x^{*}$\\
-      \newline
-      Preuve : 
-      $$c^{T}(\lambda x^{*} + (1-\lambda)y^{*}) $$
-      $$= \lambda c^{T}x^{*}  + (1-\lambda)c^{T}y^{*}$$
-      $$ = \lambda c^{T}x^{*}  + (1-\lambda)c^{T}x^{*}$$
-      car $c^{T}x^{*} = c^{T}y^{*}$ \\
-      \newline
-      Et donc, \\
-      $$\lambda c^{T}x^{*}  + (1-\lambda)c^{T}y^{*} = c^{T}x^{*}$$
-
+      Prouvons que $\lambda \xopt + (1-\lambda)y^{*}$ est aussi une solution
+      optimal.
+      C'est à dire que
+      \[ c^{T}(\lambda \xopt + (1-\lambda)y^{*}) = c^{T}\xopt \]
+      et que
+      \[ A(\lambda \xopt + (1-\lambda)y^{*}) \geq b. \]
+      \begin{proof}
+        Comme $\xopt$ et $y^*$ sont solutions,
+        on a $c^T\xopt = c^Ty^*$ et donc
+        \begin{align*}
+          c^{T}(\lambda \xopt + (1-\lambda)y^{*})
+          & = \lambda c^{T}\xopt  + (1-\lambda)c^{T}y^{*}\\
+          & = \lambda c^{T}\xopt  + (1-\lambda)c^{T}\xopt\\
+          & = c^{T}\xopt.
+        \end{align*}
+        Ensuite,
+        comme $A\xopt \geq b$, $Ay^* \geq b$ et $\lambda, 1-\lambda \geq 0$,
+        on a
+        \begin{align*}
+          A(\lambda \xopt + (1-\lambda)y^{*})
+          & = \lambda A\xopt + (1-\lambda)Ay^{*}\\
+          & \geq \lambda b + (1-\lambda)b\\
+          & \geq b.
+        \end{align*}
+      \end{proof}
     \end{solution}
 
 
@@ -283,16 +374,30 @@ $-\infty$}.\\
     graphe au moyen de la solution d'un  problème de flot de coût minimum.
 
     \begin{solution}
-      Soit $x_{ij}$ la quantité (positive!) de biens circulant de $i$ à $j$ avec $(i,j) \in E$ avec $i \ne j$. 
-      $$ \min \sum_{i=1}^I \sum_{j=1}^J c_{ij}x_{ij}$$
+      Soit $x_{ij}$ la quantité circulant de $i$ à $j$ avec $(i,j) \in E$.
+      Comme le graphe est dirigé, on doit imposer que $x_{ij} \geq 0$.
+      \[ \min \sum_{(i,j) \in E} c_{ij}x_{ij} \]
       sous les contraintes
-      $$x_{ij} \le h_{ij} \qquad \forall i,j$$
-      $$\sum_{j=1}^J (x_{ij} - x_{ji}) = b_{i} \qquad i \in M_{1}$$
-      $$\sum_{j=1}^J (x_{ij} - x_{ji}) = -b_{i} \qquad i \in M_{2}$$
-      $$\sum_{i=1}^I \sum_{j=1}^J x_{ij} = 0 $$
-
+      \begin{align*}
+        x_{ij} & \leq h_{ij} & \forall (i,j) \in E\\
+        \sum_{(i,j) \in E} x_{ij} - \sum_{(j,i) \in E} x_{ji}
+        & = b_{i} & \forall i \in V\\
+        \sum_{(i,j) \in E} x_{ij} & = 0.
+      \end{align*}
+      La solution n'est pas toujours unique.
+      Pour trouver les solutions optimales qui maximisent
+      le flot en un certain noeud $k$, on calcule le coût optimal $z^*$.
+      Puis on rajoute une contrainte
+      \[ \sum_{(i,j) \in E} c_{ij}x_{ij} = z^* \]
+      et on remplace l'objectif par
+      \[ \max \sum_{(k,j) \in E} h_{kj} + \sum_{(j,k) \in E} h_{jk}. \]
+      Pour calculer le plus court chemin entre deux noeuds d'un graphe,
+      si on ne veut pas prendre le coût de l'arc comme la distance entre
+      deux noeuds mais avoir la même distance pour chaque arc,
+      on peut mettre $c_{ij} = 1$.
+      Ensuite, pour calculer le plus court chemin entre
+      le noeud $s$ (source) et le noeud $t$ (target),
+      on met $b_s = 1$, $b_t = -1$ et les autres $b_i = 0$.
     \end{solution}
-
-
 
 \end{enumerate}

@@ -6,13 +6,16 @@
 \usepackage{epsfig}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{amscd}
 %\usepackage[latin1]{inputenc}
 %\usepackage{minitoc}
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[usenames]{color}
+%\usepackage[usenames]{color}
+%\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{latexsym}
 \usepackage{graphicx}
 \usepackage{geometry}
@@ -53,6 +56,7 @@
 
 \newcommand{\maxi}{\mbox{maximiser}}
 \newcommand{\mini}{\mbox{minimiser}}
+\newcommand{\xopt}{\ensuremath{x^*}}
 
 \parindent0mm
 
@@ -90,6 +94,17 @@
 
 \newcommand{\head}{{\parindent 0pt  V. Blondel \hfill INMA1702 \\}}
 
+% Pour les graphes des espaces admissibles
+% http://tex.stackexchange.com/questions/6364/how-to-plot-polygon-using-tikz
+\usepackage{tikz}
+\usepackage{mathtools}
+\def\nudge{.5}
+%\tikzset{axis/.style={ultra thick, Red!75!black, -latex, shorten <=-\nudge cm, shorten >=-2*\nudge cm}}
+\tikzset{axis/.style={thick, Red!75!black, -latex, shorten <=-0.5*\nudge cm, shorten >=-\nudge cm}}
+\tikzset{line/.style={thick,Green}}
+\tikzset{hash/.style={pattern=north west lines, pattern color=blue}}
+\usetikzlibrary{patterns}
+
 \author{Vincent Blondel\\
 Université catholique de Louvain}
 
@@ -105,7 +120,7 @@ Exercices (partie optimisation linéaire)}
 
 \begin{center}
 \textbf{Code source et bug tracker}\\
-\url{https://github.com/blegat/INMA1702-exercices}
+\url{https://github.com/blegat/LINMA1702-exercices}
 \end{center}
 
 \newpage
