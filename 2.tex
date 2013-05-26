@@ -147,8 +147,24 @@ $$
   \item Un problème d'optimisation linéaire peut-il toujours s'écrire sous la forme $\min c^Tx$ sous la contrainte $Ax = b$? Si oui, démontrez, si non, justifiez.
 
     \begin{solution}
-      Non, il manque la contrainte $x \geq 0$ pour faire la forme standard.
-
+      Non. En effet,
+      si le coût optimal est bornée, posons $z^*$ sa valeur.
+      L'ensemble de solutions optimales sera l'ensemble des solutions de
+      \[
+        \begin{pmatrix}
+          A\\c^T
+        \end{pmatrix}
+        x =
+        \begin{pmatrix}
+          b\\z^*
+        \end{pmatrix}
+      \]
+      qui est soit un point, soit la somme entre un sous espace vectoriel
+      et une solution particulière.
+      Or pour un problème d'optimisation linéaire,
+      on peut avoir d'autres ensembles de solutions comme une demi droite
+      pour $\min 1$ avec $x \geq 0$
+      qui n'est aucun de ces deux types d'ensemble.
     \end{solution}
 
   \item Une fusée se déplace en suivant une trajectoire rectiligne. Soit $x_t$, $v_t$
@@ -162,9 +178,24 @@ $$
     $\sum_{t=0}^{T-1} |a_t|$.  Formulez ce problème comme un problème d'optimisation linéaire.
 
     \begin{solution}
-      Il faut minimiser la norme $l^{1}$ puisqu'il s'agit de minimiser la consommation \textit{totale} de carburant $\sum_{t=0}^{T-1} \mid a_{t} \mid$ : 
-      $$\min \sum_{t=0}^{T-1} t_{i}$$
-      $$-t_{i} \le a_{i} \le t_{i}~ i = 1,2,\dots,T-1$$
+      En supposant $a_t$ constant sur son intervalle de temps, on a
+      \[ v_{t+1} = v_t + a_t \]
+      et
+      \[ x_{t+1} = \int_t^{t+1} v(\tau) \dif \tau
+      = \int_t^{t+1} v_t + (t-\tau)a_t \dif \tau
+      = v_t + \frac{a_t}{2}. \]
+      Le problème d'optimisation linéaire est donc
+      \begin{align*}
+        \min \sum_{t=0}^{T-1} u_t\\
+        a_t & \leq u_t & t = 0,\ldots,T-1\\
+        -a_t & \leq u_t & t = 0,\ldots,T-1\\
+        v_{t+1} & = v_t + a_t & t = 0,\ldots,T-1\\
+        x_{t+1} & = v_t + \frac{a_t}{2} & t = 0,\ldots,T-1\\
+        v_0 & = 0\\
+        x_0 & = 0\\
+        v_T & = 0\\
+        x_T & = 1.
+      \end{align*}
     \end{solution}
 
 
@@ -176,13 +207,30 @@ $$
     $|a^Tx_0 - b|/\|a\|$ avec $\|a\|=\sqrt{a_1^2+ \ldots + a_n^2}$.)
 
     \begin{solution}
-      Il faut minimiser la norme $l^{\infty}$ puisqu'il s'agit de maximiser \textit{la} plus petite des distances $\frac{\mid a^{T}x_{0} - b \mid}{\|a\|}$: 
-      $$ \min r$$
-      $$-r \le \frac{a_{i}^{T}x_{0} - b_{i}}{\|a_{i}\|} \le r ~~i = 1,2, \dots, n$$
+      \begin{align*}
+        d(x, P) & = \min_i \frac{|a_i^Tx - b_i|}{\|a_i\|}\\
+        \max_{x\in P} d(x, P)
+        & = \max_{x\in P}\min_i \frac{|a_i^Tx - b_i|}{\|a_i\|}.
+      \end{align*}
+      On a donc
+      \begin{align*}
+        \max_{x, t} t\\
+        |a_i^Tx - b_i| & \geq t\|a_i\| & \forall i\\
+        a_i^Tx & \leq b_i & \forall i
+      \end{align*}
+      ou encore, comme $a_i^Tx \leq b_i \leq 0$,
+      \begin{align*}
+        \max_{x, t} t\\
+        a_i^Tx + \|a_i\|t & \leq b_i & \forall i\\
+        a_i^Tx & \leq b_i & \forall i
+      \end{align*}
+      qui peut encore s'écrire
+      \begin{align*}
+        \max_{x, t} t\\
+        a_i^Tx + \|a_i\|t & \leq b_i & \forall i\\
+        t & \geq 0.
+      \end{align*}
     \end{solution}
-
-
-
 
 
   \item Nous considérons un ensemble de $m$ lampes disposées aux points $l_1, \ldots, l_m \in \R^2$ du plan et éclairant $n$
@@ -207,10 +255,13 @@ $$
       Il faut minimiser la norme $l^{\infty}$ puisqu'il s'agit de quantifier la déviation \textit{globale} 
       $$ \max \mid I_{i} - I_{des} \mid $$ 
       Le problème d'optimisation linéaire peut s'écrire sous la forme : 
-      $$\min ~t$$
-      $$ -t \le \sum_{j}a_{ij}p_{j} - I_{des} \le t ~~i = 1, 2, \dots, m $$
-      $$ 0 \le p_{j} \le 1$$
-      $$a_{ij} \geq 0$$
+      \begin{align*}
+        \min t\\
+        \sum_{j}a_{ij}p_{j} - t & \leq I_{des} & i = 1, 2, \dots, m\\
+        -\sum_{j}a_{ij}p_{j} - t & \leq -I_{des} & i = 1, 2, \dots, m\\
+        p_j & \leq 1\\
+        p_j & \geq 0.
+      \end{align*}
     \end{solution}
 
 
@@ -230,24 +281,29 @@ $$
     $$\min_x \max_i | x-x_i| ?$$
 
     \begin{solution}
-      I¡ Partie : \\
-      \newline
-      Soit $f = \sum_{i}^{n}(x-x_{i})^{2}$. En annulant la dérivée, on obtient : 
-      $$ 2\sum_{i}^{n}(x-x_{i}) = 0$$
-      $$ nx = \sum_{i}^{n} x_{i}$$
-      $$ x = \frac{1}{n}\sum_{i}^{n} x_{i}$$
-      \newline
-      II¡ Partie : \\
-      \newline`
-      Soit $f(x) = \sum_{i}^{n}\mid x-x_{i}\mid = \sum_{x \geq x_{i}} (x-x_{i}) - \sum_{x \le x_{i}} (x-x_{i})$\\
-      \newline
-      $f(x + \vartriangle x) = f(x) + \sum_{x \geq x_{i}} \vartriangle x - \sum_{x \le x_{i}} \vartriangle x$ \\
-      \newline
-      Si on est à la médiane, alors $x = \xopt$. Dans ce cas, $f(x + \vartriangle x) = f(x) $. Or, $\sum_{x \geq x_{i}} \vartriangle x \geq 0$ et $  \sum_{x \le x_{i}} (x-x_{i}) \geq 0$. Donc, $\xopt$ est la solution optimale. \\
-      \newline
-      III¡ Partie : \\
-      \newline
-      $$x_{*} = \frac{x_{0} + x_{n}}{2}$$
+      \begin{enumerate}
+        \item
+          Soit $f = \sum_{i=1}^{n}(x-x_{i})^{2}$.
+          En annulant la dérivée, on obtient
+          \begin{align*}
+            2\sum_{i=1}^{n}(x-x_{i}) & = 0\\
+            nx & = \sum_{i=1}^{n} x_{i}\\
+            x & = \frac{1}{n}\sum_{i=1}^{n} x_{i}.
+          \end{align*}
+        \item
+          Soit $f(x) = \sum_{i=1}^{n} |x-x_{i}| = \sum_{x \geq x_{i}}
+          (x-x_{i}) - \sum_{x < x_{i}} (x-x_{i})$.
+          En annulant la dérivée, on obtient
+          \[ \sum_{x \geq x_i}^n 1 = \sum_{x < x_i} 1. \]
+          Ce n'est pas extrêmement rigoureux car lorsque
+          $x = x_i$, ce n'est pas dérivable mais l'idée est là.
+          Lorsqu'il y a plus de $x_i$ à gauche de $x$ qu'à droite,
+          $f'(x) > 0$ et
+          lorsqu'il y a moins de $x_i$ à gauche de $x$ qu'à droite,
+          $f'(x) < 0$.
+        \item
+          \[ \xopt = \frac{\min_i x_i + \max_i x_i}{2}. \]
+      \end{enumerate}
     \end{solution}
 
 
@@ -258,7 +314,16 @@ $$
     non pas la somme des carrés)? Trouvez une description explicite de ce point pour les cas $m=2$ et $m=3$.
 
     \begin{solution}
-      $$\min \sum_{i} \mid x - b_{i} \mid $$
+      Il suffit de résoudre le problème d'optimisation linéaire
+      \begin{align*}
+        \min \sum_i t_i\\
+        x - t_i & \leq b_i\\
+        -x - t_i & \leq -b_i.
+      \end{align*}
+      Pour $m = 2$, c'est le milieur de $b_1$ et $b_2$.
+      Pour $m = 3$, c'est l'isobarycentre de $b_1$, $b_2$ et $b_3$.
+      Aussi appelé centre de gravité du triangle.
+      C'est aussi l'intersection des médianes.
     \end{solution}
 
 
