@@ -221,7 +221,66 @@
     \end{enumerate}
 
     \begin{solution}
-      \nosolution
+      Soient
+      \[ x_{ijk} =
+        \begin{cases}
+          1 & \text{si la case }i, j\text{ a la valeur }k\\
+          0 & \text{sinon}
+        \end{cases}
+      \]
+      et $I = \{1,2,\ldots,9\}$
+      \begin{enumerate}
+        \item Le problème d'optimisation linéaire est le suivant
+          \begin{align*}
+            \min 1\\
+            \sum_{j=1}^9 x_{ijk} & = 1 & \forall i,k \in I\\
+            \sum_{i=1}^9 x_{ijk} & = 1 & \forall j,k \in I\\
+            \sum_{i=r}^{r+2}\sum_{j=c}^{c+2} x_{ijk} & = 1
+            & \forall r \in \{1,4,7\}, c \in \{1,4,7\}\\
+            \sum_{k=1}^9 x_{ijk} & = 1 & \forall i,j \in I\\
+            x & \leq 1\\
+            x & \geq 0\\
+            x & \text{ entiers}.
+          \end{align*}
+          La première (resp. deuxième) condition s'assure qu'on a bien complété
+          les lignes (resp. les colonnes).
+          La troisième fait de même pour les régions.
+          La quatrième s'assure qu'on a complété un seul chiffre par
+          case.
+          Les 3 dernières s'assurent que $x$ contient des variables binaires.
+        \item
+          On va poser
+          \begin{itemize}
+            \item $a_i$ valant 1 si la ligne $i$ est complétée correctement
+              et 0 sinon;
+            \item $b_j$ valant 1 si la colonne $j$ est complétée correctement
+              et 0 sinon;
+            \item $c_{ij}$ valant 1 si la région donc un coin est en
+              $(i,j)$ est complétée correctement
+              et 0 sinon.
+          \end{itemize}
+          On peut alors exprimé le problème en le problème d'optimisation
+          linéaire suivant
+          \begin{align*}
+            \max \sum_{i=1}^9 a_i + \sum_{j=1}^9 b_j +
+            \sum_{r\in\{1,4,7\}}\sum_{c\in\{1,4,7\}} c_{rc}\\
+            \sum_{j=1}^9 x_{ijk} & \leq 1 & \forall i,k \in I\\
+            \sum_{i=1}^9 x_{ijk} & \leq 1 & \forall j,k \in I\\
+            \sum_{i=r}^{r+2}\sum_{j=c}^{c+2} x_{ijk} & \leq 1
+            & \forall r \in \{1,4,7\}, c \in \{1,4,7\}\\
+            \sum_{k=1}^9 x_{ijk} & = 1 & \forall i,j \in I\\
+            \sum_{k=1}^9\sum_{j=1}^9 x_{ijk}
+            & \geq 9a_i & \forall i \in I\\
+            \sum_{k=1}^9\sum_{i=1}^9 x_{ijk}
+            & \geq 9b_j & \forall j \in I\\
+            \sum_{k=1}^9\sum_{i=r}^{r+2}\sum_{j=c}^{c+2} x_{ijk}
+            & \geq 9c_{rc}
+            & \forall r \in \{1,4,7\}, c \in \{1,4,7\}\\
+            (x,a,b,c) & \leq 1\\
+            (x,a,b,c) & \geq 0\\
+            (x,a,b,c) & \text{ entiers}.
+          \end{align*}
+      \end{enumerate}
     \end{solution}
 
   \item \textsc{OptiTv} lance un nouveau jeu sur nos écrans.  La
