@@ -359,6 +359,7 @@ actives.\\
         a_i^Tx + \|a_i\|t & \leq b_i & \forall i\\
         t & \geq 0.
       \end{align*}
+
       C'est un problème d'optimisation linéaire à 4 variables.
       On remarque qu'en prenant $t = 0$, on retombe sur le polyèdre
       de départ dont on sait par l'énoncé qu'il possède un sommet.
@@ -426,11 +427,38 @@ actives.\\
 
 
     \begin{solution}
-      $$\min ~t$$
-      $$ -t \le ax_{i} + b - y_{i} \le t $$
-      L'erreur sera nulle pour au moins deux points. \\
-      $$\min \sum_{i}^{n} t_{i}$$
-      $$-t_{i} \le ax_{i} + b - y_{i} \le t_{i}$$
+      Soit $t$ la distance maximal, le problème se formule alors comme suit
+      \begin{align*}
+        \min t\\
+        ax_i + b - t & \leq y_i\\
+        -ax_i - b - t & \leq -y_i.
+      \end{align*}
+      On donc un problème d'optimisation linéaire à 3 variables $a,b,t$.
+      En supposant que le polyèdre formé par les contraintes a un sommet,
+      c'est à dire qu'on a au moins 3 points car si on a par exemple
+      deux points les contraintes forme un polyèdre qui ressemble à
+      un prisme de base parallélépipèdique et de hauteur infinie,
+      on peut dire, par le théorème fondamental
+      (le coût optimal sera nécessairement fini)
+      qu'au moins 3 contraintes seront actives pour le sommet optimal.
+      À moins que tous les points sont alignés (on aurait alors toutes
+      les contraintes actives et $t=0$),
+      les contraintes actives sont des contraintes de points différents.
+      La distance entre la droite et un point
+      sera donc égale pour au moins $\min(3,m)$ points.
+
+      Dans le cas d'un polynôme de degré $n$,
+      ça devient $\min(n+2,m)$ points.
+
+      Pour régler les cas d'égaliter avec une distance $z^*$,
+      il faut résoudre le problème d'optimisation linéaire suivant
+      \begin{align*}
+        \min \sum_i^n t_i\\
+        ax_i + b - t_i & \leq y_i\\
+        -ax_i - b - t_i & \leq -y_i\\
+        ax_i + b & \leq y^* + z^*\\
+        -ax_i + -b & \leq -y^* + z^*.
+      \end{align*}
     \end{solution}
 
   \item  Soit $\| \cdot \|_{\infty}$ la norme du maximum ($\| x \|_{\infty}=\max_i |x_i|$).
@@ -450,7 +478,11 @@ actives.\\
     \end{center}
 
     \begin{solution}
-      Le vecteur $b \notin Col(A) $ si et seulement si le nombre de contraintes est strictement supérieur au nombre de variables (en faisant l'hypothèse que les contraintes sont linéairement indépendantes). Pour plus d'explications, voir transparents CM 3.
+      Le vecteur $b \notin \mathcal{C}(A) $ si et seulement si le nombre de
+      contraintes est strictement supérieur au nombre de variables
+      (en faisant l'hypothèse que les contraintes
+      sont linéairement indépendantes).
+      Pour plus d'explications, voir transparents CM 3.
     \end{solution}
 
   \item Vrai ou faux? Justifiez vos choix par quelques lignes, un contre-exemple ou un dessin. Soyez assez précis pour convaincre
@@ -539,7 +571,48 @@ actives.\\
     \end{enumerate}
 
     \begin{solution}
-      a) Faux, b) Vrai, c) Faux, d) Vrai, e) Faux
+      \begin{enumerate}
+        \item Faux, on sait qu'un polyèdre est convexe or
+          $\{x | x \leq -1\} \hat \{x | x \geq 1\}$ n'est pas convexe.
+        \item Vrai, c'est même sa définition.
+        \item Faux, on sait qu'un polyèdre sous forme standard admet
+          toujours un sommet alors qu'en général un polyèdre n'admet pas
+          toujours un sommet.
+          Par exemple, $\{(x_1,x_2) \in \R^2 | x_1 \geq 0\}$ n'admet
+          pas de sommet. Il en pourra donc pas être écrit sous forme standard
+          sans faire un changement de variable qui modifiera le polyèdre.
+          Il ne faut d'ailleurs pas confondre ça avec le fait que tout
+          problème d'optimisation linéaire peut s'écrire sous forme standard.
+          Car ici, on accepte pas de changement de variable car ça
+          modifie le polyèdre.
+        \item Vrai. En effet, on ait que l'ensemble admissible $\mathcal{D}$
+          est un polyèdre.
+          L'ensemble des solutions qui ont un coût optimal
+          \[ \{x | c^T x = z^*\} =
+          \{x | c^T x \geq z^* \land (-c^T) x \geq -z^*\} \]
+          est aussi un polyèdre.
+          L'ensemble des solutions optimale est l'intersection des deux est
+          donc aussi un polyèdre car l'intersection de deux polyèdres est
+          un polyèdre.
+        \item Faux.
+          Il ne faut pas faire dire au théorème fondamental
+          ce qu'il ne dit pas.
+          Si l'ensemble admissible possède un sommet et que le coût
+          optimal est fini,
+          il \emph{existe} un sommet optimal mais
+          toutes les solutions optimales ne sont
+          pas spécialement des sommets.
+          Par exemple, pour le problème d'optimisation linéaire suivant
+          \begin{align*}
+            \min x_1\\
+            (x_1,x_2) & \geq 0
+          \end{align*}
+          la solution optimale $(0,0)$ est un sommet mais la solution
+          optimale $(0,1)$
+          n'en est pas une.
+          $(0,1)$ serre d'ailleurs une seule contrainte,
+          ce qui constitue un contre exemple car on a deux variables.
+      \end{enumerate}
     \end{solution}
 
 \end{enumerate}
