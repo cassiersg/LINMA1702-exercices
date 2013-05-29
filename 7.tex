@@ -71,15 +71,15 @@
 
 
     \begin{solution}
-       (a) $3 \le \sum_{i} x_{i} \le 5$ \\
-       \newline
-       (b) $x_{6} \le x_{3}$ et $x_{7} \le x_{2}$ \\
-        \newline
-       (c) $x_{6} = x_{8}$ \\
-        \newline
-       (d) $x_{2} + x_{5} \le 1$ et $x_{3} + x_{6} \le 1$\\
-        \newline
-      (e) $ 1-y \le x_{1} + x_{2} + x_{3} \le 3(1-y)$ et $ 2y \le x_{5} + x_{6} + x_{7} + x_{8} \le 4y$ où $y \in \lbrace 0,1\rbrace$.
+      \begin{enumerate}
+        \item $3 \le \sum_{i} x_{i} \le 5$.
+        \item $x_{6} \le x_{3}$ et $x_{7} \le x_{2}$.
+        \item $x_{6} = x_{8}$.
+        \item $x_{2} + x_{5} \le 1$ et $x_{3} + x_{6} \le 1$.
+        \item $ 1-y \le x_{1} + x_{2} + x_{3} \le 3(1-y)$ et
+          $ 2y \le x_{5} + x_{6} + x_{7} + x_{8} \le 4y$
+          où $y \in \lbrace 0,1\rbrace$.
+      \end{enumerate}
     \end{solution}
 
   \item Vous désirez trouver les variables $0 \leq x_1, x_2 \leq 1$ qui maximisent la fonction $c^T x$ tout en satisfaisant au
@@ -279,7 +279,7 @@
             \sum_{i=1}^9 x_{ijk} & \leq 1 & \forall j,k \in I\\
             \sum_{i=r}^{r+2}\sum_{j=c}^{c+2} x_{ijk} & \leq 1
             & \forall r \in \{1,4,7\}, c \in \{1,4,7\}\\
-            \sum_{k=1}^9 x_{ijk} & = 1 & \forall i,j \in I\\
+            \sum_{k=1}^9 x_{ijk} & \leq 1 & \forall i,j \in I\\
             \sum_{k=1}^9\sum_{j=1}^9 x_{ijk}
             & \geq 9a_i & \forall i \in I\\
             \sum_{k=1}^9\sum_{i=1}^9 x_{ijk}
