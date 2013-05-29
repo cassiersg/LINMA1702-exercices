@@ -86,10 +86,21 @@
     moins une  des deux contraintes $x_1 + 2 x_2 \leq 1$  et  $3 x_1 +  x_2 \leq 1$. Formulez ce problème comme un
     problème d'optimisation mixte.
 
-
-
     \begin{solution}
-      \nosolution
+      Comme $x_1,x_2 \leq 1$, si on transforme les conditions en
+      $x_1 + 2x_2 \leq 3$ et $3x_1 + x_2 \leq 4$,
+      on ne contraint plus rien du tout.
+      On peut donc modéliser le problème comme suit
+      \begin{align*}
+        x_1 + 2x_2 & \leq 1 + 2b_1\\
+        3x_1 + x_2 & \leq 1 + 3b_2\\
+        b_1 + b_2 & \leq 1\\
+        (x,b) & \leq 1\\
+        (x,b) & \geq 0\\
+        b & \text{ entiers}
+      \end{align*}
+      où les $b_i$ ne peuvent être nuls que si leur contrainte respective
+      est respectée sans leur aide (e.g. $x_1 + 2x_2 \leq 1$).
     \end{solution}
 
   \item Une société a développé deux nouveaux jouets pour la Noël. La production du jouet 1 nécessite des investissements initiaux de
