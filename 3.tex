@@ -57,11 +57,13 @@ actives.\\
 
 
     \begin{solution}
-      Pour que $x$ soit un sommet, il faut que : \\
-      - $x \in P$\\
-      - $n$ contraintes linéairement indépendantes soient serrées en $x$ \\
-      \newline
-      Sommet : $\lbrace(1,4), (3,6), (0,2), (3,0), (0,0)\rbrace$
+      Pour que $x$ soit un sommet, il faut que
+      \begin{itemize}
+        \item $x \in P$;
+        \item $n$ contraintes linéairement indépendantes soient serrées en $x$.
+      \end{itemize}
+      L'ensemble des sommets est
+      $\lbrace(1,4), (3,6), (0,2), (3,0), (0,0)\rbrace$.
     \end{solution}
 
   \item Soit le poly\`edre défini par les inégalités linéaires
@@ -84,10 +86,14 @@ actives.\\
 
 
     \begin{solution}
-      - $x_{1} = (2,6,0) $ est un sommet.\\
-      - $x_{2} = (4,6,0) $ n'est pas un sommet parce qu'il n'appartient pas au polyèdre.\\
-      - $x_{3} = (4,0,2) $ est un sommet dégénéré. \\
-      - $x_{1}$ et  $x_{3}$ ne sont pas adjacents car ils n'ont pas $n-1$ contraintes serrées communes.
+      \begin{itemize}
+        \item $x_{1} = (2,6,0) $ est un sommet;
+        \item $x_{2} = (4,6,0) $ n'est pas un sommet parce
+          qu'il n'appartient pas au polyèdre;
+        \item $x_{3} = (4,0,2) $ est un sommet dégénéré;
+        \item $x_{1}$ et  $x_{3}$ ne sont pas adjacents
+          car ils n'ont pas $n-1=2$ contraintes serrées communes.
+      \end{itemize}
     \end{solution}
 
   \item Trouvez  tous les sommets du poly\`edre sous forme standard ${\mathcal{P}}=\{x \in \R^4 \; | \; Ax=b \; , \; x \geq 0\}$ avec
@@ -111,14 +117,15 @@ actives.\\
     Déterminez les sommets adjacents et les sommets dégénérés.
 
 
-
-
-
     \begin{solution}
-      Si $B^{-1}b \geq 0$, alors la solution est un sommet. Si une des variables de base est nulle, alors le sommet est dégénéré. \\
-      $x_{1} = (1,0,0,0)$ est un sommet dégénéré. \\
-      $x_{2} = (0,\frac{1}{2},\frac{1}{2},0)$ est un sommet. \\
-      $x_{3} = (0,0,\frac{1}{2},-\frac{1}{2})$ n'est pas admissible car une variable de base n'est pas positive. \\
+      Si $B^{-1}b \geq 0$, alors la solution est un sommet.
+      Si une des variables de base est nulle, alors le sommet est dégénéré.
+      \begin{itemize}
+        \item $x_{1} = (1,0,0,0)$ est un sommet dégénéré;
+        \item $x_{2} = (0,\frac{1}{2},\frac{1}{2},0)$ est un sommet;
+        \item $x_{3} = (0,0,\frac{1}{2},-\frac{1}{2})$ n'est pas admissible
+          car une variable de base n'est pas positive.
+      \end{itemize}
     \end{solution}
 
   \item Quand un demi-espace contient-il un autre demi-espace? Donnez des
@@ -126,12 +133,21 @@ actives.\\
     $$\{x | a^Tx \leq b \} \subseteq \{x | \tilde a ^Tx \leq \tilde b \}$$
 
 
-
-
     \begin{solution}
-      Il faut que : \\
-      - $a^{T} = a^{T*}$ \\
-      - $ b \le b^{*}$ \\
+      Géométriquement, on voit bien que $a$ et $\tilde{a}$ doivent être
+      parallèles.
+      Il doit donc exister $\lambda$ tel que
+      \[ \lambda a^{T} = \tilde{a}^{T} \]
+      Ensuite, il faut que l'hyperplan $a^Tx = b$ soit ``en dessous''
+      de l'hyperplan $\tilde{a}^Tx = \tilde{b}$.
+      Ou algébriquement, on obtient que pour que $a^Tx \leq b$ implique
+      \[ \tilde{a}^Tx = \lambda a^Tx \leq \tilde{b} \]
+      il faut que $\tilde{b} \geq \lambda b$.
+      \begin{align*}
+        \lambda a^T & = \tilde{a}^T & \lambda b & \leq \tilde{b}.
+      \end{align*}
+      Dire que $b \leq \tilde{b}/\lambda$ est faux car si $\lambda$ est
+      de signe négatif, l'inégalité s'inverse.
     \end{solution}
 
   \item Parmi les ensembles suivants quels sont ceux qui sont des poly\`edres?
@@ -152,43 +168,100 @@ actives.\\
 
 
     \begin{solution}
-      a) Oui, b) Non (Le domaine est une courbe), c) Oui \\
+      \begin{enumerate}
+        \item Oui car c'est une combinaison linéaire de polyèdre.
+          En effet, $-1 \leq y_1 \leq 1$ est l'intersection du demi-espace
+          défini par $-1 \leq y_1$ et celui défini par $y_1 \leq 1$.
+          Un demi-espace est un polyèdre, l'intersection de polyèdre est
+          un polyèdre, on a donc un polyèdre.
+          L'adaptation de ce raisonnement pour $-1 \leq y_2 \leq 1$
+          est laissé à la sagacité du lecteur.
+        \item Non. En effet, par l'inégalité de Cauchy-Schwartz
+          (l'inégalité de Cauchy-Schwartz est même plus forte,
+          elle porte sur $|x^Ty|$),
+          \[ x^Ty \leq \|x\|\cdot\|y\| = \|x\|. \]
+          Il \emph{suffit} donc que $\|x\| \leq 1$.
+          Seulement, on a égalité avec Cauchy-Schartz
+          lorsque $x$ et $y$ sont parallèles
+          (c'est même un si et seulement si).
+          Comme $y$ peut prendre n'importe quel valeur sur le cercle unité,
+          il y aura un $y$ qui sera parallèle à $x$.
+          On sera alors dans le ``pire cas'' de l'inégalité et
+          il \emph{faudra} que $\|x\| \leq 1$.
+          L'ensemble défini est donc précisément le premier orthant d'une
+          boule de rayon 1 centré en 0.
+          C'est l'intersection d'une infinité d'espace,
+          ce n'est donc pas un polyèdre.
+        \item Oui.
+          Pour le montrer, regardons à nouveau le ``pire cas'' de l'inégalité
+          $x^Ty \leq 1$.
+          On voit de suite que c'est lorsque que $y \geq 0$.
+          On remarque aussi que $x^Ty$ est maximum lorsque,
+          soit $k = \arg\max_i x_i$, $y_k = 1$ et $y_i = 0$ $\forall i \neq k$.
+          Il faut donc que $\max x_i \leq 1$ ou encore $x \leq 1$.
+          Le polyèdre est donc défini par
+          \begin{align*}
+            x & \leq 1\\
+            x & \geq 0.
+          \end{align*}
+          C'est un polyèdre car c'est l'intersection de deux demi-espaces
+          qui sont connus comme étant des polyèdres.
+          C'est aussi le premier orthant d'un hypercube.
+      \end{enumerate}
     \end{solution}
 
   \item Supposons que $\{ x \in \R^n \; | \; a_i^Tx \geq b_i, i=1, \ldots, m \}$ et $\{ x \in \R^n \; | \; g_i^Tx \geq h_i,
     i=1, \ldots, k \}$ sont deux représentation du même poly\`edre. Démontrez que si les vecteurs $a_1, \ldots, a_m$ génèrent
     $\R^n$ alors les vecteurs $g_1, \ldots, g_k$ également.
 
-
-
-
-
-
-
     \begin{solution}
-      Un même polyèdre peut être obtenu au moyen de représentations différentes. Si le polyèdre est identique, cela signifie qu'un des deux ensembles à des contraintes linéairement dépendantes des contraintes de l'autre ensemble. \\
-      \newline
-      Preuve : \\
-      Soient $A \in \mathbb{R}^{m \times n} $ et $B \in \mathbb{R}^{k \times n} $ des matrices telles que $Ax \geq b$ et $Bx \geq b$ représentent le même polyèdre. Supposons que $ k > m$ et que les lignes de $B$, à savoir, la suite $g_{1}, \dots, g_{k}$ n'engendrent pas $\mathbb{R}^{n}$. \\
-      Dès lors, $\exists x \in \mathbb{R}^{n}$ tel que $x \notin L(B)$. Or, deux ensembles qui représentent un même polyèdre doivent avoir des contraintes communes. Il y a donc contradiction puisque, par hypothèse, l'espace ligne de $A$ forme une suite génératrice et $ k > m$. Le nombre de lignes de $B$ est donc supérieur au nombre de ligne de $A$ et les lignes de $B$ sont linéairement dépendantes des lignes de $A$. La suite $g_{1}, \dots, g_{k}$ doit donc être génératrice. %Supposons que les contraintes du domaine $Ax \geq b$ génèrent $\mathbb{R}^{n}$. Dans ce cas,
+      Un même polyèdre peut être obtenu au moyen de
+      représentations différentes.
+      Si le polyèdre est identique,
+      cela signifie qu'un des deux ensembles à des contraintes linéairement
+      dépendantes des contraintes de l'autre ensemble.
+      \begin{proof}
+        Soient $A \in \R^{m \times n} $ et $B \in \R^{k \times n} $ des matrices
+        telles que $Ax \geq b$ et $Bx \geq b$ représentent le même polyèdre.
+        Supposons que $ k > m$ et que les lignes de $B$, à savoir,
+        la suite $g_{1}, \dots, g_{k}$ n'engendrent pas $\R^{n}$.
+
+        Dès lors, $\exists x \in \R^{n}$ tel que $x \notin \mathcal(B)$.
+        Or, deux ensembles qui représentent un même polyèdre
+        doivent avoir des contraintes communes.
+        Il y a donc contradiction puisque, par hypothèse,
+        l'espace ligne de $A$ forme une suite génératrice et $ k > m$.
+        Le nombre de lignes de $B$ est donc supérieur au nombre de ligne de $A$
+        et les lignes de $B$ sont linéairement dépendantes des lignes de $A$.
+        La suite $g_{1}, \dots, g_{k}$ doit donc être génératrice.
+        %Supposons que les contraintes du domaine $Ax \geq b$ génèrent $\R^{n}$.
+        %Dans ce cas,
+      \end{proof}
     \end{solution}
 
   \item Trouvez, si possible, un problème d'optimisation linéaire qui possède un coût optimal fini mais qui ne possède pas de sommet optimal.
     Trouvez, si possible, un problème  sous forme standard avec deux variables qui possède cette propriété.  Justifiez votre réponse en cas
     d'impossibilité.
 
-
-
-
-
-
-
     \begin{solution}
-      $$\min ~x_{1}$$
-      sous la contrainte : \\
-      $$ x_{2} \geq 1 $$
-      $$x_{1} \geq 0 $$
-      Toutefois, il est impossible de trouver une solution sans sommet avec un coût fini dans le cas standard (théorème fondamental).
+      Pour ne pas avoir de sommet,
+      il suffit d'avoir moins de contrainte que de variables,
+      il sera alors impossible de serrer $n$ contraintes.
+      Le problème
+      \begin{align*}
+        \min x + y + z\\
+        x + y + z & = 3
+      \end{align*}
+      a un coût optimal fini de 3 mais n'a pas de sommet car c'est un plan.
+
+      Cela est toutefois impossible sous forme standard car
+      sous forme standard, le polyèdre possède toujours un sommet.
+      Et par le théorème fondamental,
+      \begin{itemize}
+        \item si le polyèdre possède un sommet;
+        \item et que le coût optimal est fini.
+      \end{itemize}
+      alors le problème possède un sommet optimal.
     \end{solution}
 
   \item     Considérez le problème d'optimisation
@@ -210,14 +283,23 @@ actives.\\
     $n \geq n_0$.)
 
 
-
-
-
-
-
-
     \begin{solution}
-      Néant
+      Par le théorème fondamental, comme le polyèdre possède un sommet
+      et que le coût optimal est fini, le problème possède
+      une solution optimale.
+
+      On sait que cette solution optimale est un sommet du polyèdre.
+      Un sommet serre $n$ contraintes. Il y a ${n \choose m}$
+      manières de choisir $n$ contraintes parmis les $m$.
+      Il faut pour chaque combinaison résoudre le système pour trouver
+      nos $n$ variables ce qui prendra $n^3$ opérations puis il faudra
+      vérifier si les $m-n$ autres contraintes sont satisfaites et
+      calculer le coût.
+      Comme il faut faire à chaque fois une somme de $n$ termes.
+      Ça prendra $(m-n+1)n$ opérations.
+      La complexité est donc
+      \[ O\left({n \choose m}(n^3 + (n-m+1)n)\right). \]
+      Le terme $(n-m+1)n$ peut êre négligé si on considère que $m \ll n^2$.
     \end{solution}
 
   \item Nous considérons l'ensemble $P=\{ x \in \R^n \; | \; a_i^T x \leq b_i \; , \;  i=1, \ldots, m \}$. Nous désirons trouver la
@@ -230,7 +312,23 @@ actives.\\
 
 
     \begin{solution}
-      Le centre de Chebychev n'existe pas toujours. Ex : le domaine est non-borné. Le centre de Chebychev n'est pas toujours unique. Ex : un domaine en forme de rectangle.
+      Pour la formulation en problème d'optimisation linéaire,
+      voir l'exercice~\ref{ape:cheby_center}.\ref{ex:cheby_center}
+      page~\pageref{ex:cheby_center}.
+      Le centre de Chebychev n'existe pas toujours.
+      C'est le cas par exemple si le domaine est non-borné
+      \begin{align*}
+        -x_1 & \leq 0\\
+        -x_2 & \leq 0.
+      \end{align*}
+      Le centre de Chebychev n'est pas toujours unique.
+      C'est le cas par exemple lorsque le domaine en forme de rectangle
+      \begin{align*}
+        x_1 & \leq 1\\
+        x_2 & \leq 2\\
+        -x_1 & \leq 0\\
+        -x_2 & \leq 0.
+      \end{align*}
     \end{solution}
 
   \item  Le poly\`edre de $\R^3$ défini par les inégalités linéaires
@@ -251,11 +349,33 @@ actives.\\
 
 
 
-
-
-
     \begin{solution}
-      Néant
+      Repartons de ce qu'on avait obtenu à
+      l'exercice~\ref{ape:cheby_center}.\ref{ex:cheby_center}
+      page~\pageref{ex:cheby_center}.
+      C'est à dire
+      \begin{align*}
+        \max_{x, t} t\\
+        a_i^Tx + \|a_i\|t & \leq b_i & \forall i\\
+        t & \geq 0.
+      \end{align*}
+      C'est un problème d'optimisation linéaire à 4 variables.
+      On remarque qu'en prenant $t = 0$, on retombe sur le polyèdre
+      de départ dont on sait par l'énoncé qu'il possède un sommet.
+      Soit $\tilde{x}$ un de ces sommets.
+      $(\tilde{x}, 0)$ est donc un des sommets de ce polyèdre.
+      On sait aussi par l'énoncé qu'il existe
+      une sphère de rayon strictement positif.
+      On sait donc que le coût optimal est fini.
+      Par le théorème fondamental,
+      ce problème possède donc une solution optimale.
+      Comme toute solution optimale est un sommet,
+      4 contraintes sont actives.
+      Comme, par l'énoncé, le rayon est strictement positif,
+      $t > 0$ et donc c'est quatre des six contraintes
+      $a_i^Tx - b_i \leq \|a_i\|t$ qui sont serrées.
+      La sphère de rayon maximale touche donc quatre des
+      plans qui définissent le polyèdre.
     \end{solution}
 
   \item Nous considérons un ensemble de $m$ lampes situées dans le  plan et éclairant $n$
