@@ -98,7 +98,7 @@ $
       \begin{array}{lrcr}
         \maxi & 3y_1 + 2y_2 + 8y_3\\
         & 4y_1 + y_2 + y_3 & \leq & 3\\
-        & -y_1 + -y_2 -4y_3 & \leq & 2\\
+        & -y_1 -y_2 -4y_3 & \leq & -9\\
         & y_1 -6y_2 -6y_3 & = & 0\\
         & y_2 & \geq & 0\\
         & y_3 & \leq & 0
@@ -554,17 +554,61 @@ $
       &x_i &\geq 0
     \end{eqnarray*}
 
-  \begin{enumerate} \item Enumérez les sommets de ce polyèdre. L'un des
-      ces sommets est-il optimal? \item Quelles sont (toutes) les
-      solutions optimales? \item Que deviennent ces solutions optimales si
-      on exige que les solutions soient entières? \item Ecrivez le dual de
+    \begin{enumerate}
+      \item Enumérez les sommets de ce polyèdre. L'un des
+        ces sommets est-il optimal?
+      \item Quelles sont (toutes) les
+        solutions optimales?
+      \item Que deviennent ces solutions optimales si
+        on exige que les solutions soient entières?
+      \item Ecrivez le dual de
         ce problème, résolvez-le, et faites le lien avec la solution du
         primal.
     \end{enumerate}
 
-
     \begin{solution}
-      \nosolution
+      \begin{enumerate}
+        \item On a 3 variable, il faut donc serrer 3 contraintes.
+          En choisissant $x_1 = 0$, on a $(0, 0, 2)$ qui est un sommet
+          dégénéré car il sert toutes les contraintes sauf $x_3 \geq 0$.
+          En choisissant $x_3 = 0$, on a $(1, 1, 0)$.
+
+          Le polyèdre possède donc manifestement au moins un sommet et
+          en prenant la moitié de la première contrainte plus la moitié
+          de la seconde, on trouve $x_1 + x_2 + x_3 \leq 2$.
+          Le coût est donc fini.
+          Par le théorème fondamental, il existe donc un sommet optimal.
+          Un des deux sommets est donc optimal.
+          On remarque le coût optimal est le même pour les deux sommets
+          sommets $z^* = 2$.
+          Les deux sommets sont donc des solutions optimales.
+        \item L'ensemble des solutions optimales est convexe donc
+          l'ensemble des solutions optimales est donné pour chaque
+          $0 \leq \lambda \leq 1$ par
+          \[ \lambda(0,0,2) + (1-\lambda)(1,1,0). \]
+        \item Le coût optimal reste 2 car $(1,1,0)$ est entier mais il faut
+          que $(1-\lambda,1-\lambda,2\lambda)$ soit entier.
+          Il n'y a donc plus que les deux sommets comme solution optimale.
+        \item Le dual vaut
+          \begin{align*}
+            \min_{x_i}  2y_1 + 2y_2\\
+            2y_1 & \geq 1\\
+            2y_2 & \geq 1\\
+            y_1 + y_2 & \geq 1\\
+            y & \geq 0
+          \end{align*}
+          On voit tout de suite que la troisième contrainte nous donne
+          une borne inférieure pour le coût optimal de 2.
+          On a cette fois-ci un seul sommet, $(1/2,1/2)$.
+          On sait donc par le théorème fondamental que c'est la solution
+          optimale.
+          On trouve donc un coût optimal de 2 ce qui était prévisible
+          par la dualité forte.
+
+          On voit aussi que aucun $y_i$ n'est nul ce qui par la relation
+          d'exclusion implique que les deux contraintes du primal
+          doivent être serrées. C'est bien ce qu'on avait obtenu.
+      \end{enumerate}
     \end{solution}
 
   \item Soit le problème d'optimisation
