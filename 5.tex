@@ -123,7 +123,7 @@ $
     \begin{solution}
       $
       \begin{array}{llcr}
-        \maxi & b^T x\\
+        \maxi & b^T y\\
         & Ay & \leq & c\\
         & y_1 & & \text{libre}\\
         & y_2 & \geq & 0\\
@@ -348,13 +348,12 @@ $
       \end{array}
       $
 
-      La solution $x = (0,2,1)$ est admissible pour le problème dual car $x$ appartient au polyèdre. Et,
-      par la dualité forte, $z^{*} = 47$ est une solution admissible optimale car les coûts sont égaux pour les deux problèmes.
-
-
-
-
-      La solution admissible optimal du dual est $y^{*} = (\frac{7}{2}, \frac{1}{2})$. Le principe d'exclusion stipule que $x^{T}(c-A^{T}y) = 0$ ce qui entraîne la condition $x_{1} = 0$.  Pour minimiser le problème du primal, il suffit de serrer les contraintes pour $x_{2}$ et $x_{3}$. On obtient $\xopt = (0, \frac{1}{3}, \frac{1}{3})$.
+      La solution $y = (0,2,1)$ est admissible pour le problème dual car
+      $y$ appartient au polyèdre.
+      Et, par la dualité forte,
+      comme $z^{*} = 47 = b^Ty$,
+      c'est est une solution optimale
+      car les coûts sont égaux pour les deux problèmes.
     \end{solution}
 
   \item Soit le problème suivant
@@ -371,7 +370,13 @@ $
     Trouvez le dual de ce problème et résolvez-le graphiquement. Utilisez les relations d'exclusion pour obtenir une solution du primal.
 
     \begin{solution}
-      \nosolution
+      La solution admissible optimal du dual est
+      $y^{*} = (\frac{7}{2}, \frac{1}{2})$.
+      La relation d'exclusion stipule que $x^{T}(c-A^{T}y) = 0$
+      ce qui entraîne la condition $x_{1} = 0$.
+      Pour minimiser le problème du primal,
+      il suffit de serrer les contraintes pour $x_{2}$ et $x_{3}$.
+      On obtient $\xopt = (0, \frac{1}{3}, \frac{1}{3})$.
     \end{solution}
 
   \item Soit le problème suivant
@@ -394,22 +399,45 @@ $
 
       $
       \begin{array}{llcr}
-        \max & 4y_{1} + 5y_{2} + y_{3}\\
-        & 2y_{1} + y_{2}  + 2y_{3} & \leq & 5\\
-        & -y_{1} + y_{2}  -y_{3} & \leq & -3\\
-        & 4y_{1} + 2y_{2}  + y_{3} & \leq & 0\\
-        & y_{i} & \geq & 0
+        \max & -4y_{1} - 5y_{2} + y_{3}\\
+        & -2y_{1} - y_{2}  + 2y_{3} & \leq & 5\\
+        & y_{1} - y_{2}  -y_{3} & \leq & -3\\
+        & -4y_{1} - 2y_{2}  + y_{3} & \leq & 0\\
+        & y & \geq & 0
       \end{array}
       $
 
-      Solution du primal $\xopt = (1,2,1)$.
-      Or, par le principe d'exclusion, $x^{*T}(c -A^{T}y) = 0$.
-      Dans ce cas, il faut résoudre le système d'équations suivant:
+      Comme $x_1, x_2, x_3$ sont dans la base, aucun n'est nul.
+      Comme c'est un \emph{sommet} optimal, il faut que 3 contraintes
+      soient actives, ça doit donc être les 3 premières.
+      Il nous faut donc résoudre le système $Ax = b$
       \[
         \begin{pmatrix}
-          2 & 1 & 2\\
-          -1 & 1 & -3\\
-          4 & 2 & 1
+          2 & -1 & 4\\
+          1 & 1 & 2\\
+          2 & -1 & 1
+        \end{pmatrix}
+        \begin{pmatrix}
+          x_{1}\\
+          x_{2}\\
+          x_{3}
+        \end{pmatrix}
+        \stackrel{=}{}
+        \begin{pmatrix}
+          4\\
+          5\\
+          1
+        \end{pmatrix}
+      \]
+      ce qui nous donne
+      $\xopt = (1,2,1)$ comme solution du primal.
+      Or, par la relation d'exclusion, $x^{*T}(c -A^{T}y^*) = 0$.
+      Dans ce cas, il faut résoudre le système $A^Ty = c$
+      \[
+        \begin{pmatrix}
+          -2 & -1 & 2\\
+          1 & -1 & -1\\
+          -4 & -2 & 1
         \end{pmatrix}
         \begin{pmatrix}
           y_{1}\\
@@ -423,7 +451,11 @@ $
           0
         \end{pmatrix}
       \]
-      Comme $det(A) \ne 0$, la solution est unique. $y = (-2.8889, 4.1111,3.3333)$. Cette solution n'est pas admissible.
+      %Comme $\det(A) \neq 0$, la solution est unique.
+      ce qui donne $y = \frac{1}{3}(2, 1, 10)$.
+      En effet, on retrouve bien que $c^T y = -1$ et que $y \geq 0$,
+      la dualité forte nous indique donc que $y$ est une solution optimale
+      bien que la relation d'exclusion nous le disait déjà.
     \end{solution}
 
   \item  Jacques choisit un nombre de 1 à $m$, son adversaire, Yvan, choisit indépendamment
@@ -493,7 +525,25 @@ $
 
 
     \begin{solution}
-      \nosolution
+      \begin{enumerate}
+        \item Au moins un des $a_i$ doit être de même signe que $b$.
+        \item Dans le cas où on a un sommet, comme le coût optimal est fini,
+          par le théorème fondamental,
+          on sait qu'il existe un \emph{sommet} optimal.
+          Comme c'est un sommet, au moins $n$ contraines sont actives.
+          Il y a donc au moins $n-1$ $x_i$ qui sont nuls.
+          La dernière variable faut alors $\frac{b}{a_i}$.
+          On peut donc trouver une solution optimale en prenant,
+          parmis toutes les soltions tels que $\frac{b}{a_i} \geq 0$,
+          celle qui a
+          \[ c_i \frac{b}{a_i} \]
+          le plus petit.
+        \item S'il existe $i \neq j$ tel que
+          \[ z^* = \frac{c_i}{a_i} = \frac{c_j}{a_j} \]
+          et que $b \neq 0$ (sinon ces deux solutions sont les mêmes
+          avec $x = 0$),
+          alors le problème possède plusieurs solutions optimales.
+      \end{enumerate}
     \end{solution}
 
   \item Soit le problème d'optimisation
@@ -533,15 +583,111 @@ $
     \end{enumerate}
 
 
-
-
-
-
-
-
-
     \begin{solution}
-      \nosolution
+      \begin{enumerate}
+        \item
+          \begin{align*}
+            \max y_1 + 2y_2\\
+            -y_1 + y_2 & \leq 3\\
+            -y_1 - y_2 & \leq -1\\
+            y_1 + \alpha y_2 & = 1\\
+            y_1 & \geq 0\\
+            y_2 & \text{ libre}.
+          \end{align*}
+        \item
+          La figure ci-dessous représente en hashuré le domaine admissible
+          sans prendre compte la contrainte $y_1 + \alpha y_2 = 1$.
+          \begin{center}
+            \begin{tikzpicture}
+              % Axis
+              \draw[axis] (-1,0) -- (1,0) node[right=\nudge cm] {\(y_1\)};
+              \draw[axis] (0,0) -- (0,3) node[above=\nudge cm] {\(y_2\)};
+              \begin{scope}%je t'aime mon benoit
+                % Avoid going too far
+                \clip (-1-\nudge,-\nudge) rectangle (1+\nudge,3.3+\nudge);
+                \draw[line] (-1,2) -- (1,4) coordinate (ineq1);
+                \draw[line] (-1,2) -- (1.3,-0.3) coordinate (ineq2);
+                \draw[line] (1,0) -- (1/5,16/5) coordinate (ineq3);
+                \draw[line] (2,-1/4) -- (-1,1/2) coordinate (ineq4);
+                \begin{scope}
+                  %Clip sélectionne ce qu'il y a dans le polygone dessiné.
+                  \clip (0,1) -- (0,3) -- (2,5) |- (2,-1);
+                  \fill[hash] (-1,-0.5) rectangle (1.4,3.4);
+                  %\draw[dashed,line] (0,1) -- (2,2) -- (3,1) -- (2,0);
+                  % (4,4) to be enough, anyway clip restrict us to the good part
+                \end{scope}
+              \end{scope}
+              %\node[above right] at (ineq1) {\(\mathllap{-}3 x_1 + 4 x_2 = 4\)};
+              \node[right] at (ineq1) {\(\mathllap{-}y_1 + y_2 = 3\)};
+              \node[right] at (ineq2) {\(\mathllap{-}y_1 - y_2 = -1\)};
+              \node[right] at (ineq3) {\(y_1 + 0.25y_2 = 1\)};
+              \node[above] at (ineq4) {\(y_1 + 4y_2 = 1\)};
+              \foreach \coord/\adj in {
+                {(-1,2)}/left,
+                {(0,3)}/left,
+                %{(100,50)}/above right,
+                %{(0,200/3)}/left,
+              } {
+                \fill \coord circle (2pt) node[\adj] {$\coord$};
+              }
+            \end{tikzpicture}
+          \end{center}
+          \begin{itemize}
+            \item Lorsque $\alpha \leq 1/3$, c'est l'intersection entre
+              $y_1 + \alpha y_2 = 1$ et $-y_1 + y_2 = 3$  qui est optimale;
+            \item Lorsque $1/3 < \alpha \leq 1$, c'est l'intersection entre
+              $y_1 + \alpha y_2 = 1$ et $y_2 = 0$  qui est optimale;
+            \item Lorsque $1 < \alpha < 2$, il reste plus qu'un point dans le
+              domaine, $(1,0)$. C'est donc la solution optimale.
+            \item Lorsque $\alpha = 2$, il y a une infinité de solutions
+              de coût optimal 1 qui définissent l'ensemble
+              \[ \{(y_1,(1-y_1)/2) | y_1 \geq 0\}. \]
+            \item Lorsque $\alpha > 2$, le coût optimal est non borné.
+          \end{itemize}
+        \item
+          \begin{itemize}
+            \item Lorsque $\alpha \leq 1/3$, la deuxième contrainte
+              du dual est inactive donc,
+              par la relation d'exclusion, $x_2 = 0$, on a donc
+              $x_1 = 2 - \alpha x_3$.
+              \begin{itemize}
+                \item Si $\alpha \neq 1/3$, $y_2 > 0$ du coup,
+                  par la relation d'exclusion, $-x_1 -x_2+ x_3 = 1$ ce qui
+                  donne $x^* = \frac{1}{\alpha+1}(2-\alpha,0, 3)$.
+                \item Si $\alpha = 1/3$, la fonction objectif devient
+                  $\min 2$ et on a une solution optimale pour tout
+                  $\frac{9}{4} \leq x_3 \leq 6$ et donc
+                  $0 \leq x_1 \leq \frac{5}{4}$.
+              \end{itemize}
+            \item Lorsque $1/3 < \alpha < 1$,
+              aucune des 2 premières contraintes du dual ne sont actives.
+              Dès lors,
+              par la relation d'exclusion, $(x_1,x_2) = 0$ et donc
+              $x^* = \frac{1}{\alpha}(0,0,2)$.
+            \item Lorsque $\alpha = 1$, la première
+              contrainte qui n'est pas active et donc $x_1 = 0$.
+              La deuxième contrainte du primal nous donne alors
+              $-x_2 + x_3 = 2$ qui avec une fonction objectif $-x_2 +x_3$
+              nous indique que $z^* = 2$.
+              L'ensemble des solutions optimales est donc
+              \[ \{(0,x_2,2-x_2) | x_2 \geq 0 \}. \]
+            \item Lorsque $1 < \alpha < 2$, la première contrainte du dual
+              n'est pas active et $y_1 \geq 0$ non plus.
+              On a donc $x_1 = 0$ et $-x_1-x_2+x_3 = 1$.
+              En résolvant, on obtient
+              $x^* = \frac{1}{\alpha-1}(0,2-\alpha,1)$.
+            \item Lorsque $\alpha = 2$, comme la première contrainte
+              du dual est inactive, $x_1 = 0$.
+              En prenant 2 fois la premières contrainte du primal
+              moins la deuxième, on tombe sur $-x_2 \geq 0$.
+              Comme on a aussi que $x_2 \geq 0$, on a $x_2 = 0$ et
+              on a comme solution optimale $(0,0,1)$ avec comme coût
+              optimal 1 comme pour le dual.
+            \item Lorsque $\alpha > 2$, comme le coût optimal du dual
+              est non-borné, le primal ne possède pas de solution
+              admissible.
+          \end{itemize}
+      \end{enumerate}
     \end{solution}
 
   \item Une entreprise vend 20 tonnes de sa production à répartir
@@ -626,7 +772,12 @@ $
 
 
     \begin{solution}
-      \nosolution
+      \begin{enumerate}
+        \item Vrai.
+        \item Faux, on peut avoir un objectif non-borné du primal et donc
+          pas de solution admissible du dual et inversément.
+        \item Vrai, par la dualité faible, et dualité forte.
+      \end{enumerate}
     \end{solution}
 
 
