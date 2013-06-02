@@ -32,25 +32,42 @@
     diététicien compose-t-il le mélange?
 
     \begin{solution}
-      Soient $X_{A}, X_{B}$ et $X_{C}$ les quantités respectives de légumes, fruits et viande. \\
-      Primal : \\
-      $$ \min ~3X_{A} + 2X_{B} + 10X_{C}$$
-      $$X_{A} + 5X_{B} + X_{C} \geq 11$$
-      $$2X_{A} + X_{B} + X_{C} \geq 4$$
-      $$ X_{A}, X_{B}, X_{C} \geq 0$$
-      Dual : \\
-      Soient $y_{1}$ et $y_{2}$ le profit généré par le vente de la vitamine $A$ et $B$.
-      $$ \max 11y_{1} + 4y_{2}$$
-      $$ y_{1} + 2y_{2} \le 3$$
-      $$ 5y_{1} + y_{2}  \le 2$$
-      $$ y_{1} + y_{2} \le 10$$
-      $$y_{i} \geq 0$$
-      En effectuant l'algorithme du simplexe pour le dual, on obtient $y^{*} = (\frac{1}{9},\frac{13}{9})$. Par le principe d'exclusion, il faut nécessairement que $Ax = b$. On obtient $\xopt = A^{-1}b = (1,2,0)$. En conclusion, la vitamine $B$ est la plus chère. \\
-      Si l'entreprise décide de mettre la vitamine $A$ et $B$ sur le marché à des prix de 1 et 0.5, le problème du primal devient : \\
-      $$ \min ~3X_{A} + 2X_{B} + 10X_{C} + X_{D} + \frac{1}{2}X_{E}$$
-      $$X_{A} + 5X_{B} + X_{C} + X_{D} \geq 11$$
-      $$2X_{A} + X_{B} + X_{C} + X_{E} \geq 4$$
-      $$ X_{A}, X_{B}, X_{C}, X_{D}, X_{E} \geq 0$$
+      Soient $x_A, x_B$ et $x_C$ les quantités respectives
+      de légumes, fruits et viande.
+      Le primal est
+      \begin{align*}
+        \min 3x_A + 2x_B + 10x_C\\
+        x_A + 5x_B + x_C & \geq 11\\
+        2x_A + x_B + x_C & \geq 4\\
+        x_A, x_B, x_C & \geq 0.
+      \end{align*}
+
+      Soient $y_{1}$ et $y_{2}$ le coût de produire respectivement
+      de la vitamine $A$ et $B$.
+      Le dual est
+      \begin{align*}
+        \max 11y_{1} + 4y_{2}\\
+        y_{1} + 2y_{2} & \leq 3\\
+        5y_{1} + y_{2}  & \leq 2\\
+        y_{1} + y_{2} & \leq 10\\
+        y & \geq 0.
+      \end{align*}
+      En effectuant l'algorithme du simplexe pour le dual,
+      on obtient $y^{*} = (\frac{1}{9},\frac{13}{9})$.
+      Par la relation d'exclusion,
+      il faut nécessairement que $Ax = b$ car $y > 0$
+      et que $x_C = 0$ car $y_1 + y_2 < 10$.
+      On obtient $\xopt = A^{-1}b = (1,2,0)$.
+      En conclusion, la vitamine $B$ est la plus chère.
+
+      Si l'entreprise décide de mettre la vitamine $A$ et $B$ sur le
+      marché à des prix de 1 et 0.5, le problème du primal devient
+      \begin{align*}
+        \min 3x_A + 2x_B + 10x_C + x_D + \frac{1}{2}x_E\\
+        x_A + 5x_B + x_C + x_D & \geq 11\\
+        2x_A + x_B + x_C + x_E & \geq 4\\
+        x_A, x_B, x_C, x_D, x_E & \geq 0.
+      \end{align*}
     \end{solution}
 
   \item On considère le problème suivant:
@@ -72,7 +89,96 @@
 
 
     \begin{solution}
-      Une base est admissible si $B^{-1}b \geq 0$ et est optimale si $c_{N}^{T} - c_{B}^{T}B^{-1}N \geq0 $. En formant le tableau pour obtenir la base $(x_{2},x_{3},x_{7})$, on observe que $c_{N}^{T} - c_{B}^{T}B^{-1}N$ est positif et que $b = (6, \frac{\delta +2}{5}, \frac{56 - 2\delta}{5})^{T}$ est positif si $ -2 \le \delta \le 28$.
+      Le problème sous forme standard est
+      \begin{align*}
+        -\min -x_1 - 2x_2 - x_3 - x_4\\
+        2x_1+x_2+5x_3+x_4 + x_5 & = 8 + \delta\\
+        2x_1+ 2x_2+ 4x_4 + x_6 & = 12\\
+        3x_1+ x_2+ 2x_3 + x_7 & = 18\\
+        x_1, x_2, x_3, x_4, x_5, x_6, x_7 & \geq 0.
+      \end{align*}
+      Il peut être réécrit sous la forme
+      \begin{align*}
+        -\min
+        \begin{pmatrix}
+          c_B^T & c_N^T
+        \end{pmatrix}
+        x\\
+        \begin{pmatrix}
+          B & N
+        \end{pmatrix}
+        x & = b\\
+        x & \geq 0
+      \end{align*}
+      où
+      \begin{align*}
+        c_B & =
+        \begin{pmatrix}
+          -2\\-1\\0
+        \end{pmatrix}
+        & c_N & =
+        \begin{pmatrix}
+          -1\\-1\\0\\0
+        \end{pmatrix}
+        & x & =
+        \begin{pmatrix}
+          x_2\\x_3\\x_7\\x_1\\x_4\\x_5\\x_6
+        \end{pmatrix}\\
+        B & =
+        \begin{pmatrix}
+          1 & 5 & 0\\
+          2 & 0 & 0\\
+          1 & 2 & 1
+        \end{pmatrix}
+        & N & =
+        \begin{pmatrix}
+          2 & 1 & 1 & 0\\
+          2 & 4 & 0 & 1\\
+          3 & 2 & 0 & 0
+        \end{pmatrix}
+        & b & =
+        \begin{pmatrix}
+          8 + \delta\\12\\18
+        \end{pmatrix}.
+      \end{align*}
+      Comme $A$ est inversible, on a
+      \begin{align*}
+        -\min
+        \begin{pmatrix}
+          c_B^T & c_N^T
+        \end{pmatrix}
+        x\\
+        \begin{pmatrix}
+          I & B^{-1}N
+        \end{pmatrix}
+        x & = B^{-1}b\\
+        x & \geq 0
+      \end{align*}
+      puis
+      \begin{align*}
+        -\min
+        \begin{pmatrix}
+          0 & c_N^T - c_B^TB^{-1}N
+        \end{pmatrix}
+        x\\
+        \begin{pmatrix}
+          I & B^{-1}N
+        \end{pmatrix}
+        x & = B^{-1}b\\
+        x & \geq 0.
+      \end{align*}
+      On voit donc qu'une base est admissible lorsque $B^{-1}b \geq 0$
+      et optimale si les coût réduits
+      $\tilde{c}^T = c_{N}^{T} - c_{B}^{T}B^{-1}N \geq 0$.
+      Or, ici, $\tilde{c}^T = \frac{1}{10}
+      \begin{pmatrix}
+        12 & 28 & 2 & 9
+      \end{pmatrix}$ est positif indépendamment de $\delta$
+      et $B^{-1}b = \frac{1}{5}
+      \begin{pmatrix}
+        6 & \frac{\delta +2}{5} & \frac{56 - 2\delta}{5}
+      \end{pmatrix}^{T}$
+      est positif si et seulement si $-2 \leq \delta \leq 28$.
     \end{solution}
 
   \item On considère le problème suivant:
@@ -113,8 +219,26 @@
 
 
     \begin{solution}
-      (a) La solution du primal est $x_{B} = B^{-1}b = (4,3,1)^{T}$. Le vecteur est bien positif et il vérifie bien les contraintes. La solution du dual est $y^{*} = (1,2,3)^{T}$. La valeur de la fonction coût est identique pour le primal et le dual.
-      (b) Le coût de la fonction devient plus petit.
+      \begin{enumerate}
+        \item
+          Le dual vaut
+          \begin{align*}
+            \min b^Ty\\
+            B^Ty & \geq c\\
+            y & \geq 0
+          \end{align*}
+          La solution du primal est $x_B = B^{-1}b = (4,3,1)^{T}$.
+          Le vecteur est bien positif et il vérifie bien les contraintes.
+          Comme aucun $x$ n'est nul, par la relation d'exclusion,
+          $B^T y = c$.
+          La solution du dual est donc $y^{*} = (B^T)^{-1}c = (1,2,3)^{T}$.
+          La valeur de la fonction coût est identique
+          pour le primal et le dual.
+        \item Le coût de la fonction devient plus petit.
+          En effet, la fonction objectif du dual est $b^Ty$ donc si
+          on passe de 15 à $15 - \delta$, on passe de $z^*$ à
+          $z^* - y_2^* \delta = z^* - 2\delta$.
+      \end{enumerate}
     \end{solution}
 
   \item Les joueurs $A$ et $B$ choisissent indépendamment l'un de l'autre un nombre entre 1 et 100. L'issue du jeu est nulle si les
@@ -296,21 +420,47 @@
     \end{enumerate}
 
     \begin{solution}
-      La théorie des jeux constitue une approche mathématique de problèmes de stratégie tels quÕon en trouve en recherche opérationnelle et en économie. Elle étudie les situations où les choix de deux protagonistes Ñ ou davantage Ñ ont des conséquences pour lÕun comme pour lÕautre (source Wikipédia). \\
-      \newline
-      Le tableau qui contient les indices $a_{ij}$ correspond au tableau usuel que l'on retrouve dans l'analyse des probabilités. Ce sont toutes les combinaisons possibles dont la somme des probabilités associées à chaque couple d'entier vaut 1 et donc chaque case correspond au gain d'un des protagoniste. \\
-      \newline
-      (a) Soit $a_{ij}$, le gain réel de Jacques. L'espérance de Jacques est de $$\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$ \\
-      (b) Si Yvan veut maximiser son gain, il doit minimiser le gain espéré de Jacques, c'est-à-dire, \\
-      $$\min_y ~\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$
-      $$ 0\le \sum_{j}^{n} y_{j} \le 1$$
-      $$ 0 \le y_{j} \le1~j = 1, \dots, n$$ \\
-      (c) Pour maximiser son gain, Yvan doit choisir 1, 2 et 3 avec une probabilité de 0, 1 et 0. Soit les deux joueurs choisissent en même temps 2 auquel cas le gain est nul, soit Yvan joue 2 et Jacques 3 auquel cas Yvan remporte 3 EUR. Le gain espéré est de 1.5 EUR. Dans les autres stratégies, le gain espéré de Jacques est plus faible. \\
-      \newline
-      (d) Si on se limite au cas particulier du (c), il faudra que Jacques choisisse tout le temps 1. Le gain espéré est dans ce cas de 3 EUR. Formellement, le problème devient \\
-      $$\max_x ~\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$
-      $$ 0\le \sum_{i}^{n} x_{i} \le 1$$
-      $$ 0 \le x_{i} \le1~j = 1, \dots, n$$ \\
+      La théorie des jeux constitue une approche mathématique de problèmes
+      de stratégie tels qu'on en trouve en recherche opérationnelle
+      et en économie.
+      Elle étudie les situations où les choix de deux protagonistes ou
+      davantage ont des conséquences pour
+      l'un comme pour l'autre (source Wikipédia).
+
+      Le tableau qui contient les indices $a_{ij}$ correspond au tableau
+      usuel que l'on retrouve dans l'analyse des probabilités.
+      Ce sont toutes les combinaisons possibles dont la somme des probabilités
+      associées à chaque couple d'entier vaut 1
+      et donc chaque case correspond au gain d'un des protagoniste.
+      \begin{enumerate}
+        \item Soit $a_{ij}$, le gain réel de Jacques.
+          L'espérance de Jacques est de
+          $$\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$
+        \item Si Yvan veut maximiser son gain,
+          il doit minimiser le gain espéré de Jacques, c'est-à-dire,
+          \begin{align*}
+            \min_y \sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}\\
+            0 & \leq \sum_{j}^{n} y_{j} \leq 1\\
+            0 & \leq y_{j} \leq 1 & j = 1, \dots, n.
+          \end{align*}
+        \item Pour maximiser son gain,
+          Yvan doit choisir 1, 2 et 3 avec une probabilité de 0, 1 et 0.
+          Soit les deux joueurs choisissent en même temps 2 auquel cas
+          le gain est nul,
+          soit Yvan joue 2 et Jacques 3 auquel cas Yvan remporte 3 EUR.
+          Le gain espéré est de 1.5 EUR.
+          Dans les autres stratégies, le gain espéré
+          de Jacques est plus faible.
+        \item Si on se limite au cas particulier du (c),
+          il faudra que Jacques choisisse tout le temps 1.
+          Le gain espéré est dans ce cas de 3 EUR.
+          Formellement, le problème devient
+          \begin{align*}
+            \max_x \sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}\\
+            0 & \leq \sum_{i}^{n} x_{i} \leq 1\\
+            0 & \leq x_{i} \leq 1 & j = 1, \dots, n.
+          \end{align*}
+      \end{enumerate}
     \end{solution}
 
 \end{enumerate}
