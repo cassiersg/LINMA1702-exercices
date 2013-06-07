@@ -817,9 +817,27 @@ $
 
     \begin{solution}
       \begin{enumerate}
-        \item Vrai.
-        \item Faux, on peut avoir un objectif non-borné du primal et donc
-          pas de solution admissible du dual et inversément.
+        \item Vrai, on a une méthode automatique pour calculer
+          le dual qui marche dans tous les cas.
+        \item Faux, on sait que si le primal a une solution non-bornée,
+          le dual n'a pas de solution admissible
+          (ça vient du fait que le dual fournit une borne à l'objectif
+          du primal).
+          On sait donc que la solution du dual est bornée mais rien n'empêche
+          au primal d'avoir une solution non-bornée et au dual de ne pas
+          avoir de solution admissible.
+          Considérons l'exemple suivant où le primal
+          \begin{align*}
+            \min x\\
+            x & \leq 1
+          \end{align*}
+          a une solution admissible alors que le dual
+          \begin{align*}
+            \max y\\
+            y & = 1\\
+            y & \leq 0.
+          \end{align*}
+          n'en a pas.
         \item Vrai, par la dualité faible, et dualité forte.
       \end{enumerate}
     \end{solution}

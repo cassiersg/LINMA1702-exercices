@@ -388,7 +388,7 @@
       \nosolution
     \end{solution}
 
-  \item Jacques choisit un nombre de 1 \'a $m$, son adversaire, Yvan,
+  \item Jacques choisit un nombre de 1 \`a $m$, son adversaire, Yvan,
     choisit ind\'ependamment de Jacques, un nombre de 1 \`a $n$. Si
     Jacques choisit $i$ et Yvan $j$, Jacques re\c coit $a_{ij}$ d'Yvan.
     Jacques et Yvan appliquent des strat\'egies probabilistes; Jacques
@@ -441,31 +441,47 @@
       \begin{enumerate}
         \item Soit $a_{ij}$, le gain réel de Jacques.
           L'espérance de Jacques est de
-          $$\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}$$
+          $$\sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij} = y^TAx$$
+          où $A$ est la matrice avec $a_{ij}$ à la ligne $i$ et colonne $j$.
         \item Si Yvan veut maximiser son gain,
           il doit minimiser le gain espéré de Jacques, c'est-à-dire,
           \begin{align*}
-            \min_y \sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}\\
-            0 & \leq \sum_{j}^{n} y_{j} \leq 1\\
-            0 & \leq y_{j} \leq 1 & j = 1, \dots, n.
+            \min_y y^TAx\\
+            \sum_{j=1}^n y_j & = 1\\
+            \leq y_j \leq 1 & j = 1, \dots, n\\
+            y & \geq 0.
           \end{align*}
-        \item Pour maximiser son gain,
-          Yvan doit choisir 1, 2 et 3 avec une probabilité de 0, 1 et 0.
-          Soit les deux joueurs choisissent en même temps 2 auquel cas
-          le gain est nul,
-          soit Yvan joue 2 et Jacques 3 auquel cas Yvan remporte 3 EUR.
-          Le gain espéré est de 1.5 EUR.
-          Dans les autres stratégies, le gain espéré
-          de Jacques est plus faible.
-        \item Si on se limite au cas particulier du (c),
-          il faudra que Jacques choisisse tout le temps 1.
-          Le gain espéré est dans ce cas de 3 EUR.
-          Formellement, le problème devient
+        \item
+          On sait par l'inégalité de Cauchy-Schwartz que
+          \[ |y^TAx| \leq \|y\|\cdot\|Ax\| \]
+          avec égalité lorsque $y$ est parallèle à $Ax$.
+          Ici,
+          \[ A =
+            \begin{pmatrix}
+              0 & -3 & 1\\
+              3 & 0 & -3\\
+              1 & 3 & 0
+          \end{pmatrix} \]
+          et $x = \begin{pmatrix}0 & 1/2 & 1/2\end{pmatrix}^T$
+          donc $Ax = \begin{pmatrix}-1 & -3/2 & 3/2\end{pmatrix}^T$.
+          On voit ici directement que la solution optimale est
+          $y = \begin{pmatrix}0 & 1 & 0\end{pmatrix}^T$ et qu'elle est
+          unique.
+        \item On remarque que Yvan choisira toujours de tout le temps jouer
+          le nombre qui fait perdre le plus à Jacques.
+          Le gain moyen est donc toujours la valeur minimale de $Ax$.
+          Il faut donc maximiser $\min Ax$, d'où le problème
+          d'optimisation linéaire
           \begin{align*}
-            \max_x \sum_{i=1}^{m}x_{i}\sum_{j=1}^{n}y_{j}a_{ij}\\
-            0 & \leq \sum_{i}^{n} x_{i} \leq 1\\
-            0 & \leq x_{i} \leq 1 & j = 1, \dots, n.
+            \max_{x,t} t\\
+            -a_{*j}x + t & \leq 0 & j = 1, \dots, n\\
+            \sum_{i=1}^m x & = 1\\
+            x_i & \leq 1 & i = 1, \dots, m\\
+            x & \geq 0.
           \end{align*}
+        \item La solution optimale est donnée par
+        $x = \frac{1}{7}\begin{pmatrix}4 & 0 & 3\end{pmatrix}^T$ et donne
+        un gain moyen de $\frac{3}{7}$.
       \end{enumerate}
     \end{solution}
 
