@@ -196,7 +196,6 @@
     comme un problème d'optimisation en nombres entiers. Appliquez l'algorithme ``branch and bound" pour trouver la
     solution. Justifiez les étapes de l'algorithme.
 
-
     \begin{solution}
       \nosolution
     \end{solution}
@@ -204,13 +203,6 @@
   \item  Considérez l'arbre d'énumération suivant pour un problème d'optimisation en nombres entiers. L'arbre
     résulte-t-il d'un problème de maximisation ou de minimisation?  Quels sont les noeuds qui doivent encore être analysés? Donnez
     un intervalle dans lequel se trouve l'optimum. Que pouvez vous dire de la solution optimale?
-
-
-
-
-
-
-
 
     \begin{solution}
       \nosolution
@@ -238,7 +230,21 @@
       En observant la fonction coût, on constate qu'il est plus avantageux de donner la plus grande valeur entière possible à $x_{1}$ car le coefficient est supérieur à celui de $x_{2}$. On obtient $x = (6,0)$. On peut régresser pour $x_{1} = 5$, mais on s'aperçoit que la fonction coût décroît.
     \end{solution}
 
-  \item Considérez l'arbre d'énumération suivant pour un problème d'optimisation de deux variables entières.
+  \item Considérez l'arbre d'énumération suivant pour un
+    problème d'optimisation de deux variables entières
+    où ``E'' signifie que la solution optimale du problème
+    relaxée est entière et ``NE'' signifie qu'elle n'est pas entière.
+
+    \Tree [.{60 NE}
+      [.{59.8 NE}
+        [.{50.2 NE} ]
+        [.{48 E} ]
+      ]
+      [.{56.7 NE}
+        [.{51 E} ]
+        [.{53.4 NE} ]
+      ]
+    ]
 
     \begin{enumerate}
       \item L'arbre résulte-t-il d'un problème de maximisation ou de minimisation?
@@ -251,9 +257,19 @@
         \ref{r2}?
     \end{enumerate}
 
-
     \begin{solution}
-      \nosolution
+      \begin{enumerate}
+        \item C'est un problème de maximisation car 60 est la solution
+          du problème complet alors que 59.8 est celle
+          d'une restriction et que $59.8 < 60$.
+        \item 50.2 ne doit pas être exploré car il est plus petit que 51.
+          53.4 doit par contre être exploré.
+        \item On sait que $51 \leq z^* \leq 53.4$.
+        \item On sait alors que si $x_1$ et $x_2$ sont entiers,
+          $z^*$ sera divisible par 3.
+          Comme le prochain multiple de 3 après 51 est 54,
+          on sait que $z^* = 51$ et il ne vaut plus explorer 53.4.
+      \end{enumerate}
     \end{solution}
 
   \item  Il y a 50 groupes d'étudiants en première candidature FSA. On souhaite affecter un projet par groupe. Il y a 10
