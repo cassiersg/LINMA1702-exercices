@@ -21,7 +21,13 @@
 
 
     \begin{solution}
-      En analysant le graphique, la solution $x = (2,3)$ est optimale parmi les solutions admissibles entières.
+      On voit que la solution optimale entière est $x^* = (2,3)$ qui donne
+      un coût optimal de 13.
+      La solution optimale du problème relaxé est $\frac{1}{5}(13,8)$.
+      Les solutions admissibles obtenues en arrondissant cette solution
+      sont $(2,1)$ et $(2,2)$ qui donnent respectivement un coût optimal de
+      11 et 12.
+      Ce ne sont donc pas des solutions optimales.
     \end{solution}
 
   \item Yves et Muriel désirent partager les principales tâches ménagères  (courses, cuisine, vaisselle et nettoyage)
@@ -29,14 +35,14 @@
     diffèrent. Yves est rapide pour faire les courses et la vaisselle mais il se fait distancer par Murielle pour la cuisine et le
     nettoyage.
 
-    $
-    \begin{array}{l|llll}
-      & courses & cuisine & vaisselle & nettoyage\\
-      \hline
-      Yves & 4.5 & 7.8 & 3.6 & 3.1\\
-      Muriel & 4.9 & 7.2 & 4.3 & 2.9
-    \end{array}
-    $
+    \begin{center}
+      \begin{tabular}{l|llll}
+        & courses & cuisine & vaisselle & nettoyage\\
+        \hline
+        Yves & 4.5 & 7.8 & 3.6 & 3.1\\
+        Muriel & 4.9 & 7.2 & 4.3 & 2.9
+      \end{tabular}
+    \end{center}
 
     Le jeune couple  désire partager les tâches de manière équitable (deux tâches par personne) et optimale (temps total minimum). Formulez
     ce problème comme un problème d'optimisation en nombres entiers. Donnez une relaxation de ce problème. La solution du problème
@@ -44,12 +50,40 @@
 
 
     \begin{solution}
-      Le problème devient : \\
-      $$ \min \sum_{ij}c_{ij}x_{ij}$$
-      sous les contraintes \\
-      $$ \sum_{j} x_{ij} = 2 \qquad i = 1,2$$
-       $$ \sum_{i} x_{ij} = 1\qquad j = 1, \dots,4$$
-       $$x_{ij} \in \lbrace 0,1\rbrace$$
+      Soient $x_{ij}$ valant 1 si $i$ fait la tâche $j$ et 0 sinon
+      et $c_{ij}$ le temps que fait $i$ pour faire la tâche $j$.
+      Le problème devient alors
+      \begin{align*}
+        \min \sum_{ij}c_{ij}x_{ij}\\
+        \sum_{j} x_{ij} & = 2 && i = 1,2\\
+        \sum_{i} x_{ij} & = 1 && j = 1,2,3,4\\
+        x_{ij} & \in \lbrace 0,1\rbrace.
+      \end{align*}
+      La solution optimale de problème relaxé est
+      \[ x^* =
+        \begin{pmatrix}
+          1 & 0 & 1 & 0\\
+          0 & 1 & 0 & 1
+      \end{pmatrix}. \]
+      \begin{proof}
+        Prouvons le par l'absurde.
+        Soit une solution différente,
+        posons $\delta > 0$ la plus petite variation non
+        nulle d'une variable de la solution à la solution $x^*$.
+        Sans perte de généralité, disons que c'est à la variable $x_{23}$.
+        On a donc $x_{13} \leq 1 - \delta$. Il y a donc soit $x_{12}$,
+        soit $x_{14}$ qui est non-nulle et comme on a supposé $\delta$ comme
+        étant la plus petite variation,
+        au moins un des deux a une variation plus grande que $\delta$.
+        Sans perte de généralité, disons que c'est $x_{12}$.
+        En rajoutant $\delta$ à $x_{13}$ et $x_{22}$
+        et en retirant $\delta$ à $x_{23}$ et $x_{12}$,
+        on a donc toujours une solution admissible donc le coût
+        change de $\delta(3.6-4.3 + 7.2-7.8) < 0$ et donc diminue.
+        La solution n'est donc pas optimale d'où la contradiction.
+      \end{proof}
+      On remarque que la solution du problème relaxé est entière.
+      Elle est donc aussi solution optimale du problème non relaxé.
     \end{solution}
 
   \item Vouz désirez choisir un ensemble de cours parmi huit cours $\{1, \ldots,
@@ -71,13 +105,15 @@
 
 
     \begin{solution}
+      Soit $x_i$ valant 1 si le cours $i$ est choisi et 0 sinon.
       \begin{enumerate}
         \item $3 \le \sum_{i} x_{i} \le 5$.
         \item $x_{6} \le x_{3}$ et $x_{7} \le x_{2}$.
         \item $x_{6} = x_{8}$.
         \item $x_{2} + x_{5} \le 1$ et $x_{3} + x_{6} \le 1$.
-        \item $ 1-y \le x_{1} + x_{2} + x_{3} \le 3(1-y)$ et
-          $ 2y \le x_{5} + x_{6} + x_{7} + x_{8} \le 4y$
+          $x_2x_5 = 0$ n'est pas correct car ce n'est pas linéaire.
+        \item $ 1-y \le x_{1} + x_{2} + x_{3}$ et
+          $ 2y \le x_{5} + x_{6} + x_{7} + x_{8}$
           où $y \in \lbrace 0,1\rbrace$.
       \end{enumerate}
     \end{solution}
@@ -101,6 +137,14 @@
       \end{align*}
       où les $b_i$ ne peuvent être nuls que si leur contrainte respective
       est respectée sans leur aide (e.g. $x_1 + 2x_2 \leq 1$).
+      C'est aussi correcte de prendre le problème suivant
+      \begin{align*}
+        x_1 + 2x_2 & \leq 1 + 2b\\
+        3x_1 + x_2 & \leq 1 + 3(1-b)\\
+        (x,b) & \leq 1\\
+        (x,b) & \geq 0\\
+        b & \text{ entiers}.
+      \end{align*}
     \end{solution}
 
   \item Une société a développé deux nouveaux jouets pour la Noël. La production du jouet 1 nécessite des investissements initiaux de
@@ -115,17 +159,6 @@
     25 l'heure dans les deux usines. Les usines disposent de 500 et 700 heures d'ici Noël.  Le problème consiste à déterminer le
     nombre de jouets à produire de manière à maximiser le profit.
 
-
-
-
-
-
-
-
-
-
-
-
     \begin{solution}
       \nosolution
     \end{solution}
@@ -136,7 +169,24 @@
 
 
     \begin{solution}
-      Comme il s'agit de variables binaires, il y a au plus $2^{4}$ possibilités avant de trouver la solution optimale. La \textit{stratégie} efficace consiste à annuler les variables dont le rapport entre utilité/poids est le plus faible. On obtiendra une valeur qui s'approche de la fonction coût du problème relaxé. En testant les autres branches dont les coûts sont supérieurs, on trouve finalement $x = (0,1,1,0)$.
+      Le problème d'optimisation est le suivant
+      \begin{align*}
+        \max 17x_1 + 10x_2 + 25x_3 + 7x_4\\
+        5x_1 + 3x_2 + 8x_3 + 7x_4 & \leq 12\\
+        x & \in \{0,1\}
+      \end{align*}
+      où $x_i$ vaut 1 si on prend l'objet et 0 sinon.
+
+      On peut résoudre la relaxation assez facilement à la main.
+      En effet, on se convainct aisément qu'il
+      suffit de prendre l'objet dont le rapport utilité/poids
+      (qui est ici $(17/5,10/3,25/8,1)$)
+      est le plus important tant qu'il y en a puis passer au suivant.
+      On ne peut malheureusement pas appliquer ce raisonnement au cas
+      non relaxé.
+      Heureusement, la solution du problème relaxé est $(0,1,1,0)$ qui
+      est entière.
+      C'est donc aussi une solution du problème non relaxé.
     \end{solution}
 
   \item Vous disposez de 5 objets de poids respectifs 2, 4, 3, 3 et 2. Les
