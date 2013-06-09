@@ -172,6 +172,7 @@ $-\infty$}.\\
           \clip (-\nudge,-\nudge) rectangle (200+\nudge,100+\nudge);
           \draw[line] (0,200/3) -- (400,0) coordinate (ineq1);
           \draw[line] (0,150) -- (150,0) coordinate (ineq2);
+          \draw[obj] (150,0) -- (200/12,200);
           \begin{scope}
           %Clip sélectionne ce qu'il y a dans le polygone dessiné.
             \clip (0,200/3) |- (150,0) -- (100,50);
@@ -188,7 +189,7 @@ $-\infty$}.\\
           {(100,50)}/above right,
           {(0,200/3)}/left,
         } {
-          \fill \coord circle (2pt) node[\adj] {$\coord$};
+          \fill \coord circle (100pt) node[\adj] {$\coord$};
         }
         \end{tikzpicture}
       \end{center}
