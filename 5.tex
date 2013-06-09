@@ -220,9 +220,9 @@ $
       \end{array}
       $
 
-      \textbf{TODO} comment utilise-t-on le fait que $a \geq 0$ ?
+      %FIXME comment utilise-t-on le fait que $a \geq 0$ ?
 
-      \textbf{TODO} ça a du sens de prendre le dual si on a fait un changement
+      %FIXME ça a du sens de prendre le dual si on a fait un changement
       de variable ?
     \end{solution}
 
@@ -646,13 +646,14 @@ $
               % Axis
               \draw[axis] (-1,0) -- (1,0) node[right=\nudge cm] {\(y_1\)};
               \draw[axis] (0,0) -- (0,3) node[above=\nudge cm] {\(y_2\)};
-              \begin{scope}%je t'aime mon benoit
+              \begin{scope}
                 % Avoid going too far
                 \clip (-1-\nudge,-\nudge) rectangle (1+\nudge,3.3+\nudge);
                 \draw[line] (-1,2) -- (1,4) coordinate (ineq1);
                 \draw[line] (-1,2) -- (1.3,-0.3) coordinate (ineq2);
                 \draw[line] (1,0) -- (1/5,16/5) coordinate (ineq3);
                 \draw[line] (2,-1/4) -- (-1,1/2) coordinate (ineq4);
+                \draw[obj] (-1,2.5) -- (2,1);
                 \begin{scope}
                   %Clip sélectionne ce qu'il y a dans le polygone dessiné.
                   \clip (0,1) -- (0,3) -- (2,5) |- (2,-1);
