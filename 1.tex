@@ -187,7 +187,7 @@ $-\infty$}.\\
         \foreach \coord/\adj in {
           {(150,0)}/below,
           {(100,50)}/above right,
-          {(0,200/3)}/left,
+          {(0,200/3)}/left%
         } {
           \fill \coord circle (100pt) node[\adj] {$\coord$};
         }
@@ -253,7 +253,7 @@ $-\infty$}.\\
         \node[above right] at (ineq2) {\(x_1 + 2 x_2 = 3\)};
         \foreach \coord/\adj in {
           {(3,0)}/above,% or right, left, below left, above right
-          {(0,1.5)}/right,% or right, left, below left, above right
+          {(0,1.5)}/right% or right, left, below left, above right
         } {
           \fill \coord circle (2pt) node[\adj] {$\coord$};
         }
