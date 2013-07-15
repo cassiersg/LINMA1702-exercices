@@ -5,3 +5,7 @@
 INMA2702-exercices.pdf
 *~
 *.pdf
+
+# latexmk
+*.fdb_latexmk
+*.fls
