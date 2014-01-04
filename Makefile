@@ -12,7 +12,7 @@ PDF_NAME=$(MAIN_NAME).pdf
 PDF_NAME_SOL=$(MAIN_NAME_SOL).pdf
 
 # You want latexmk to *always* run, because make does not have all the info.
-.PHONY: $(PDF_NAME)
+.PHONY: $(PDF_NAME) $(PDF_NAME_SOL) all default show clean release
 
 # If you want the pdf to be opened by your preferred pdf viewer
 # after `$ make', comment the following line and uncomment the
@@ -20,7 +20,7 @@ PDF_NAME_SOL=$(MAIN_NAME_SOL).pdf
 #default: all
 default: show
 
-all: $(PDF_NAME)
+all: $(PDF_NAME) $(PDF_NAME_SOL)
 
 # MAIN LATEXMK RULE
 
@@ -48,5 +48,5 @@ clean:
 show: $(PDF_NAME_SOL)
 	$(PDFVIEWER) $(PDF_NAME_SOL) 2> /dev/null &
 
-release: $(PDF_NAME)
+release: all
 	smartcp -v config.yml
