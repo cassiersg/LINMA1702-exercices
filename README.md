@@ -12,3 +12,8 @@ Pour cela, clonez le repo et faites
 `make release` nécessite
 [`smartcp`](https://github.com/blegat/smartcp)
 mais n'est pas essentiel.
+
+Si vous ne connaissez pas Git,
+lisez la partie *Utilisation linéaire de Git* de
+[ce tutoriel](http://sites.uclouvain.be/SystInfo/notes/Outils/html/git.html)
+écrit par Benoît Legat.
