@@ -195,7 +195,7 @@
     utilités des objets sont respectivement de 9, 20, 14, 10 et 6. Vous désirez
     sélectionner un ensemble d'objets de poids total inférieur  à 10
     et dont la somme des utilités est maximale.  Formulez le problème
-    comme un problème d'optimisation en nombres entiers. Appliquez l'algorithme ``branch and bound" pour trouver la
+    comme un problème d'optimisation en nombres entiers. Appliquez l'algorithme ``branch and bound'' pour trouver la
     solution. Justifiez les étapes de l'algorithme.
 
     \begin{solution}
@@ -380,7 +380,7 @@
     \end{solution}
 
   \item Le Sudoku est un jeu logique présenté sous forme de grille.
-    D'abord publié en 1979, le Sudoku s'est développé au Japon en 1986 avant d'atteindre la popularité internationale en 2005, et ce jusqu'aux colonnes de l'hebdomadaire ``la Salopette" édité par le CI.
+    D'abord publié en 1979, le Sudoku s'est développé au Japon en 1986 avant d'atteindre la popularité internationale en 2005, et ce jusqu'aux colonnes de l'hebdomadaire ``la Salopette'' édité par le CI.
     La grille de jeu est un carré de neuf cases de côté, subdivisé en neuf carrés, appelés régions (voir figure).
     Quelques chiffres sont disposés dans la grille et le but du jeu est de compléter la grille avec des chiffres  de un à neuf en respectant la règle suivante: chaque ligne, colonne et région ne doit contenir qu'une et une seule fois  les chiffres de un à neuf.
 
@@ -634,7 +634,98 @@
     \end{enumerate}
 
     \begin{solution}
-      \nosolution
+      \begin{enumerate}
+        \item
+          Soient
+          \begin{itemize}
+            \item $x_A$ le nombre de kg de la marchandise A,
+            \item $x_B$ le nombre de kg de la marchandise B et
+            \item $x_C$ le nombre de kg de la marchandise C
+          \end{itemize}
+          Le problème d'optimisation s'écrit:
+          \begin{large}
+            $$ \max_{x_A,x_B,x_C}
+            {15x_A + 17.5x_B + 14x_C}
+            $$
+            $$x_A + x_B + x_C \leq 1000$$
+            $$x_A, x_B, x_C \geq 0$$
+          \end{large}
+          Intuitivement, comme les bénéfices de la marchandise B sont les plus élevés, on a intérêt à prendre toute la quantité disponible de cette marchandise à savoir $x_B = 240kg$.\\
+          Ensuite, on prend pour les 760kg restant la marchandise A car son bénéfice est supérieur à celui de la marchandise C. \\
+          On a donc $x^{*} = (760, 240, 0)$ et le bénéfice est de 15600 \euro.
+        \item
+          Soient
+          \begin{itemize}
+            \item $x_A$ le nombre de sac de la marchandise A,
+            \item $x_B$ le nombre de sac de la marchandise B et
+            \item $x_C$ le nombre de sac de la marchandise C
+          \end{itemize}
+          Le problème d'optimisation s'écrit:
+          \begin{large}
+            $$ \max_{x_A,x_B,x_C}
+            {60 \cdot 15x_A + 80 \cdot 17.5x_B + 20 \cdot 14x_C}
+            $$
+            $$60x_A \leq 900$$
+            $$80x_B \leq 240$$
+            $$20x_C \leq 560$$
+            $$60x_A + 80x_B + 20x_C \leq 1000$$
+            $$x_A, x_B, x_C \geq 0$$
+            $$x_A, x_B, x_C \;\;entiers$$
+          \end{large}
+          A nouveau, il faut commencer par prendre les conditionnements ayant le plus grand bénéfice. On doit donc prendre dans l'orde B, A, C.
+
+          La méthode ``branch and bound'' nous donne:
+          $$(\frac{38}{3}, 3, 0) \longrightarrow 15600$$
+          $x_A \geq 13$ :
+          $$(13, \frac{11}{4}, 0) \longrightarrow 15550$$
+          $x_A \leq 12$ :
+          $$(12, 3, 2) \longrightarrow 15560$$
+          Cette solution est entière et meilleure que pour $x_A \geq 13$.
+
+          Comparé au point (a), il y a donc une perte de 40 \euro.
+        \item
+          \begin{center}
+            \begin{tabular}{|c|c|}
+              \hline
+              Marchandise & D \\
+              \hline
+              Quantité disponible (kg) & $3*50 = 150$ \\
+              \hline
+              Bénéfice (euros/kg) & $\frac{1000}{50} = 20$ \\
+              \hline
+              Poids d'un sac (kg) & $50$ \\
+              \hline
+            \end{tabular}
+          \end{center}
+          Soient
+          \begin{itemize}
+            \item $x_A$ le nombre de sac de la marchandise A,
+            \item $x_B$ le nombre de sac de la marchandise B,
+            \item $x_C$ le nombre de sac de la marchandise C et
+            \item $x_D$ le nombre de sac de la marchandise D
+          \end{itemize}
+          Le problème d'optimisation s'écrit:
+          \begin{large}
+            $$ \max_{x_A,x_B,x_C,x_D}
+            {60 \cdot 15x_A + 80\cdot17.5x_B + 20\cdot14x_C + 50\cdot20x_D}
+            $$
+            $$60x_A \leq 900$$
+            $$80x_B \leq 240$$
+            $$20x_C \leq 560$$
+            $$50x_D \leq 150$$
+            $$x_A \geq 9$$
+            $$x_B \geq 2$$
+            $$60x_A + 80x_B + 20x_C + 50x_D \leq 1000$$
+            $$x_A, x_B, x_C, x_D \geq 0$$
+            $$x_A, x_B, x_C, x_D \;\;entiers$$
+          \end{large}
+          La méthode de résolution à utiliser est la méthode ``branch and bound'' comme dans l'exercice précédent.
+
+          Au départ on a:
+          $$(9, 2, 0, 0) \longrightarrow 10900$$
+          Comme la marchandise ayant le meilleur bénéfice est maintenant D, il va prendre les 3 sacs disponibles. Il lui reste encore suffisamment de place pour prendre un sac de B et un sac de A:
+          $$(10, 3, 0, 3) \longrightarrow 16200$$
+      \end{enumerate}
     \end{solution}
 
 \end{enumerate}
