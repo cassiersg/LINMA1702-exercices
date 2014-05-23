@@ -179,15 +179,38 @@
       \end{align*}
       où $x_i$ vaut 1 si on prend l'objet et 0 sinon.
       
-      La solution optimale du problème relaxé est $(1,1,0.5,0), qui n'est pas entière.
+      On peut résoudre la relaxation assez facilement à la main.
+      En effet, on se convainct aisément qu'il
+      suffit de prendre l'objet dont le rapport utilité/poids
+      (qui est ici $(17/5,10/3,25/8,1)$)
+      est le plus important tant qu'il y en a puis passer au suivant.
+      On ne peut malheureusement pas appliquer ce raisonnement au cas
+      non relaxé.
+
+      Malheureusement, la solution optimale du problème relaxé est $(1,1,0.5,0)$, qui n'est pas entière.
       Celle-ci donne une utilité de 39.5.
       Comme le problème est petit, on peut le résoudre en nombres entiers facilement à la main.
       En effet, on peut essayer de combiner différents objets en connaissant le rapport utilité/poids
       (qui est ici $(17/5,10/3,25/8,1)$). 
       Si on prend le premier, qui a le meilleur rapport, on peut encore prendre le deuxième.
       En prenant le deuxième et le troisième, on a une plus grande utilité.
-      En essayant d'autres combinaisons, on voit qu'il s'agit de la solution optimale en nombres entiers.
-      Heureusement, la solution du problème non est donc $(0,1,1,0)$.
+      En essayant toutes les autres combinaisons,
+      on voit qu'il s'agit de la solution optimale en nombres entiers.
+      La solution du problème non-relaxé est donc $(0,1,1,0)$.
+      C'est un avantage des problèmes en nombre entier, on peut parfois énumérer toutes les solutions admissibles.
+
+      On peut aussi le faire de façon plus sytématique avec l'algorithme ``branch and bound''
+
+      \Tree [.{$(1,1,0.5,0) \rightarrow 39.5$}
+        [.{$x_3 \leq 0$\\$(1,1,0,4/7) \rightarrow 31$} ]
+        [.{$x_3 \geq 1$\\$(0,1,1,0) \rightarrow 35$} ]
+      ]
+
+      De la branche avec $x_3 \geq 1$, on tire $z^* \geq 35$.
+      La branche avec $x_3 \leq 0$ ne fera pas mieux que 31,
+      il est donc inutile de continuer dans cette direction.
+      On a donc la solution optimale $(0,1,1,0)$ avec un
+      coût optimal de 35.
     \end{solution}
 
   \item Vous disposez de 5 objets de poids respectifs 2, 4, 3, 3 et 2. Les
@@ -218,7 +241,7 @@
       \]
       On les prend donc dans l'ordre $2, 3, 1, 4, 5$.
 
-      L'algorithme de branch and bound nous donne alors
+      L'algorithme de ``branch and bound'' nous donne alors
 
       \Tree [.{$(1,1,1,1/3,0) \rightarrow 46.\bar{3}$}
         [.{$x_4 \leq 0$\\$(1,1,1,0,1/2) \rightarrow 46$}
