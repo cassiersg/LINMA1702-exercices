@@ -38,10 +38,23 @@ $-\infty$}.\\
     les cours ont la même pondération et l'étudiant désire obtenir la  moyenne la plus élevée possible.  Formulez ce problème comme un problème d'optimisation
     linéaire (solution lors d'une séance ultérieure).
     \begin{solution}
-      Soient $x_{A}, x_{B}\text{ et }x_{C}$ le nombre d'heures consacrées aux cours $A, B$ et $C$ respectivement.
-      Le problème d'optimisation est le suivant
+      Soient $x_{A}$, $x_{B}$ et $x_{C}$ le nombre d'heures consacrées aux cours $A, B$ et $C$ respectivement.
+      Introduisons le vecteur
+      \(
+      x =
+      \begin{pmatrix}
+        x_A & x_B & x_C
+      \end{pmatrix}^T
+      \)
+      et la notation $x \geq 0$ signifiant que toutes les composantes du vecteur $x$ sont positives.
 
-      $
+      On peut simplifier l'objectif $(6+x_A/10 + 6.25+x_B/5 + 6.7+3x_C/10)/3$
+      en le multipliant par 30 et en retirant le terme constant.
+      La valeur optimale de l'objectif changera et ne sera plus la moyenne de l'étudiant
+      mais la valeur optimale de $x$ ne changera pas.
+
+      Ça nous donne le problème d'optimisation suivant:
+      \[
       \begin{array}{llcr}
         \maxi & x_A + 2x_B + 3x_C\\
         & 6 + \frac{x_A}{10} & \geq & 10\\
@@ -53,13 +66,7 @@ $-\infty$}.\\
         & x_A + x_B + x_C & \leq & 100\\
         & x & \geq & 0
       \end{array}
-      $
-
-      La solution est
-      $\xopt = \begin{pmatrix}
-        40 & \frac{80}{3} & \frac{100}{3}
-      \end{pmatrix}^{T}$.
-
+      \]
     \end{solution}
 
 
@@ -84,6 +91,16 @@ $-\infty$}.\\
     \begin{solution}
       Soient $x_{A}$, $x_{B}$ et $x_{C}$
       la quantité de biens $A, B$ et $C$ produite.
+      Introduisons le vecteur
+      \(
+      x =
+      \begin{pmatrix}
+        x_A & x_B & x_C
+      \end{pmatrix}^T
+      \)
+      et la notation $x \geq 0$ signifiant que toutes les composantes du vecteur $x$ sont positives.
+
+      On peut modéliser le problème d'optimisation par le problème d'optimisation linéaire suivant:
       \[ \max 6(x_{A} + x_{B} + x_{C}) \]
       sous les contraintes
       \begin{align*}
@@ -107,7 +124,6 @@ $-\infty$}.\\
         \end{pmatrix}\\
         x & \geq 0.
       \end{align*}
-      La solution est $\xopt = (\frac{105}{8},\frac{21}{8},0)^{T}$.
     \end{solution}
 
 
@@ -121,6 +137,8 @@ $-\infty$}.\\
 
     \begin{solution}
       Soit $x_{ijg}$ le nombre d'étudiants d'une commune $i$ allant à l'école $j$ de niveau $g$.
+      Introduisons la notation $x \geq 0$ signifiant que toutes les composantes du vecteur $x$ sont positives.
+
       \[ \min \sum_{i=1}^I \sum_{j=1}^J d_{ij} \sum_{g=1}^G x_{ijg} \]
       sous les contraintes
       \begin{align*}
@@ -173,6 +191,7 @@ $-\infty$}.\\
           \draw[line] (0,200/3) -- (400,0) coordinate (ineq1);
           \draw[line] (0,150) -- (150,0) coordinate (ineq2);
           \draw[obj] (150,0) -- (200/12,200);
+          \draw[obj] (500/3,0) -- (0,125);
           \begin{scope}
           %Clip sélectionne ce qu'il y a dans le polygone dessiné.
             \clip (0,200/3) |- (150,0) -- (100,50);
@@ -220,8 +239,8 @@ $-\infty$}.\\
           avec un coût de $-3$.
         \item $c = (0,1,0)$.
           $$ \min x_{2} $$
-          La solution optimale est  $\xopt = (\alpha,0,\beta)^{T}$
-          avec $1\le \alpha \le 3$ et $\beta \geq 0$.
+          La solution optimale est  $\xopt = (x_1,0,x_3)^{T}$
+          avec $1\le x_1 \le 3$ et $x_3 \geq 0$.
           Le coût est de 0.
         \item $c = (0,0,-1)$
           $$ \min -x_{3} $$
@@ -314,16 +333,18 @@ $-\infty$}.\\
     Comment évolue l'objectif optimum si on ajoute une contrainte?
 
     \begin{solution}
-      Il y a deux cas possibles.
+      Il y a trois cas possibles.
       \begin{itemize}
-        \item Soit l'objectif optimum augmente ou ne change pas.
-          En effet, l'objectif optimum ne peut diminuer car on ne fait
-          que restreindre l'ensemble admissible;
-        \item Soit cette contrainte est telle que l'ensemble optimal
+        \item Soit l'objectif optimum augmente,
+          c'est la nouvelle contrainte diminue l'ensemble admissible et la solution optimale était dans la partie de l'ensemble admissible qu'on a retiré;
+        \item Soit il ne change pas, c'est le cas si la nouvelle contrainte ne modifie pas l'ensemble admissible ou si il reste une solution admissible avec le même coût optimal une fois la contrainte appliquée;
+        \item Soit cette contrainte est telle que l'ensemble admissible
           devient vide.
           Dans ce cas, il n'y a plus de solution optimale
           et le coût n'est plus défini.
       \end{itemize}
+      L'objectif optimum ne peut diminuer car on ne fait
+      que restreindre l'ensemble admissible;
     \end{solution}
 
   \item Un sous-ensemble $V$ de $\R^n$ est convexe si $x, y \in V \Rightarrow \lambda x + (1-\lambda) y \in V$ pour tout $0 < \lambda <1$. Démontrez que
@@ -382,8 +403,7 @@ $-\infty$}.\\
       \begin{align*}
         x_{ij} & \leq h_{ij} & \forall (i,j) \in E\\
         \sum_{(i,j) \in E} x_{ij} - \sum_{(j,i) \in E} x_{ji}
-        & = b_{i} & \forall i \in V\\
-        \sum_{(i,j) \in E} x_{ij} & = 0.
+        & = b_{i} & \forall i \in V.
       \end{align*}
       La solution n'est pas toujours unique.
       Pour trouver les solutions optimales qui maximisent
@@ -391,7 +411,7 @@ $-\infty$}.\\
       Puis on rajoute une contrainte
       \[ \sum_{(i,j) \in E} c_{ij}x_{ij} = z^* \]
       et on remplace l'objectif par
-      \[ \max \sum_{(k,j) \in E} h_{kj} + \sum_{(j,k) \in E} h_{jk}. \]
+      \[ \max \sum_{(k,j) \in E} x_{kj} + \sum_{(j,k) \in E} x_{jk}. \]
       Pour calculer le plus court chemin entre deux noeuds d'un graphe,
       si on ne veut pas prendre le coût de l'arc comme la distance entre
       deux noeuds mais avoir la même distance pour chaque arc,
