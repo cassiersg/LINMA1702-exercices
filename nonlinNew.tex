@@ -1,0 +1,206 @@
+\section{Conditions d'optimalité pour problèmes non contraints}
+\label{sec:nonlinApe1}
+
+Les points stationnaires correspondent aux points où 
+\[\nabla f = 0.\]
+Pour déterminer leurs nature, il s'agit d'analyser la hessienne de la fonction.
+La hessienne est la matrice telle que
+\[H_{ij}(f) = \frac{\partial^2 f}{\partial x_i \partial x_j}.\]
+C'est en fait la matrice des dérivées secondes $\nabla^2 f$.
+
+Si la hessienne est définie strictement positive
+(resp. strictement négative) au point $x$, 
+alors la fonction atteint un minimum (resp. maximum) local en $x$.
+S'il y a des valeurs propres de chaque signe, 
+alors le point stationnaire est un \emph{point selle}.
+
+Par contre, lorsque que la hessienne a des valeurs propres nulles,
+on ne sait rien dire et il faut analyser ce qu'il se passe en ce point.
+
+Une méthode très efficace pour avoir des informations 
+sur les valeurs propres (et donc le caractère) d'une matrice, 
+est de s'intéresser au \emph{déterminant} et à la \emph{trace} de celle-ci.
+En effet, 
+\begin{align*}
+  \text{tr}(M) =& \sum_i \lambda_i = \sum_i a_{ii} \\
+  \text{det}(M) =& \prod_i \lambda_i.
+\end{align*}
+
+\newpage
+  
+\begin{enumerate}
+  
+  \item Soit la fonction $f(x_1, x_2)= 2 x_1^3+3 x_1^2+12x_1 x_2 + 3 x_2^2
+    -6 x_2 + 54$. 
+    Trouvez les points stationnaires de cette fonction et déterminez leur nature.
+    La fonction possède-t-elle un minimum global? un maximum global?
+
+    \begin{solution}
+      Les points stationnaires sont $(2,-3)$ et $(1,-1)$.
+      
+      \[ \nabla^2 f = 6
+        \begin{pmatrix}
+          2x_1 + 1 & 2\\
+          2 & 1
+        \end{pmatrix} 
+      \]
+      Au point $(2,-3)$, le déterminant vaut $1$ et la trace $6$. 
+      Les valeurs propres sont donc strictement positives
+      et la matrice définie positive.
+      C'est un minimum local.
+      
+      Au point $(1,-1)$, le déterminant vaut $-1$ et la trace $4$.
+      Il y a une valeur propre strictement positive et une strictement négative.
+      C'est un point selle.
+      
+      Il n'y a pas de minimum ni de maximum global puisque
+      \[ \lim_{x_1 \rightarrow\pm\infty} f(x_1,x_2) = \pm\infty .\] 
+    \end{solution}
+    
+  \item Soit la fonction
+  
+    \[f(x_1,x_2) = (x_1 - 1)^2 + \lambda(x_1^2 - x_2)^2\]
+
+    pour $\lambda \in \mathbb{R}$. Trouvez les points stationnaires de $f$
+    et discutez leur nature en fonction de $\lambda$.
+    
+    \begin{solution}
+      On a ici un seul point stationnaire $(1,1)$.
+      
+      En $(1,1)$, on a
+      \[ \nabla^2 f = 
+        \begin{pmatrix}
+          1+4\lambda & -2\lambda \\
+          -2\lambda & \lambda
+        \end{pmatrix}.
+      \]
+      On a donc 
+      \begin{align*}
+        \lambda &= \lambda_1 \lambda_2 \\
+        1 + 5\lambda &= \lambda_1 + \lambda_2  
+      \end{align*}
+      Trois cas se présentent.
+      \begin{itemize}
+        \item $\lambda > 0$. La matrice est définie positive 
+        donc c'est un minimum local.
+        \item $\lambda = 0$. La matrice est semi-définie positive.
+        La fonction devient $f(x_1,x_2) = (x_1 - 1)^2$ 
+        et le point est donc un minimum global.
+        \item $\lambda < 0$. La matrice est indéfinie
+        donc c'est un point selle.
+      \end{itemize}
+    \end{solution}
+    
+  \item Déterminez pour chacune des fonctions ci-dessous,
+  en justifiant soigneusement, les minimas locaux
+  et identifiez parmi ceux-ci lesquels sont globaux 
+  et lesquels sont stricts :
+  \[ \text{min}_{x \in \mathbb{R}} f(x) \]
+  
+  \begin{enumerate}
+    \item $f(x) = |x+2| + |x-3|$
+      \begin{solution}
+        La fonction globale devient
+        \begin{align*}
+          &2x-1& \forall x \geq 3 \\
+          &5& \forall x \in [-2,3] \\
+          &-2x+1& \forall x \leq -2.
+        \end{align*}
+        Les points stationnaires ($\nabla f = 0$) se trouvent en $[-2,3]$
+        et la fonction prend la même valeur en chacun d'eux.
+        Comme $\nabla^2 f=0$ pour tous ces points,
+        il faut analyser leur comportement par rapport au reste de la fonction.
+        On remarque vite (valeur absolue) 
+        qu'il n'y a pas d'autres points pour lesquels
+        la valeur de $f$ est inférieure.
+        Ce sont donc des minimas globaux non stricts.
+      \end{solution}
+      
+    \item $f(x) = x\sin{x} + \cos{x}$
+      \begin{solution}
+        Les points stationnaires vérifient
+        \[x\cos{x} = 0\]
+        c'est-à-dire $x=0$
+        et $x= \pi/2 + k\pi$ où $(k\in\mathbb{Z})$.
+        Il y a donc une alternance infinie de minimas et maximas locaux
+        mais pas de globaux puisque les valeurs prises par $f$ ne cessent
+        d'augmenter quand $|x| \rightarrow \infty$.
+        Les minimas locaux se trouvent en $x=0$ 
+        et $|x|= 3\pi/2 + 2k'\pi$ où $(k'\in\mathbb{Z}^+)$.
+        Ces minimas $\xopt$ sont stricts 
+        puisque on a toujours $f(\xopt) < f(x)$.
+      \end{solution}
+    \item 
+    $f(x) = \left\{ \begin{array}{rcl}
+             x^2-4x+2 & \mbox{lorsque} & x<1 \\ 
+             x^3-5x+3 & \mbox{lorsque} & x \geq 1 \\
+              \end{array}\right.$
+    
+    \item $f(x) = \mbox{max}\{x^2 - 3x + 3, 3x^2 + x - 3\}$
+          
+  \end{enumerate}
+  
+  \item Considérez la fonction quadratique $f(x)=(1/2) x^T Q x-c^T x$ 
+  avec $Q$ symétrique. Sous quelle condition cette fonction possède-t-elle un
+    point stationnaire? 
+    Un minimum local? 
+    Un point stationnaire mais pas de minimum ni de maximum local?
+
+    \begin{solution}
+      On remarque que, comme $Q$ est symétrique,
+      \[\nabla f = Qx - c.\]
+      La condition pour que $f$ possède un point stationnaire
+      est donc que $Qx = c$.
+      
+      On continue en observant que 
+      \[\nabla^2 f = Q.\]
+      On a donc (comme expliqué au début de la section~\ref{sec:nonlinApe1})
+      un minimum (resp. maximum) local si $Q$ est définie positive (resp. négative).
+      Le dernier cas est en fait un point selle
+      et se produit lorsque $Q$ est indéfinie.
+    \end{solution}
+  
+  \item Trouvez si possible une fonction $f$ de deux variables 
+  et un point $\xopt$ qui maximise $f$ 
+  et pour lequel $\nabla^2 f(\xopt) \succeq 0$. 
+  Même question pour $\nabla^2 f(\xopt) \succ 0$.
+
+    \begin{solution}
+      Pour avoir un maximum, il faut que $\nabla f(\xopt) = 0$ 
+      et $\nabla^2 f(\xopt) \preceq 0$.
+      Or on demande que $\nabla^2 f(\xopt) \succeq 0$.
+      Donc il faut que
+      \[\nabla^2 f(\xopt) = 0.\]
+      On pourrait à priori penser à une fonction de type $f(x_1,x_2) = -x_1^3-x_2^3$,
+      mais on aurait alors un point selle.
+      On peut par exemple choisir la fonction d'ordre 4
+      \[f(x_1,x_2) = -x_1^4-x_2^4.\]
+      
+      Il est par contre impossible d'avoir un maximum 
+      avec $\nabla^2 f(\xopt) \succ 0$.
+    \end{solution}
+  
+  \item Démontrez les assertions suivantes en trouvant un contre-exemple
+  avec $f$ une fonction de $\mathbb{R}^2 \rightarrow \mathbb{R}$
+  et $\xopt = (1,1)$.
+  \begin{enumerate}
+    \item La condition '$\nabla f(\xopt)=0$' 
+    n'est pas suffisante pour que $\xopt$ soit un minimum.
+    \item La condition '$\nabla^2 f(\xopt)\succeq 0$ et $\nabla f(\xopt)=0$'
+    n'est pas suffisante pour que $\xopt$ soit un minimum.
+    \item La condition '$\nabla f(\xopt) = 0$ et $\nabla^2 f(\xopt)\succ 0$' 
+    n'est pas nécessaire pour que $\xopt$ soit un minimum.  
+    \item La condition '$\nabla f(\xopt)=0$ et $\nabla^2 f(\xopt) \succ 0$' 
+    n'est pas nécessaire pour que $\xopt$ soit un minimum.
+  \end{enumerate}
+  
+    \begin{solution}
+      \begin{enumerate}
+        \item $f(x_1,x_2) = (x_1 - 1)^3 - (x_2 - 1)^3$ \label{itm:power3}
+        \item idem~\ref{itm:power3}
+        \item $f(x_1,x_2) = (x_1 - 1)^4 + (x_2 - 1)^4$ \label{itm:power4}
+        \item idem~\ref{itm:power4}
+      \end{enumerate}
+    \end{solution}
+  
+\end{enumerate}
