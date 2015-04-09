@@ -4,25 +4,25 @@
 
 {\bf Forme géométrique}
 
-$$
+\[
 \begin{array}{ll}
   \mini &  c^T x \\
   \mbox{ }
   & A x \geq b
 \end{array}
-$$
+\]
 
 
 {\bf Forme standard}
 
-$$
+\[
 \begin{array}{lrcr}
   \mini &  c^T x \\
   \mbox{ }
   & A x & = &  b\\
   & x & \geq & 0
 \end{array}
-$$
+\]
 \\
 
 
@@ -135,12 +135,12 @@ $$
         x_2 - t & \leq 10\\
         -x_2 - t & \leq -10\\
         x_1 + x_2 & \leq 3\\
-        -x_1 - x_2 & \leq 7\\
-        x_1 + x_2 & \leq 3\\
+        -x_1 + x_2 & \leq 7\\
+        x_1 - x_2 & \leq 3\\
         -x_1 - x_2 & \leq 7.
       \end{align*}
       La première est plus élégante mais la seconde utilise
-      moins de variables et une contraintes en plus.
+      moins de variables et une contrainte en moins.
     \end{solution}
 
 
@@ -148,7 +148,7 @@ $$
 
     \begin{solution}
       Non. En effet,
-      si le coût optimal est bornée, posons $z^*$ sa valeur.
+      si le coût optimal est borné, posons $z^*$ sa valeur.
       L'ensemble de solutions optimales sera l'ensemble des solutions de
       \[
         \begin{pmatrix}
@@ -181,16 +181,18 @@ $$
       En supposant $a_t$ constant sur son intervalle de temps, on a
       \[ v_{t+1} = v_t + a_t \]
       et
-      \[ x_{t+1} = \int_t^{t+1} v(\tau) \dif \tau
-      = \int_t^{t+1} v_t + (t-\tau)a_t \dif \tau
-      = v_t + \frac{a_t}{2}. \]
+      \begin{align*}
+        x_{t+1} &= x_t + \int_t^{t+1} v(\tau) \dif \tau \\
+        &= x_t + \int_t^{t+1} v_t + (\tau-t)a_t \dif \tau \\
+        &= x_t + v_t + \frac{a_t}{2}.
+      \end{align*}
       Le problème d'optimisation linéaire est donc
       \begin{align*}
         \min \sum_{t=0}^{T-1} u_t\\
         a_t & \leq u_t & t = 0,\ldots,T-1\\
         -a_t & \leq u_t & t = 0,\ldots,T-1\\
         v_{t+1} & = v_t + a_t & t = 0,\ldots,T-1\\
-        x_{t+1} & = v_t + \frac{a_t}{2} & t = 0,\ldots,T-1\\
+        x_{t+1} & = x_t + v_t + \frac{a_t}{2} & t = 0,\ldots,T-1\\
         v_0 & = 0\\
         x_0 & = 0\\
         v_T & = 0\\
@@ -221,7 +223,7 @@ $$
         |a_i^Tx - b_i| & \geq t\|a_i\| & \forall i\\
         a_i^Tx & \leq b_i & \forall i
       \end{align*}
-      ou encore, comme $a_i^Tx \leq b_i \leq 0$,
+      ou encore, comme $a_i^Tx - b_i \leq 0$,
       \begin{align*}
         \max_{x, t} t\\
         a_i^Tx + \|a_i\|t & \leq b_i & \forall i\\
@@ -242,7 +244,7 @@ $$
     L'illumination $I_i$ du point milieu du tronçon $i$ dépend de la position des lampes et de leurs
     puissances. Nous utilisons un modèle simple d'illumination
 
-    $$I_i = \sum_{j=1}^m a_{ij} p_j, \qquad a_{ij}=r_{ij}^{-2} \max \{\cos \theta_{ij}, 0 \}$$
+    \[I_i = \sum_{j=1}^m a_{ij} p_j, \qquad a_{ij}=r_{ij}^{-2} \max \{\cos \theta_{ij}, 0 \}\]
 
     où $r_{ij}$ représente la distance entre la lampe $j$ et le point milieu du tronçon $i$, et $\theta_{ij}$ représente l'angle
     entre la normale du tronçon $i$ et le segment de droite qui lie le point milieu du tronçon $i$ et la lampe $j$ (voir Figure). Ce
@@ -250,18 +252,18 @@ $$
     mais ne prend pas en compte l'illumination des tronçons entre eux par réflexion.  Le problème consiste à déterminer la puissance des lampes de façon à ce
     que les niveaux d'illumination des  tronçons soient tous proches du niveau désiré $I_{des}$. Nous choisissons la déviation maximum
 
-    $$\max_{i=1, \ldots, n} | I_i -I_{des}|$$
+    \[ \max_{i=1, \ldots, n} | I_i -I_{des}| \]
 
     pour quantifier la déviation globale par rapport au niveau d'illumination désiré. Formulez ce problème comme un problème d'optimisation linéaire.
 
     \begin{solution}
-      Il faut minimiser la norme $l^{\infty}$ puisqu'il s'agit de quantifier la déviation \textit{globale} 
-      $$ \max \mid I_{i} - I_{des} \mid $$ 
+      Il faut minimiser la norme $l^{\infty}$ puisqu'il s'agit de quantifier la déviation \emph{globale} 
+      \[ \max_i | I_{i} - I_{des} | \] 
       Le problème d'optimisation linéaire peut s'écrire sous la forme : 
       \begin{align*}
         \min t\\
-        \sum_{j}a_{ij}p_{j} - t & \leq I_{des} & i = 1, 2, \dots, m\\
-        -\sum_{j}a_{ij}p_{j} - t & \leq -I_{des} & i = 1, 2, \dots, m\\
+        \sum_{j}a_{ij}p_{j} - t & \leq I_{des} & i = 1, 2, \dots, n\\
+        -\sum_{j}a_{ij}p_{j} - t & \leq -I_{des} & i = 1, 2, \dots, n\\
         p_j & \leq 1\\
         p_j & \geq 0.
       \end{align*}
@@ -277,27 +279,27 @@ $$
     \emph{médiane}  des résultats est un résultat qui partage l'ensemble des résultats en deux ensembles de  tailles égales. Dans notre
     exemple, la médiane est donnée par $86$. Montrez que la moyenne et la médiane s'obtiennent comme solutions optimales des problèmes
     d'optimisation
-    $$\min_x \sum_i (x-x_i)^2$$
+    \[\min_x \sum_i (x-x_i)^2\]
     et
-    $$\min_x \sum_i |x-x_i|.$$
+    \[\min_x \sum_i |x-x_i|.\]
     Quelle est la solution du problème
-    $$\min_x \max_i | x-x_i| ?$$
+    \[\min_x \max_i | x-x_i| ?\]
 
     \begin{solution}
       \begin{enumerate}
         \item
-          Soit $f = \sum_{i=1}^{n}(x-x_{i})^{2}$.
+          Soit $f(x) = \sum_{i=1}^{n}(x-x_{i})^{2}$.
           En annulant la dérivée, on obtient
           \begin{align*}
-            2\sum_{i=1}^{n}(x-x_{i}) & = 0\\
-            nx & = \sum_{i=1}^{n} x_{i}\\
-            x & = \frac{1}{n}\sum_{i=1}^{n} x_{i}.
+            2\sum_{i=1}^{n}(\xopt-x_{i}) & = 0\\
+            n\xopt & = \sum_{i=1}^{n} x_{i}\\
+            \xopt & = \frac{1}{n}\sum_{i=1}^{n} x_{i}.
           \end{align*}
         \item
           Soit $f(x) = \sum_{i=1}^{n} |x-x_{i}| = \sum_{x \geq x_{i}}
           (x-x_{i}) - \sum_{x < x_{i}} (x-x_{i})$.
           En annulant la dérivée, on obtient
-          \[ \sum_{x \geq x_i}^n 1 = \sum_{x < x_i} 1. \]
+          \[ \sum_{\xopt \geq x_i}^n 1 = \sum_{\xopt < x_i}^n 1. \]
           Ce n'est pas extrêmement rigoureux car lorsque
           $x = x_i$, ce n'est pas dérivable mais l'idée est là.
           Lorsqu'il y a plus de $x_i$ à gauche de $x$ qu'à droite,
@@ -320,8 +322,8 @@ $$
       Il suffit de résoudre le problème d'optimisation linéaire
       \begin{align*}
         \min \sum_i t_i\\
-        x - t_i & \leq b_i\\
-        -x - t_i & \leq -b_i.
+        x - t_i & \leq b_i & \forall i \\
+        -x - t_i & \leq -b_i. & \forall i
       \end{align*}
       Pour $m = 2$, c'est n'importe quel point situé sur le segment reliant $b_1$ et $b_2$. En effet, la somme des distances sera égale à la longueur de ce segment.
       Pour $m = 3$, c'est l'isobarycentre de $b_1$, $b_2$ et $b_3$.

@@ -1,6 +1,6 @@
 \section{Géométrie des polyèdres}
 
-Un \emph{polyèdre} est un sous-ensemble de $\R^n$ qui peut être écrit comme ${\mathcal P}=\{x \in \R^n |\;  Ax \geq b \}$. Un polyédre est une
+Un \emph{polyèdre} est un sous-ensemble de $\R^n$ qui peut être écrit comme ${\mathcal P}=\{x \in \R^n |\;  Ax \geq b \}$. Un polyèdre est une
 intersection d'un nombre fini d'ensembles convexes et c'est donc un ensemble convexe. Soit
 $\mathcal P$ un poly\`edre de
 $\R^n$. La solution
@@ -126,11 +126,14 @@ actives.\\
         \item $x_{3} = (0,0,\frac{1}{2},-\frac{1}{2})$ n'est pas admissible
           car une variable de base n'est pas positive.
       \end{itemize}
+      Les sommets $x_{1}$ et $x_{2}$ sont adjacents puisqu'ils ont
+      au moins $n-m-1 = 1$ (ici $2$) contraintes serrées communes
+      et $m-1 = 1$ variable de base commune.
     \end{solution}
 
   \item Quand un demi-espace contient-il un autre demi-espace? Donnez des
     conditions pour lesquelles
-    $$\{x | a^Tx \leq b \} \subseteq \{x | \tilde a ^Tx \leq \tilde b \}$$
+    \[\{x | a^Tx \leq b \} \subseteq \{x | \tilde a ^Tx \leq \tilde b \}\]
 
 
     \begin{solution}
@@ -211,14 +214,14 @@ actives.\\
     \end{solution}
 
   \item Supposons que $\{ x \in \R^n \; | \; a_i^Tx \geq b_i, i=1, \ldots, m \}$ et $\{ x \in \R^n \; | \; g_i^Tx \geq h_i,
-    i=1, \ldots, k \}$ sont deux représentation du même poly\`edre. Démontrez que si les vecteurs $a_1, \ldots, a_m$ génèrent
+    i=1, \ldots, k \}$ sont deux représentations du même poly\`edre. Démontrez que si les vecteurs $a_1, \ldots, a_m$ génèrent
     $\R^n$ alors les vecteurs $g_1, \ldots, g_k$ également.
 
     \begin{solution}
       Un même polyèdre peut être obtenu au moyen de
       représentations différentes.
       Si le polyèdre est identique,
-      cela signifie qu'un des deux ensembles à des contraintes linéairement
+      cela signifie qu'un des deux ensembles a des contraintes linéairement
       dépendantes des contraintes de l'autre ensemble.
       \begin{proof}
         Soient $A \in \R^{m \times n} $ et $B \in \R^{k \times n} $ des matrices
@@ -231,7 +234,7 @@ actives.\\
         doivent avoir des contraintes communes.
         Il y a donc contradiction puisque, par hypothèse,
         l'espace ligne de $A$ forme une suite génératrice et $ k > m$.
-        Le nombre de lignes de $B$ est donc supérieur au nombre de ligne de $A$
+        Le nombre de lignes de $B$ est donc supérieur au nombre de lignes de $A$
         et les lignes de $B$ sont linéairement dépendantes des lignes de $A$.
         La suite $g_{1}, \dots, g_{k}$ doit donc être génératrice.
         %Supposons que les contraintes du domaine $Ax \geq b$ génèrent $\R^{n}$.
@@ -289,7 +292,7 @@ actives.\\
       une solution optimale.
 
       On sait que cette solution optimale est un sommet du polyèdre.
-      Un sommet serre $n$ contraintes. Il y a ${n \choose m}$
+      Un sommet serre $n$ contraintes. Il y a ${m \choose n}$
       manières de choisir $n$ contraintes parmis les $m$.
       Il faut pour chaque combinaison résoudre le système pour trouver
       nos $n$ variables ce qui prendra $n^3$ opérations puis il faudra
@@ -298,8 +301,8 @@ actives.\\
       Comme il faut faire à chaque fois une somme de $n$ termes.
       Ça prendra $(m-n+1)n$ opérations.
       La complexité est donc
-      \[ O\left({n \choose m}(n^3 + (n-m+1)n)\right). \]
-      Le terme $(n-m+1)n$ peut êre négligé si on considère que $m \ll n^2$.
+      \[ O\left({m \choose n}(n^3 + (m-n+1)n)\right). \]
+      Le terme $(m-n+1)n$ peut êre négligé si on considère que $m \ll n^2$.
     \end{solution}
 
   \item Nous considérons l'ensemble $P=\{ x \in \R^n \; | \; a_i^T x \leq b_i \; , \;  i=1, \ldots, m \}$. Nous désirons trouver la
@@ -322,7 +325,7 @@ actives.\\
         -x_2 & \leq 0.
       \end{align*}
       Le centre de Chebychev n'est pas toujours unique.
-      C'est le cas par exemple lorsque le domaine en forme de rectangle
+      C'est le cas par exemple lorsque le domaine est en forme de rectangle
       \begin{align*}
         x_1 & \leq 1\\
         x_2 & \leq 2\\
@@ -364,7 +367,9 @@ actives.\\
       On remarque qu'en prenant $t = 0$, on retombe sur le polyèdre
       de départ dont on sait par l'énoncé qu'il possède un sommet.
       Soit $\tilde{x}$ un de ces sommets.
-      $(\tilde{x}, 0)$ est donc un des sommets de ce polyèdre.
+      Le nouveau point $(\tilde{x}, 0)$ serre exactement une contrainte
+      supplémentaire sans pour autant désactiver une autre, 
+      c'est donc un des sommets de ce polyèdre.
       On sait aussi par l'énoncé qu'il existe
       une sphère de rayon strictement positif.
       On sait donc que le coût optimal est fini.
@@ -373,8 +378,8 @@ actives.\\
       Comme toute solution optimale est un sommet,
       4 contraintes sont actives.
       Comme, par l'énoncé, le rayon est strictement positif,
-      $t > 0$ et donc c'est quatre des six contraintes
-      $a_i^Tx - b_i \leq \|a_i\|t$ qui sont serrées.
+      $t > 0$ et donc ce sont quatre des six contraintes
+      $a_i^Tx + \|a_i\|t \leq b_i$ qui sont serrées.
       La sphère de rayon maximale touche donc quatre des
       plans qui définissent le polyèdre.
     \end{solution}
