@@ -1,0 +1,212 @@
+\section{Conditions d'optimalité pour problèmes contraints}
+\label{sec:nonlinApe2}  
+
+\begin{enumerate}
+
+  \item On cherche à déterminer parmi les points de la parabole
+  d'équation $y=\frac{1}{5}(x-3)^2$ celui qui est le plus proche
+  du point $(x,y)=(3,2)$, ce qu'on formule comme le
+  problème d'optimisation suivant
+  \[ \text{min} f(x,y) = (x-3)^2 + (y-2)^2 \text{ tel que } (x-3)^2 = 5y .\]
+  \begin{enumerate}
+    \item Pourquoi a-t-on utilisé comme fonciton objectif le \emph{carré}
+    de la distance au point $(1,2)$ ?
+    \item Trouvez tous les points satisfaisant à la condition (nécessaire)
+    d'optimalité au premier ordre (en prenant soin de vérifier la condition 
+    d'indépendance des gradients), et déduisez-en la solution du problème.
+    \item Répondez à nouveau en utilisant cette fois la parabole 
+    d'équation $y=\frac{1}{3}(x-3)^2$.
+    \item Pouvait-on résoudre ce problème en éliminant $x$ à l'aide de la contrainte
+    puis en résolvant le problème non-contraint ainsi obtenu ? 
+    En éliminant $y$ ?
+  \end{enumerate}
+  
+  \begin{solution}
+    \begin{enumerate}
+      \item Les opérations sont moins lourdes sur une somme de carrés 
+      que sur une racine. Note qu'on peut le faire seulement parce que
+      la fonction racine carrée est une fonction monotone.
+      \item On a un système à trois équations 
+      \begin{align*}
+               2(x-3) &= 2\lambda (x-3) \\ 
+               2(y-2) &= -5\lambda \\
+               (x-3)^2 - 5y &= 0
+      \end{align*}
+      On a soit $x\neq 3$ et il n'y pas de solution,
+      soit $x=3$ et $y=2$.
+      \item On a les solutions $(3,0)$, $(3\pm\sqrt{3/2},1)$.
+      \item Oui, on pouvait remplacer $y$ par 
+      \[ y = \frac{1}{5}(x-3)^2 \]
+      mais les calculs deviennent assez lourd.
+      On peut aussi remplacer $x$ par 
+      \[ x = 3 \pm \sqrt{5y} \] 
+      mais il faut alors poser $y \geq 0$ 
+      et faire attention de ne pas perdre de solutions.
+    \end{enumerate}
+    
+  \end{solution}
+    
+  \item Sur le domaine de $\mathbb{R}$ déterminé par les équations
+  \[f(x) = \left\{ \begin{array}{rcl}
+           x_1 \geq -3/2 \\ 
+           x_1 \geq x_2 \\
+           x_1^2 + x_2^2 \leq 4 
+            \end{array}\right.,
+  \]
+  trouvez \emph{tous} les minimums locaux (en justifiant) des fonctions
+  \begin{enumerate}
+    \item $f(x) = (x_1 - 1)^2$
+    \item $f(x) = -((x_1 - 1)^2 + (x_2 - 1)^2$
+    \item $f(x) = (x_1 - 1)^2 + 2(x_2 - 1)^2.$
+  \end{enumerate}
+  
+  \begin{solution}
+    Les contraintes ainsi que le domaine admissible sont représentés
+    sur le graphe ci-dessous.
+    On voit immédiatement que la contrainte $c_1$ n'est jamais active,
+    on sait donc que $\lambda_1$ sera nul.
+    \begin{enumerate}
+      \item Le minimum est atteint en $x_1 = 1$.
+      On peut ensuite faire varier $x_2$ entre $-\sqrt{3}$ et $1$.
+      
+      \item Tout d'abord, intuitivement on remarque qu'il s'agit de
+      maximiser le rayon du cercle centré en $(1,1)$.
+      L'ILGCA est vérifié pour tous les points sauf $(0,0)$,
+      qui n'est pas un point particulier.
+      On résoud donc les conditions KKT et on obtient trois points
+      \begin{itemize}
+        \item $(1,1)$ qui est un maximum global,
+        \item $(\sqrt{2},\sqrt{2})$ qui est un point selle,
+        \item $(-\sqrt{2},-\sqrt{2})$ qui est un minimum local.
+      \end{itemize}
+      
+      \item On voit immédiatement que $(0,0)$ est le minimum global.
+      On ne pourra cependant pas le trouver avec les conditions KKT
+      puisque l'ILGCA n'est pas vérifiée en ce point.
+      En effet,
+      \begin{align*}
+        \nabla c_2 &= \begin{pmatrix} 1 \\ 0 \end{pmatrix} &
+        \nabla c_3 &= \begin{pmatrix} -2x_1 \\ -2x_2 \end{pmatrix} &
+      \end{align*}
+      sont linéairement dépendants en $(0,0)$ (on ne tient pas compte de $c_1$ 
+      puisque qu'elle n'est pas une contrainte active).
+    \end{enumerate}    
+    
+    \begin{center}
+      \begin{tikzpicture}[scale=1]
+      % Axes
+      \draw[axis] (-3,0) -- (3,0) node[right=\nudge cm] {\(x_1\)};
+      \draw[axis] (0,-3) -- (0,3) node[above=\nudge cm] {\(x_2\)};
+      \begin{scope}
+        %Contraintes
+        \draw[green,thick] (-3/2,-3) -- (-3/2,3) coordinate (ineq2)
+          node[right=\nudge] {$c_1$};
+        \draw[green,thick] (-3,-3) -- (3,3) coordinate (ineq1)
+          node[below=\nudge] {$c_2$};
+        \draw[green,thick] (0,0) circle (2cm) coordinate (ineq3)
+          node[below=2.5cm,right=\nudge] {$c_3$};
+          
+        %Domaine admissible
+        \begin{scope}
+          \fill[hash] (0,0) -- ({sqrt(2)},{sqrt(2)}) arc (45:-135:2cm);
+        \end{scope}
+          
+        %Solutions avec de jolies couleurs et un point tricolore
+        \draw[cyan,very thick] (1,-{sqrt(3)}) -- (1,1) 
+          node[left=\nudge] {(a)};
+        \fill[cyan] (1,1) circle (0.1cm);
+        \fill[magenta] ({sqrt(2)},{sqrt(2)}) circle (0.05cm)
+          node[above=\nudge] {(b)};
+        \fill[magenta] (-{sqrt(2)},-{sqrt(2)}) circle (0.05cm)
+          node[left=\nudge] {(b)};
+        \fill[magenta] (1,1)--(1+0.1,1) arc (0:120:0.1cm);
+        \fill[yellow] (1,1)--(1+0.1,1) arc (0:-120:0.1cm)
+          node[above=\nudge] {(c)};
+          
+        %Grid
+        \draw[step=1cm,gray,very thin] (-3,-3) grid (3,3) ;
+      \end{scope}
+      \end{tikzpicture}
+    \end{center}
+
+  \end{solution}
+  
+  \item Considérez le problème d'optimisation
+  \begin{align*}
+    \text{min } &x_1 + x_2 \\
+    \text{s.c. } &x_1^3 \geq x_2 \\
+    &x_2 \geq 0.
+  \end{align*}
+  
+  \begin{enumerate}
+    \item Quelle est la solution optimale de ce problème ?
+    \item Ecrivez et résolvez les conditions KKT pour ce problème. Commentez.
+  \end{enumerate}
+  
+  \begin{solution}
+    \begin{enumerate}
+      \item La solution optimale est $(0,0)$.
+      \item L'ILGCA n'est pas vérifiée pour les points $(x_1,x_2)$ 
+      tels que $x_1 \neq 0$ puisque
+      \begin{align*}
+        \nabla c_1 &= \begin{pmatrix} 3x_1^2 \\ -1 \end{pmatrix} &
+        \nabla c_3 &= \begin{pmatrix} 0 \\ 1 \end{pmatrix}. &
+      \end{align*}
+      On a donc le système suivant pour les autres points 
+      \begin{align*}
+        1 &= 3 \lambda_1 x_1^2 \\
+        1 &= -\lambda_1 + \lambda_2 \\
+        \lambda_1 (x_1^3-x_2) &\geq 0 \\
+        \lambda_2 \, x_2 &\geq 0 \\
+        \lambda_1 , \lambda_2 &\geq 0
+      \end{align*}
+      Soit $x_2 \neq 0$, alors $\lambda_2 = 0$ et $\lambda_1 = -1$,
+      ce qui est impossible.
+      
+      Soit $x_2 = 0$, alors $\lambda_1 \, x_1^3 = 0$,
+      ce qui est égalemment impossible.
+      
+      On a donc bien une unique solution optimale $(0,0)$.
+    \end{enumerate}
+  \end{solution}
+  
+  \item 
+  \begin{enumerate}
+    \item Prouvez que si $\xopt$ est un point satisfaisant les conditions KKT
+    et la condition d'indépendance des gradients, alors le vecteur des 
+    multiplicateurs de Lagrage $\lambda^*$ correspondant est unique.
+    \item Montrez que la reformulation d'une égalité $g(x)=0$ sous la forme
+    équivalente $g(x)^2=0$ n'est pas une bonne idée du point de vue des 
+    conditions d'optimalité.
+  \end{enumerate}
+  
+  \begin{solution}
+    \begin{enumerate}
+      \item Si l'ILGCA est vérifié, alors, 
+      par définition de l'indépendance linéaire, on a
+      \begin{equation} 
+        \sum_{i \in \mathcal{A}(\xopt)}{\alpha_i \nabla c_i (\xopt)} = 0
+        \iff \alpha_i = 0 
+        \label{eq:indepLin}
+      \end{equation}
+      Prouvons par l'absurde,
+      soit $\lambda'$ et $\lambda''$ deux vecteurs des multiplicateurs de
+      Lagrange.
+      Comme les conditions KKT sont vérifiées, on a
+      \[ 
+        \nabla f(\xopt) = \sum_i \lambda_i' \nabla c_i = \sum_i \lambda_i'' \nabla c_i
+      \]
+      On peut aussi écrire 
+      \[ \sum_i (\lambda_i' - \lambda_i'') \nabla c_i = 0. \]
+      On montre finalement en utilisant la propriété de l'équation~\ref{eq:indepLin}
+      \[ \lambda_i' = \lambda_i'' \qquad \forall i. \] 
+      
+      \item Le gradient de la forme équivalente est
+      \[ \nabla (g(x)^2) = 2 g(x) \nabla g(x). \]
+      Pour $g(x)=0$, on aura un gradient toujours nul
+      et il n'y aura donc jamais d'indépendance linéaire,
+      ce qui pose problème pour respecter l'ILGCA.
+    \end{enumerate}
+  \end{solution}
+  
+\end{enumerate}
