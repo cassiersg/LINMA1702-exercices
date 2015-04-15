@@ -51,7 +51,7 @@
         \end{array}
       \]
       Le sommet $(2,0,0,4)$ n'est pas non plus optimal car le coût
-      réduit $\tilde{c}_2 = -1$ est négatif.
+      réduit $\tilde{c}_2 = -3$ est négatif.
       Faisons donc rentrer $x_2$ dans la base car c'est lui qui a un
       coût réduit négatif.
       À nouveau, on a $x = (2+\lambda,\lambda,0,4-2\lambda)$.
@@ -123,7 +123,7 @@
           $z^*$ est aussi petit que l'on veut.
         \item Pour avoir un sommet dégénéré, il faut qu'un terme indépendant
           vaille 0.
-          En sortant $x_2$ de la base et en y fesant rentrer $x_3$, on
+          En sortant $x_5$ de la base et en y fesant rentrer $x_2$, on
           optient le tableau simplexe suivant (si $\beta \neq 0$)
           \[
             \begin{array}{cccccc|l}
@@ -212,13 +212,13 @@
           \[
             \begin{array}
               {ccc|l}
-              0 & -1 & 0 & -z+7\\
+              0 & 0 & -1 & -z+7\\
               \hline
               0 &  1 & 1 & 1\\
-              1 &  1 & 0 & 3\\
+              1 &  0 & -1 & 2\\
             \end{array}
           \]
-          Dès lors, $\xopt = (2,1,0)$ et $z^* = 7$.
+          Dès lors, $\xopt = (2,1)$ et $z^* = 7$.
         \item
           \label{itm:sim400}
           Le tableau simplexe est le suivant
@@ -256,7 +256,7 @@
             \end{array}
           \]
 
-          Essayons maintenant en faisant rentre $x_4$.
+          Essayons maintenant en faisant rentrer $x_4$.
           On doit alors sortir $x_6$.
           \[
             \begin{array}{cccccc|l}
@@ -695,7 +695,7 @@
         \end{array}
       \]
 
-      On a maintanenant bien $z = 0$.
+      On a maintenant bien $z = 0$.
       Notre polyèdre avait donc au moins un sommet.
       $\frac{1}{5}(0,7,18)$ est un de ces sommets.
     \end{solution}
@@ -780,14 +780,14 @@
       Si le coût optimal est non borné,
       c'est qu'il existe une demi-droite incluse au domaine admissible
       au long de laquelle $x_1 + 16x_2 + 12x_3$ augmente.
-      Seulement, on peut remarqué géométriquement que le domaine admissible
-      est compacte.
+      Seulement, on peut remarquer géométriquement que le domaine admissible
+      est compact.
       On peut aussi s'en sortir algébriquement en se disant que
-      si le coût augmente à l'infini, c'est au moins une variable augmente
+      si le coût augmente à l'infini, c'est qu'au moins une variable augmente
       à l'infini.
       En tenant compte des contraintes, comme tous les coefficients
       sont positifs, il faut qu'au moins une variable tende vers
-      $-\infty$ ce qui est impossible car elles sont positive.
+      $-\infty$ ce qui est impossible car elles sont positives.
       Tout cela pour dire qu'il n'existe pas de valeur d'$\alpha$
       pour laquelle le coût optimal est non borné.
     \end{solution}
