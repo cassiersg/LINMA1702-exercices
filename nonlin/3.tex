@@ -1,0 +1,195 @@
+\section{Convexité \& modélisation}
+
+Le problème d'optimisation 
+\[ 
+\min_{x\in \mathbb{R}^n} f(x) \mbox{ tel que } x\in X\in\subseteq\mathbb{R}^n 
+\]
+est un \emph{problème d'optimisation convexe} si et seulement si
+\begin{enumerate}
+  \item il s'agit d'un problème de \emph{minimisation},
+  \item la fonction objectif $f$ est une fonction \emph{convexe},
+  \item le domaine admissible $X$ est un \emph{ensemble convexe}.
+\end{enumerate}
+
+\newpage
+
+\begin{enumerate}
+  
+  \item Prouvez la convexité des problèmes d'optimisation ci-desous
+  (en utilisant les critères vus au cours ou d'autres raisonnements
+  nécessaire) :
+  \begin{enumerate}
+    \item min $|x| - \log{(xy)}$ tel que $x^2 + y^2 \leq 1$ et $x,y > 0$
+    \begin{solution}
+      Il s'agit d'un problème de minimisation.
+      La fonction $|x| = \mbox{max}\{-x,x\}$ est l'intersection de deux 
+      fonctions affines et est donc convexe.
+      La fonction $-\log{(xy)}$ est convexe puisqu'on a 
+      \[ f(x_2) \geq f(x_1) + \nabla f(x_1)^T (x_2 - x_1) \]
+      pour $x_1,x_2 > 0$.
+      L'addition conserve la convexité donc la fonction objectif est bien convexe.
+      Le domaine est convexe puisque 
+      c'est l'intersection d'une boule et de deux demi-espaces. 
+    \end{solution}
+    
+    \item min $e^x + e^y + e^z$ tel que $x + y \geq 1$ et $y+z = 2$
+    \begin{solution}
+      Il s'agit d'un problème de minimisation.
+      La fonction objectif est convexe car c'est une somme de fonctions convexes.
+      Le domaine est aussi convexe puisque c'est l'intersection
+      d'un demi-espace et d'un hyperplan.
+    \end{solution}
+    
+    \item max $\sqrt{x} + y$ tel que $x\geq 1$ et $y^2\leq x\leq 2$
+    \begin{solution}
+      Le problème devient
+      \[ \min -\sqrt{x} - y. \]
+      La fonction $-\sqrt{x}$ est convexe puisque
+      \[ \nabla^2 (-\sqrt{x}) = \frac{1}{4 x^{3/2}} \]
+      qui est toujours positif sur le domaine étudié.
+      Le domaine est l'intersection entre les demi-espaces $x\geq 1$, $x\leq 2$
+      et le domaine $y^2 - x \leq 0$.
+    \end{solution} 
+    
+    
+    \item min max\{$3x^2 + 4y, 3x + 4y^2$\}
+    tel que $1\leq x^2 + y^2 \leq 2$ et $x + y \geq \sqrt{2}$
+  \end{enumerate}
+  
+  \item \textbf{La petite maison dans la prairie.} 
+  Sur une carte assimilée au plan $\mathcal{R}^2$ 
+  sont représentés une prairie, d'équation
+  \[ \mathcal{P} = \{(x,y) | x^2 + (x+y)^2 \leq 18 \} \]
+  ainsi qu'une rivière, d'équation $\mathcal{R} = \{(x,y) | x + 2y + 12 = 0\}$
+  et une cl\^oture, d'équation $\mathcal{C}=\{(x,y) | x = 2\}$.
+  On souhaite construire une petite maison et déterminer ses coordonnées $(x,y)$
+  de telle façon que
+  \begin{itemize}
+    \item la maison se trouve dans la prairie $\mathcal{P}$
+    \item la maison se trouve à gauche de la cl\^oture $\mathcal{C}$
+    (c'est-à-dire dans la région où $x\leq 2$)
+    \item la maison se trouve le plus près possible de la rivière $\mathcal{R}$
+  \end{itemize}
+  \begin{enumerate}
+    \item Esquissez graphiquement 
+    les éléments $\mathcal{P}$, $\mathcal{R}$ et $\mathcal{C}$
+    apparaissant sur la carte.
+    On pourra s'aider de la représentation suivante (exacte) de la prairie :
+    \begin{center}
+      \begin{tikzpicture}[scale=.7]
+      % Axes
+      \draw[axis] (-8,0) -- (8,0) node[right=\nudge cm] {\(x\)};
+      \draw[axis] (0,-8) -- (0,8) node[above=\nudge cm] {\(y\)};
+      \foreach \x in {-8,-4,0,4,8}
+          \draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\x$};
+      \foreach \y in {-8,-4,4,8}
+          \draw (1pt, \y cm) -- (-1pt,\y cm) node[anchor=east] {$\y$};
+      \begin{scope}
+        %Contraintes
+        \draw[thick,rotate=33] (0,0) ellipse (3 and 3*2.2) coordinate (ineq1)
+          node[above=4.2 cm,left = 1cm] {$\mathcal{P}$};    
+           
+        %Grid
+        \draw[step=1cm,gray,very thin] (-8,-8) grid (8,8) ;
+      \end{scope}
+      \end{tikzpicture}
+    \end{center}
+    
+    \item Formulez le problème de la localisation de la petite maison comme un 
+    problème d'optimisation (\emph{conseil:} veillez tout particulièrement 
+    à la simplicité de la fonction objectif).
+    \item Ce problème d'optimisation est-il linéaire ? Est-il convexe ?
+    (\emph{justifiez})
+    \item Ecrivez les conditions d'optimalité KKT relatives 
+    à ce problème d'optimisation.
+    Ces conditions sont-elles nécessaires ? Sont-elles suffisantes ?
+    (\emph{justifiez})
+    \item A l'aide de ces conditions, déterminez la localisation 
+    optimale de la maison (on pourra supposer que la condition d'indépendance
+    linéaire des gradients des contraintes est toujours satisfaite).
+  \end{enumerate}
+  
+  \begin{solution}
+    \begin{enumerate}
+      \item La représentation graphique du problème
+      \begin{center}
+        \begin{tikzpicture}[scale=.7]
+          % Axes
+          \draw[axis] (-8,0) -- (8,0) node[right=\nudge cm] {\(x\)};
+          \draw[axis] (0,-8) -- (0,8) node[above=\nudge cm] {\(y\)};
+          \foreach \x in {-8,-4,0,4,8}
+            \draw (\x cm,1pt) -- (\x cm,-1pt) node[anchor=north] {$\x$};
+          \foreach \y in {-8,-4,4,8}
+            \draw (1pt, \y cm) -- (-1pt,\y cm) node[anchor=east] {$\y$};
+          \begin{scope}
+            %Contraintes
+            \draw[thick] (2,-8) -- (2,8) node[right=\nudge] {$\mathcal{C}$};
+            \draw[thick,rotate=33] (0,0) ellipse (3 and 3*2.22) 
+              node[above=4.2 cm,left = 1cm] {$\mathcal{P}$};
+        
+            %Fonction objectif
+            \draw[thick] (-8,-2) -- (4,-8) node[right=\nudge] {$\mathcal{R}$};
+      
+            %Solution
+            \fill[cyan] ({sqrt(18/5)},-{sqrt(162/5)}) circle (0.1cm)
+              node[above=\nudge,left=\nudge] {(e)};   
+                 
+            %Grid
+            \draw[step=1cm,gray,very thin] (-8,-8) grid (8,8) ;
+          \end{scope}
+        \end{tikzpicture}
+      \end{center}
+    
+      \item La distance entre un point $(x_1,y_1)$ 
+      et une droite d'équation $ax+by+c=0$ vaut 
+      \[ \frac{|a x_1 + b y_1 + c|}{\sqrt{a^2+b^2}}. \]
+      La division par une constante positive ne modifie pas la solution
+      du problème d'optimisation.
+      On remarque aussi que $x+2y < 12$, 
+      on peut donc enlever la valeur absolue.
+      Le problème d'optimisation peut s'écrire
+      \begin{align*}
+        \min x + 2y + 12 \\
+        18 - x^2 - (x+y)^2 & \geq 0 \\
+        2 - x & \geq 0 \\        
+      \end{align*}
+      
+      \item
+      
+      \item Les conditions KKT sont
+      \begin{align*}
+        1 &= \lambda_1 (-2x -2(x+y))  - \lambda_2 \\
+        2 &= -2\lambda_1 (x+y) \\
+        \lambda_1 (18 - x^2 - (x+y)^2) &= 0 \\
+        \lambda_2 (2-x) &= 0 \\
+        \lambda_1 , \lambda_2 &\geq 0
+      \end{align*}
+      Ces conditions sont \emph{nécessaires pour certaines solutions} 
+      (celles où l'indépendance des gradients des contraites actives
+      est satisfaite),
+      mais ne sont \emph{pas suffisantes}
+      (elles peuvent aussi être satisfaites en d'autres points).
+      
+      \item Pour $\lambda_1 \neq 0$ et $\lambda_2 = 0$, on a
+      \begin{align*}
+        1 &= -4x \lambda_1 - 2y \lambda_1 \\
+        2 &= -2x \lambda_1 - 2y \lambda_1 \\
+        18 - x^2 - (x+y)^2 &= 0
+      \end{align*}
+      on résoud ensuite le système
+      \begin{align*}
+        1 &= 2x \lambda_1 \\
+        -3 &= 2y \lambda_1 \\
+        18 - x^2 - (x+y)^2 &= 0
+      \end{align*}
+      et on obtient la solution
+      \[ (x,y) = \left( 3\sqrt{\frac{2}{5}}, -9 \sqrt{\frac{2}{5}} \right). \]
+    \end{enumerate}
+    
+  \end{solution}
+  
+  
+  
+  
+  
+\end{enumerate}

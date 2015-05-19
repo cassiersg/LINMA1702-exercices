@@ -130,13 +130,51 @@ En effet,
         Ces minimas $\xopt$ sont stricts 
         puisque on a toujours $f(\xopt) < f(x)$.
       \end{solution}
+      
     \item 
     $f(x) = \left\{ \begin{array}{rcl}
              x^2-4x+2 & \mbox{lorsque} & x<1 \\ 
              x^3-5x+3 & \mbox{lorsque} & x \geq 1 \\
               \end{array}\right.$
+      \begin{solution}
+        On a
+        \[ \nabla f(x) = \left\{ \begin{array}{rcl}
+            2x-4 & \mbox{lorsque} & x<1 \\ 
+            3x^2-5 & \mbox{lorsque} & x \geq 1 \\
+              \end{array}\right. \]
+        Note qu'il n'y a pas de discontinuité en $x=1$ puisque
+        \[ \lim_{x\rightarrow 1^-} \nabla f(x)
+           = \lim_{x\rightarrow 1^+} \nabla f(x) = -2. \]
+        On a un minimum strict en 
+        \[ x = \sqrt{\frac{5}{3}}. \]
+        Les autres points pour lesquels le gradient s'annule
+        ne sont pas pris en compte puisqu'il ne sont pas dans le domaine
+        de leur fonction correspondante.
+      \end{solution}
     
     \item $f(x) = \mbox{max}\{x^2 - 3x + 3, 3x^2 + x - 3\}$
+      \begin{solution}
+        La fonction peut s'écrire comme
+        \[ f(x) = \left\{ \begin{array}{rcl}
+            3x^2-5 & \mbox{lorsque} & \{x<-3,x>1\} \\
+            x^2 - 3x + 3 & \mbox{sinon.} & \\ 
+              \end{array}\right. \]
+        On a donc
+        \[ \nabla f(x) = \left\{ \begin{array}{rcl}
+            6x+1 & \mbox{lorsque} & \{x<-3,x>1\} \\ 
+            2x-3 & \mbox{lorsque} & -3<x<1 \\
+            \varnothing & \mbox{sinon.} & \\            
+              \end{array}\right. \]
+        Cette fois-ci le gradient n'existe pas aux points de raccordement,
+        il faut donc les analyser séparément.
+        Tout d'abord, les points où le gradient s'annule
+        ne sont pas compris dans leur domaine donc ne nous intéressent pas.
+        On remarque que le gradient change de signe en $x=1$
+        (négatif pour $x<1$ et positif pour $x>1$),
+        on a donc un minimum strict en ce point.
+      \end{solution}
+              
+        
           
   \end{enumerate}
   
