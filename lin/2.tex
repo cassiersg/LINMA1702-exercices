@@ -413,7 +413,22 @@
     forme d'un problème d'optimisation linéaire.
 
     \begin{solution}
-      \nosolution
+      Le problème d'optimisation à résoudre est
+      \[\min_{x, y} \left( \max_{i} |a_i^Tx - b_{x,i}| + |a_i^Ty - b_{y,i}|\right).\]
+
+      Il peut s'écrire sous forme linéaire
+      \[\min_{x, y, d} d\]
+      avec $d\in\mathbb{R}$, sous les contraintes
+      \begin{align*}
+      d &\geq a_i^T \left(x+y\right) - \left(b_{x,i} + b_{y, i}\right) \\
+      d &\geq a_i^T \left(x-y\right) - \left(b_{x,i} - b_{y, i}\right) \\
+      d &\geq a_i^T \left(-x+y\right) - \left(-b_{x,i} + b_{y, i}\right) \\
+      d &\geq a_i^T \left(-x-y\right) - \left(-b_{x,i} - b_{y, i}\right) \\
+      \end{align*}
+      pour $1\leq m$.
+
+     Les quatre types de contraintes sont liées au développement de l'expression
+     $|a|+|b|$ en $d\geq a+b$, $d\geq a-b$, $d\geq -a+b$ et $d\geq -a-b$.
     \end{solution}
 
 \end{enumerate}
