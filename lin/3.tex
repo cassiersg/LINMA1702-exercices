@@ -218,12 +218,42 @@ actives.\\
     $\R^n$ alors les vecteurs $g_1, \ldots, g_k$ également.
 
     \begin{solution}
+        \begin{proof}
+        Un théorème du cours est très proche de l'énoncé à démontrer :
+
+        \begin{theorem}{(slide 3-33)}
+            Un polyèdre donné sous forme géométrique
+            $\mathcal{P} = \left\{ x\in \mathbb{R}^n | Ax \geq b\right\}$
+            possède un sommet si et seulement si l'équation $Ad=0$ ne
+            possède pas d'autre solution que la solution triviale $d=0$.
+        \end{theorem}
+
+        Remarquons que condition de l'unicité de la solution de $Ad=0$ est équivalente
+        au fait que la suite $a_1, ..., a_m$ génère $\mathbb{R}^n$.
+
+        Si les $a_i$ génèrent $\mathbb{R}^n$, $\mathcal{P}$ possède un sommet.
+        Si $\mathcal{P}$ possède un sommet, les $g_i$ génèrent $\mathbb{R}^n$.
+        \end{proof}
+
+        Cette preuve de fonctionne que si $\mathcal{P}$ est non-vide (le théorème
+        n'est applicable que si $\mathcal{P}$ est non-vide).
+
+        D'ailleurs, la proposition à démontrer est fausse dans le cas où $\mathcal{P}$
+        est vide : par exemple, un polyèdre vide de $\mathbb{R}^2$ peut être
+        représenté par les contraintes $x_1 \geq 1$, $x_1 \leq 0$, $x_2 \geq 0$
+        qui génèrent $\mathbb{R}^2$. On peut supprimer la contrainte \og{}inutile\fg{}
+        $x_2 \geq 0$, ce qui rend la suite des contraintes non-génératrice, et
+        contredit donc l'énoncé.
+
+        Une autre preuve du théorème est celle-ci :
+
       Un même polyèdre peut être obtenu au moyen de
       représentations différentes.
       Si le polyèdre est identique,
       cela signifie qu'un des deux ensembles a des contraintes linéairement
       dépendantes des contraintes de l'autre ensemble.
       \begin{proof}
+
         Soient $A \in \R^{m \times n} $ et $B \in \R^{k \times n} $ des matrices
         telles que $Ax \geq b$ et $Bx \geq b$ représentent le même polyèdre.
         Supposons que $ k > m$ et que les lignes de $B$, à savoir,
