@@ -526,14 +526,16 @@ $
     \begin{solution}
       \begin{enumerate}
         \item Au moins un des $a_i$ doit être de même signe que $b$.
-        \item Dans le cas où on a un sommet, comme le coût optimal est fini,
+        \item Le problème étant sous forme standard, il existe une solution
+          de base admissible, c'est-à-dire un sommet.
+          Comme il existe un sommet et que le coût optimal est fini,
           par le théorème fondamental,
           on sait qu'il existe un \emph{sommet} optimal.
           Comme c'est un sommet, au moins $n$ contraines sont actives.
           Il y a donc au moins $n-1$ $x_i$ qui sont nuls.
           La dernière variable faut alors $\frac{b}{a_i}$.
           On peut donc trouver une solution optimale en prenant,
-          parmis toutes les soltions tels que $\frac{b}{a_i} \geq 0$,
+          parmi toutes les solutions tels que $\frac{b}{a_i} \geq 0$,
           celle qui a
           \[ c_i \frac{b}{a_i} \]
           le plus petit.
